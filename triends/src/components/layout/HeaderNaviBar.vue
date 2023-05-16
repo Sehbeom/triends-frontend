@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="dark">
+    <b-navbar toggleable="lg" variant="faded" type="light">
       <b-navbar-brand href="#">
         <router-link to="/">
           <img
@@ -12,7 +12,7 @@
         </router-link>
       </b-navbar-brand>
 
-     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
@@ -71,4 +71,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.navbar {
+  background-color: aqua;
+}
+</style>
