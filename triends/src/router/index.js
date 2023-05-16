@@ -27,6 +27,11 @@ const routes = [
     component: AttractionView,
   },
   {
+    path: "/reivewdetail",
+    name: "reviewdetail",
+    component: ReviewDetail,
+  },
+  {
     path: "/mypage",
     name: "mypage",
     component: MyPageView,
