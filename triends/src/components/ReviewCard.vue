@@ -12,7 +12,9 @@
       Some quick example text to build on the card title and make up the bulk of the card's content.
     </b-card-text>
 
-    <b-button href="#" variant="primary">Go somewhere</b-button>
+    <b-button href="#" variant="primary"
+      ><router-link to="/reviewdetail">Go somewhere</router-link></b-button
+    >
   </b-card>
 </template>
 

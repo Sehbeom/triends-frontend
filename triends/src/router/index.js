@@ -6,10 +6,16 @@ import MyPageView from "../views/MyPageView.vue";
 import MyplanView from "../views/MyPlanView.vue";
 import NoticeView from "../views/NoticeView.vue";
 import RecommandedAttractionView from "../views/RecommandedAttractionView.vue";
+import ReviewDetail from "../components/review/ReviewDetail.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/reviewdetail",
+    name: "reviewdetail",
+    component: ReviewDetail,
+  },
   {
     path: "/",
     name: "home",
