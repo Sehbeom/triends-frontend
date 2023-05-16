@@ -1,5 +1,5 @@
 <template>
-  <h3>attraction review view!</h3>
+  <h3>attraction review view!Fuck!!!</h3>
 </template>
 
 <script>
