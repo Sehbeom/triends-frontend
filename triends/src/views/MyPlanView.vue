@@ -1,5 +1,5 @@
 <template>
-  <h3>myplan view!</h3>
+  <h3>myplan view! testing testing</h3>
 </template>
 
 <script>
