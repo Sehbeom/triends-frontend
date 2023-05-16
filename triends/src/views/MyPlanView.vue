@@ -1,13 +1,11 @@
 <template>
-  <h3> myplan view! </h3>
+  <h3>myplan view!</h3>
 </template>
 
 <script>
 export default {
-    name: "MyPlanView",
-}
+  name: "MyPlanView",
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
