@@ -1,4 +1,4 @@
-# enjoytrip
+# triends
 
 ## Project setup
 ```
