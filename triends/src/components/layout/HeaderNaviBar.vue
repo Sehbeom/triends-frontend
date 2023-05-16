@@ -1,34 +1,25 @@
 <template>
-  <div>
+  <div class="header">
     <b-navbar toggleable="lg" variant="faded" type="light">
-      <b-navbar-brand href="#">
-        <router-link to="/">
-          <img
-            src="@/assets/ssafy_logo.png"
-            class="d-inline-block align-middle"
-            width="100px"
-            alt="ssafy"
-          />
-        </router-link>
-      </b-navbar-brand>
-
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item href="#"
             ><router-link :to="{ name: 'home' }" class="link"
-              ><b-icon icon="house" font-scale="1.5"></b-icon> 홈</router-link
-            ></b-nav-item
-          >
+              ><img
+                src="@/assets/ssafy_logo.png"
+                class="d-inline-block align-middle"
+                width="100px"
+                alt="ssafy" /></router-link
+          ></b-nav-item>
           <b-nav-item href="#"
             ><router-link :to="{ name: 'notice' }" class="link"
               ><b-icon icon="house-fill" font-scale="1.5"></b-icon> 공지사항</router-link
             ></b-nav-item
           >
           <b-nav-item href="#"
-            ><router-link :to="{ name: 'mypage' }" class="link"
-              ><b-icon icon="journal" font-scale="1.5"></b-icon> 마이페이지</router-link
+            ><router-link :to="{ name: 'home' }" class="link"
+              ><b-icon icon="instagram" font-scale="1.5"></b-icon> 플랜짜기</router-link
             ></b-nav-item
           >
           <b-nav-item href="#"
@@ -37,13 +28,17 @@
             ></b-nav-item
           >
           <b-nav-item href="#"
-            ><router-link :to="{ name: 'recommand' }" class="link"
-              ><b-icon icon="truck" font-scale="1.5"></b-icon> 여행지 추천</router-link
+            ><router-link :to="{ name: 'attraction' }" class="link"
+              ><b-icon icon="truck" font-scale="1.5"></b-icon> 여행지 리뷰</router-link
             ></b-nav-item
           >
-        </b-navbar-nav>
-
-        <b-navbar-nav class="ml-auto">
+          <b-nav-item href="#"
+            ><router-link :to="{ name: 'mypage' }" class="link"
+              ><b-icon icon="journal" font-scale="1.5"></b-icon> 마이페이지</router-link
+            ></b-nav-item
+          >
+          <!-- </b-navbar-nav>
+        <b-navbar-nav> -->
           <b-nav-item-dropdown right>
             <template #button-content>
               <b-icon icon="people" font-scale="2"></b-icon>
@@ -74,5 +69,10 @@ export default {
 <style>
 .navbar {
   background-color: aqua;
+}
+.navbar-nav {
+  width: 1200px;
+  flex-direction: row;
+  justify-content: space-around;
 }
 </style>
