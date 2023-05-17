@@ -1,13 +1,11 @@
 <template>
-  <h3> mypage! </h3>
+  <h3>mypage!</h3>
 </template>
 
 <script>
 export default {
-    name: "MyPageView",
-}
+  name: "MyPageView",
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
