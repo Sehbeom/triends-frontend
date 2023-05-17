@@ -18,7 +18,6 @@
 
 <script>
 import VueResizable from "vue-resizable";
-
 export default {
   name: "SideBar",
   components: {
@@ -28,6 +27,11 @@ export default {
     return {
       isVisibleSideBar: true,
     };
+  },
+  computed: {
+    isVisibleReviewList() {
+      return this.$store.state.isVisibleReviewList;
+    },
   },
   methods: {
     showSideBar() {
@@ -39,20 +43,8 @@ export default {
 
 <style lang="scss" scoped>
 .side-bar-wrapper {
-  position: fixed;
   display: flex;
-
-  > .resizable-side-bar {
-    > .side-bar {
-      background-color: rgba(0, 0, 0, 0.5);
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-  }
-
+  color: #fff;
   > .side-bar-active-btn {
     flex-shrink: 0;
     display: flex;
