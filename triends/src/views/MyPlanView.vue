@@ -1,10 +1,10 @@
 <template>
-  <div class="recommand-page">
+  <div class="myplan-page">
     <article-layout>
       <page-detail-header title="내 플랜" />
-      <div class="recommand-page-container">
+      <div class="myplan-page-container">
         <!-- 이 밑은 카드 컨테이너. 여행 리뷰 페이지의 카드들을 모아놓는 부분 -->
-        <b-container class="bv-example-row mb-3" style="width: 75%; min-width: 1000px">
+        <b-container class="bv-example-row mb-3" style="min-width: 1000px">
           <b-row cols="2">
             <b-col :key="item" v-for="item in items">
               <my-plan-card />
@@ -31,8 +31,8 @@ export default {
 </script>
 
 <style>
-.recommand-page-container {
-  margin-top: 5vw;
+.myplan-page-container {
+  margin-top: 50px;
   min-width: 1000px;
 }
 </style>

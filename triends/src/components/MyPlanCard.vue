@@ -5,16 +5,50 @@
       <span class="plan-title">title</span>
       <span class="plan-date">2022.01~2022.03</span>
       <div class="plan-button">
-        <b-button variant="success">Button</b-button>
-        <b-button variant="outline-primary">Button</b-button>
+        <span>누구누구 외 3명</span>
+        <b-button v-b-toggle.sidebar-backdrop>Toggle Sidebar</b-button>
       </div>
     </div>
+    <b-sidebar
+      id="sidebar-backdrop"
+      title="Sidebar with backdrop"
+      :backdrop-variant="variant"
+      backdrop
+      shadow
+    >
+      <div class="px-3 py-2">
+        <b-form-group label="Backdrop variant" label-for="backdrop-variant">
+          <b-form-select
+            id="backdrop-variant"
+            v-model="variant"
+            :options="variants"
+          ></b-form-select>
+        </b-form-group>
+      </div>
+    </b-sidebar>
   </div>
 </template>
 
 <script>
 export default {
   name: "MyPlanCard",
+  data() {
+    return {
+      variant: "dark",
+      variants: [
+        "transparent",
+        "white",
+        "light",
+        "dark",
+        "primary",
+        "secondary",
+        "success",
+        "danger",
+        "warning",
+        "info",
+      ],
+    };
+  },
 };
 </script>
 
@@ -25,9 +59,8 @@ export default {
   align-items: center;
   background-color: beige;
   width: 100%;
-  height: 95%;
+  height: 12vw;
   margin: 0.5vw;
-
   border-radius: 15px;
   min-width: 500px;
 }
