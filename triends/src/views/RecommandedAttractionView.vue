@@ -1,5 +1,7 @@
 <template>
-  <div class="recommand-page-container">
+  <!-- <div class="recommand-page-container"> -->
+  <article-layout>
+    <page-detail-header title="내 플랜" />
     <div class="button-container">
       <b-dropdown id="dropdown-1" text="정렬 기준" class="m-md-2" variant="primary">
         <b-dropdown-item>최신글</b-dropdown-item>
@@ -15,14 +17,16 @@
         </b-col>
       </b-row>
     </b-container>
-  </div>
+  </article-layout>
 </template>
 
 <script>
 import ReviewCard from "@/components/ReviewCard.vue";
+import PageDetailHeader from "@/components/layout/PageDetailHeader.vue";
+import ArticleLayout from "@/components/layout/ArticleLayout.vue";
 
 export default {
-  components: { ReviewCard },
+  components: { ReviewCard, PageDetailHeader, ArticleLayout },
   name: "RecommandedAttractionView",
   data: function () {
     return { items: [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2] };
