@@ -20,14 +20,11 @@
           <b-nav-item href="#"
             ><router-link :to="{ name: 'home' }" class="link"
               ><b-icon icon="instagram" font-scale="1.5"></b-icon> 플랜짜기</router-link
-<<<<<<< HEAD
             ></b-nav-item
           >
           <b-nav-item href="#"
             ><router-link :to="{ name: 'recommand' }" class="link"
               ><b-icon icon="instagram" font-scale="1.5"></b-icon> 여행지추천</router-link
-=======
->>>>>>> a8521b7eb8dbd97ce085d6370dc1908680e16826
             ></b-nav-item
           >
           <b-nav-item href="#"
