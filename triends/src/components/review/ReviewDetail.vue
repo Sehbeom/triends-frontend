@@ -1,62 +1,77 @@
 <template>
   <div class="review">
-    <div class="title">
-      <h1>여행 후기 제목</h1>
-    </div>
-    <div class="user">
-      <img src="../../assets/logo.png" />
-      <span>작성자</span>
-      <b-btn size="sm">친구추가</b-btn>
-    </div>
-    <hr />
-    <div>
-      <b-button v-b-toggle.sidebar>Toggle Sidebar</b-button>
-      <b-sidebar id="sidebar" title="일자별 여행지" shadow class="my-sidebar">
-        <div class="px-3 py-2">
-          <b-btn>1일차</b-btn>
-        </div>
-      </b-sidebar>
-    </div>
-    <div class="img-wrap" ref="target">
-      <button @click="moveScrollLeft">Left +100</button>
-      <ul>
-        <li><img src="../../assets/ssafy_logo.png" /></li>
-        <li><img src="../../assets/ssafy_logo.png" /></li>
-        <li><img src="../../assets/ssafy_logo.png" /></li>
-        <li><img src="../../assets/ssafy_logo.png" /></li>
-      </ul>
-    </div>
-    <br />
-    <div class="review-content">여행후기 내용이 들어갈 자리입니다~</div>
-    <div class="comment"></div>
+    <article-layout>
+      <page-detail-header title="리뷰 제목이 들어갈 자리입니다."></page-detail-header>
+      <div class="review-page-container">
+        <b-container style="width: 90%; min-width: 1000px">
+          <user-and-button username="사용자이름" />
+          <hr />
+          <div>
+            <b-button v-b-toggle.sidebar>날짜별 사진보기</b-button>
+            <b-sidebar id="sidebar" title="일자별 여행지" shadow class="my-sidebar">
+              <div class="px-3 py-2">
+                <b-btn>1일차</b-btn>
+              </div>
+            </b-sidebar>
+          </div>
+          <div class="img-wrap" ref="target">
+            <button class="left-paddle paddle" @click="scrollLeft">왼쪽</button>
+            <button class="right-paddle paddle" @click="scrollRight">오른쪽</button>
+            <ul class="menu" ref="menu">
+              <li><img src="../../assets/ssafy_logo.png" /></li>
+              <li><img src="../../assets/ssafy_logo.png" /></li>
+              <li><img src="../../assets/ssafy_logo.png" /></li>
+              <li><img src="../../assets/ssafy_logo.png" /></li>
+            </ul>
+          </div>
+          <div class="review-content">
+            여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이
+            들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~
+            여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이
+            들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈
+            자리입니다~여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~
+            여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이
+            들어갈 자리입니다~
+          </div>
+          <hr />
+          댓글
+          <div class="write-comment" @keyup="13">
+            <user-and-button username="로그인유저" />
+            <b-row class="comment-form">
+              <b-col sm="11">
+                <textarea
+                  class="form-control"
+                  id="write-comment-content"
+                  placeholder="댓글을 입력해주세요."
+                ></textarea>
+              </b-col>
+              <b-col sm="1">
+                <b-button class="form-btn">댓글 등록</b-button>
+              </b-col>
+            </b-row>
+          </div>
+          <div class="view-comment">
+            <ul>
+              <li><user-and-button username="댓글유저" />댓글내용</li>
+              <li><user-and-button username="댓글유저" />댓글내용</li>
+              <li><user-and-button username="댓글유저" />댓글내용</li>
+            </ul>
+          </div>
+        </b-container>
+      </div>
+    </article-layout>
   </div>
 </template>
 
 <style scoped lang="scss">
-.review {
-  width: 950px;
-  margin-left: 220px;
+.review-page-container {
+  margin-top: 5vw;
+  width: 1000px;
   text-align: left;
+  padding-left: 50px;
 }
 .title {
   text-align: left;
-  margin-top: 100px;
-}
-.title > h1 {
-  font-weight: bolder;
-}
-.user {
-  text-align: left;
-  margin-top: 40px;
-}
-.user > img {
-  height: 25px;
-  width: 25px;
-  margin-right: 5px;
-}
-.user > span {
-  font-weight: bolder;
-  margin-right: 20px;
 }
 ::v-deep {
   .b-sidebar {
@@ -70,8 +85,9 @@
   overflow-x: auto;
   white-space: nowrap;
 }
-.img-wrap > ul {
+ul {
   list-style: none;
+  padding-left: 0;
 }
 .img-wrap > ul > li {
   display: inline-block;
@@ -79,30 +95,61 @@
 li > img {
   width: 300px;
 }
-.img-wrap::-webkit-scrollbar {
-  width: 10px;
+.review-content {
+  // background-color: red;
 }
-.img-wrap::-webkit-scrollbar-thumb {
-  background-color: #2f3542;
-  border-radius: 10px;
-  background-clip: padding-box;
-  border: 2px solid transparent;
+.write-comment {
+  margin-bottom: 20px;
 }
-.img-wrap::-webkit-scrollbar-track {
-  background-color: grey;
-  border-radius: 10px;
-  box-shadow: inset 0px 0px 5px white;
+.view-comment > ul > li {
+  margin-bottom: 20px;
+}
+.form-control {
+  height: 5rem;
+  resize: none;
+  width: 102%;
+}
+.form-btn {
+  width: 100%;
+  height: 100%;
 }
 </style>
 
 <script>
+import PageDetailHeader from "@/components/layout/PageDetailHeader.vue";
+import ArticleLayout from "@/components/layout/ArticleLayout.vue";
+import UserAndButton from "../layout/UserAndButton.vue";
+
 export default {
-  components: {},
+  components: {
+    PageDetailHeader,
+    ArticleLayout,
+    UserAndButton,
+  },
+  data() {
+    return { scrollAmount: 0 };
+  },
   methods: {
-    moveScrollLeft() {
-      var _scrollX = this.$refs.target.scrollHeight;
-      this.$refs.target.scrollHeight = _scrollX + 100;
-      console.log(_scrollX);
+    scrollLeft: function () {
+      this.scrollLeft;
+      const menu = this.$refs.menu;
+      console.log(menu);
+      console.log(window);
+      window.scrollBy({
+        top: 200,
+        behavior: "smooth",
+      });
+      menu.scrollBy({
+        left: 200,
+        behavior: "smooth",
+      });
+    },
+    scrollRight: function () {
+      const menu = this.$refs.menu;
+      menu.scrollBy({
+        left: -200,
+        behavior: "smooth",
+      });
     },
   },
 };
