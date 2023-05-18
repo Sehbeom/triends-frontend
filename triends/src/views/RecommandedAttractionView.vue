@@ -41,10 +41,7 @@ export default {
   justify-content: space-between;
   margin-top: 7vw;
 }
-.m-md-2 {
-  position: relative;
-  top: 0;
-  right: 40vw;
-  background: none;
+.button-container {
+  text-align: left;
 }
 </style>
