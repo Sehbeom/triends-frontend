@@ -4,7 +4,6 @@ import HomeView from "../views/HomeView.vue";
 import AttractionView from "../views/AttractionReviewView.vue";
 import MyPageView from "../views/MyPageView.vue";
 import MyplanView from "../views/MyPlanView.vue";
-import NoticeView from "../views/NoticeView.vue";
 import RecommandedAttractionView from "../views/RecommandedAttractionView.vue";
 import ReviewDetail from "../components/review/ReviewDetail.vue";
 
@@ -44,7 +43,40 @@ const routes = [
   {
     path: "/notice",
     name: "notice",
-    component: NoticeView,
+    component: () => import(/* webpackChunkName: "notice" */ "@/views/NoticeView.vue"),
+    redirect: "/notice/list",
+    children: [
+      {
+        path: "list",
+        name: "noticeList",
+        component: () =>
+          import(/* webpackChunkName: "notice" */ "@/components/notice/NoticeList.vue"),
+      },
+      // {
+      //   path: "write",
+      //   name: "boardRegister",
+      //   component: () =>
+      //     import(/* webpackChunkName: "board" */ "@/components/board/BoardRegister.vue"),
+      // },
+      {
+        path: "detail/:articleno",
+        name: "noticeDetail",
+        component: () =>
+          import(/* webpackChunkName: "board" */ "@/components/notice/NoticeDetail.vue"),
+      },
+      // {
+      //   path: "modify/:articleno",
+      //   name: "boardModify",
+      //   component: () =>
+      //     import(/* webpackChunkName: "board" */ "@/components/board/BoardModify.vue"),
+      // },
+      // {
+      //   path: "delete/:articleno",
+      //   name: "boardDelete",
+      //   component: () =>
+      //     import(/* webpackChunkName: "board" */ "@/components/board/BoardDelete.vue"),
+      // },
+    ],
   },
   {
     path: "/recommand",

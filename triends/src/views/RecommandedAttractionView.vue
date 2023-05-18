@@ -1,7 +1,7 @@
 <template>
   <!-- <div class="recommand-page-container"> -->
   <article-layout>
-    <page-detail-header title="내 플랜" />
+    <page-detail-header title="여행지 추천" />
     <div class="button-container">
       <b-dropdown id="dropdown-1" text="정렬 기준" class="m-md-2" variant="primary">
         <b-dropdown-item>최신글</b-dropdown-item>
