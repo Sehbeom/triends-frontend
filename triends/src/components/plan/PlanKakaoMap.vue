@@ -43,8 +43,8 @@ export default {
 
 <style scoped>
 #map {
-  width: 80%;
-  height: 800px;
+  width: 100%;
+  height: 870px;
   float: right;
 }
 </style>
