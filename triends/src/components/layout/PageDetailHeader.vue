@@ -1,7 +1,6 @@
 <template>
   <div class="detail-header">
     {{ title }}
-    <hr />
   </div>
 </template>
 
