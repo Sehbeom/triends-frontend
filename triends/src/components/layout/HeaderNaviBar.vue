@@ -18,13 +18,13 @@
             ></b-nav-item
           >
           <b-nav-item href="#"
-            ><router-link :to="{ name: 'home' }" class="link"
-              ><b-icon icon="instagram" font-scale="1.5"></b-icon> 플랜짜기</router-link
+            ><router-link :to="{ name: 'recommand' }" class="link"
+              ><b-icon icon="instagram" font-scale="1.5"></b-icon> 여행지추천</router-link
             ></b-nav-item
           >
           <b-nav-item href="#"
-            ><router-link :to="{ name: 'recommand' }" class="link"
-              ><b-icon icon="instagram" font-scale="1.5"></b-icon> 여행지추천</router-link
+            ><router-link :to="{ name: 'plan' }" class="link"
+              ><b-icon icon="instagram" font-scale="1.5"></b-icon> 플랜짜기</router-link
             ></b-nav-item
           >
           <b-nav-item href="#"
@@ -33,7 +33,7 @@
             ></b-nav-item
           >
           <b-nav-item href="#"
-            ><router-link :to="{ name: 'attraction' }" class="link"
+            ><router-link :to="{ name: 'review' }" class="link"
               ><b-icon icon="truck" font-scale="1.5"></b-icon> 여행지 리뷰</router-link
             ></b-nav-item
           >

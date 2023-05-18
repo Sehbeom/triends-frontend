@@ -5,16 +5,12 @@ import AttractionView from "../views/AttractionReviewView.vue";
 import MyPageView from "../views/MyPageView.vue";
 import MyplanView from "../views/MyPlanView.vue";
 import RecommandedAttractionView from "../views/RecommandedAttractionView.vue";
-import ReviewDetail from "../components/review/ReviewDetail.vue";
+import MakePlanView from "../views/MakePlanView.vue";
+import AttractionReviewView from "../views/AttractionReviewView.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: "/reviewdetail",
-    name: "reviewdetail",
-    component: ReviewDetail,
-  },
   {
     path: "/",
     name: "home",
@@ -26,9 +22,24 @@ const routes = [
     component: AttractionView,
   },
   {
-    path: "/reivewdetail",
+    path: "/plan",
+    name: "plan",
+    component: MakePlanView,
+  },
+  {
+    path: "/reivew",
+    name: "review",
+    component: AttractionReviewView,
+  },
+  {
+    path: "review/regist",
+    name: "reviewregist",
+    component: () => import(/* webpackChunkName: "review" */"../components/review/ReviewWrite.vue"),
+  },
+  {
+    path: "detail",
     name: "reviewdetail",
-    component: ReviewDetail,
+    component: () => import(/* webpackChunkName: "review" */"../components/review/ReviewDetail.vue"),
   },
   {
     path: "/mypage",
