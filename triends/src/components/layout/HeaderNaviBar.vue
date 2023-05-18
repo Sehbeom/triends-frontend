@@ -73,7 +73,7 @@ export default {
 
 <style>
 .navbar {
-  background-color: aqua;
+  background-color: #f2f0eb;
 }
 .navbar-nav {
   width: 1200px;
