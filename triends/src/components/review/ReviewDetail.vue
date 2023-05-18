@@ -14,11 +14,14 @@
               </div>
             </b-sidebar>
           </div>
-          <div class="img-wrap" ref="target">
+          <div class="img-wrap">
             <!-- <button class="left-paddle paddle" @click="scrollLeft">왼쪽</button>
             <button class="right-paddle paddle" @click="scrollRight">오른쪽</button> -->
-            <div class="menu" v-for="image in images" :key="image" ref="menu">
-              <div class="menu-img"><img :src="image" /></div>
+            <div class="test" v-for="image in images" :key="image.index" ref="menu">
+              <img class="menu-img" :src="image.src" />
+              <b-button :v-b-modal="String(image.index)">Show Modal</b-button>
+              <div :id="String(image.index)">웩</div>
+              <b-modal :id="String(image.index)">Hello From My Modal!</b-modal>
             </div>
           </div>
           <div class="review-content">
@@ -74,14 +77,20 @@
   }
 }
 .img-wrap {
-  text-align: left;
   height: 250px;
   margin: 20px;
+  overflow:scroll;
+  white-space: nowrap;
 }
-.menu {
+.test {
   text-align: left;
   display: inline-block;
-  white-space: nowrap;
+}
+.menu-img{
+  height:200px;
+}
+.test::-webkit-scrollbar{
+  display: none;
 }
 .write-comment {
   margin-bottom: 20px;
@@ -115,14 +124,15 @@ export default {
     return {
       scrollAmount: 0,
       images: [
-        "/img/ssafy_logo.9aceab8b.png",
-        "/img/ssafy_logo.9aceab8b.png",
-        "/img/ssafy_logo.9aceab8b.png",
-        "/img/ssafy_logo.9aceab8b.png",
-        "/img/ssafy_logo.9aceab8b.png",
-        "/img/ssafy_logo.9aceab8b.png",
-        "/img/ssafy_logo.9aceab8b.png",
+        {index:1,src:"/img/ssafy_logo.9aceab8b.png"},
+        {index:2,src:"/img/ssafy_logo.9aceab8b.png"},
+        {index:3,src:"/img/ssafy_logo.9aceab8b.png"},
+        {index:4,src:"/img/ssafy_logo.9aceab8b.png"},
+        {index:5,src:"/img/ssafy_logo.9aceab8b.png"},
+        {index:6,src:"/img/ssafy_logo.9aceab8b.png"},
+        {index:7,src:"/img/ssafy_logo.9aceab8b.png"},
       ],
+      isModalViewed:false,
     };
   },
   methods: {
