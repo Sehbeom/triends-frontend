@@ -1,0 +1,69 @@
+<template>
+  <div>
+    <page-detail-header title="공지사항" />
+    <b-list-group>
+      <b-list-group-item
+        :key="article.articleno"
+        href="#some-link"
+        v-for="article in articles"
+        style="text-align: left"
+        @click="viewNotice(article)"
+        >공지사항: {{ article.title }}</b-list-group-item
+      >
+    </b-list-group>
+  </div>
+</template>
+
+<script>
+import PageDetailHeader from "@/components/layout/PageDetailHeader.vue";
+
+export default {
+  components: { PageDetailHeader },
+  name: "NoticeList",
+  data() {
+    return {
+      articles: [
+        {
+          articleno: 1,
+          title: "1번 글",
+        },
+        {
+          articleno: 2,
+          title: "2번 글",
+        },
+        {
+          articleno: 3,
+          title: "3번 글",
+        },
+        {
+          articleno: 4,
+          title: "4번 글",
+        },
+        {
+          articleno: 5,
+          title: "5번 글",
+        },
+        {
+          articleno: 6,
+          title: "6번 글",
+        },
+        {
+          articleno: 7,
+          title: "7번 글",
+        },
+      ],
+    };
+  },
+  methods: {
+    viewNotice(article) {
+      //   console.log(article.articleno);
+      this.$router.push({
+        name: "noticeDetail",
+        params: { articleno: article.articleno },
+      });
+    },
+  },
+};
+</script>
+
+<style></style>

@@ -1,5 +1,7 @@
 <template>
-  <div class="detail-header">{{ title }}</div>
+  <div class="detail-header">
+    {{ title }}
+  </div>
 </template>
 
 <script>

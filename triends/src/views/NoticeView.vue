@@ -1,13 +1,18 @@
 <template>
-  <h3> notice view! </h3>
+  <div>
+    <article-layout>
+      <router-view />
+    </article-layout>
+  </div>
 </template>
 
 <script>
+import ArticleLayout from "@/components/layout/ArticleLayout.vue";
+
 export default {
-    name: "NoticeView",
-}
+  components: { ArticleLayout },
+  name: "NoticeView",
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

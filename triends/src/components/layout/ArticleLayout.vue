@@ -20,6 +20,6 @@ export default {
 }
 .article {
   width: 75%;
-  margin-top: 5vw;
+  margin-top: 75px;
 }
 </style>
