@@ -26,7 +26,7 @@
         <div class="img-wrap">
           <b-row>
             <b-col v-for="attraction in attractions" :key="attraction.id">
-              <review-card />
+              <attraction-review-card />
             </b-col>
           </b-row>
         </div>
@@ -46,12 +46,13 @@
 </template>
 
 <script>
+import AttractionReviewCard from "../AttractionReviewCard.vue";
 import ArticleLayout from "../layout/ArticleLayout.vue";
-import ReviewCard from "../ReviewCard.vue";
+
 export default {
   components: {
     ArticleLayout,
-    ReviewCard,
+    AttractionReviewCard,
   },
   data() {
     return {
