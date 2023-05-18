@@ -66,9 +66,7 @@
 <style scoped lang="scss">
 .review-page-container {
   margin-top: 5vw;
-  width: 1000px;
   text-align: left;
-  padding-left: 50px;
 }
 .title {
   text-align: left;
@@ -94,9 +92,6 @@ ul {
 }
 li > img {
   width: 300px;
-}
-.review-content {
-  // background-color: red;
 }
 .write-comment {
   margin-bottom: 20px;

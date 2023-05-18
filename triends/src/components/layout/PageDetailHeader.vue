@@ -16,6 +16,5 @@ export default {
   text-align: left;
   font-size: 3rem;
   font-weight: bold;
-  background-color: pink;
 }
 </style>
