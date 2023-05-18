@@ -15,14 +15,11 @@
             </b-sidebar>
           </div>
           <div class="img-wrap" ref="target">
-            <button class="left-paddle paddle" @click="scrollLeft">왼쪽</button>
-            <button class="right-paddle paddle" @click="scrollRight">오른쪽</button>
-            <ul class="menu" ref="menu">
-              <li><img src="../../assets/ssafy_logo.png" /></li>
-              <li><img src="../../assets/ssafy_logo.png" /></li>
-              <li><img src="../../assets/ssafy_logo.png" /></li>
-              <li><img src="../../assets/ssafy_logo.png" /></li>
-            </ul>
+            <!-- <button class="left-paddle paddle" @click="scrollLeft">왼쪽</button>
+            <button class="right-paddle paddle" @click="scrollRight">오른쪽</button> -->
+            <div class="menu" v-for="image in images" :key="image" ref="menu">
+              <div class="menu-img"><img :src="image" /></div>
+            </div>
           </div>
           <div class="review-content">
             여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이
@@ -80,18 +77,11 @@
   text-align: left;
   height: 250px;
   margin: 20px;
-  overflow-x: auto;
-  white-space: nowrap;
 }
-ul {
-  list-style: none;
-  padding-left: 0;
-}
-.img-wrap > ul > li {
+.menu {
+  text-align: left;
   display: inline-block;
-}
-li > img {
-  width: 300px;
+  white-space: nowrap;
 }
 .write-comment {
   margin-bottom: 20px;
@@ -122,7 +112,18 @@ export default {
     UserAndButton,
   },
   data() {
-    return { scrollAmount: 0 };
+    return {
+      scrollAmount: 0,
+      images: [
+        "/img/ssafy_logo.9aceab8b.png",
+        "/img/ssafy_logo.9aceab8b.png",
+        "/img/ssafy_logo.9aceab8b.png",
+        "/img/ssafy_logo.9aceab8b.png",
+        "/img/ssafy_logo.9aceab8b.png",
+        "/img/ssafy_logo.9aceab8b.png",
+        "/img/ssafy_logo.9aceab8b.png",
+      ],
+    };
   },
   methods: {
     scrollLeft: function () {
