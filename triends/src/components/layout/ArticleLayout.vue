@@ -19,7 +19,7 @@ export default {
   min-width: 1000px;
 }
 .article {
-  width: 75%;
-  margin-top: 5vw;
+  width: 55%;
+  margin-top: 75px;
 }
 </style>

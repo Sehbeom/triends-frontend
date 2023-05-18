@@ -4,7 +4,6 @@
     <b-list-group>
       <b-list-group-item
         :key="article.articleno"
-        href="#some-link"
         v-for="article in articles"
         style="text-align: left"
         @click="viewNotice(article)"
@@ -57,10 +56,14 @@ export default {
   methods: {
     viewNotice(article) {
       //   console.log(article.articleno);
-      this.$router.push({
-        name: "noticeDetail",
-        params: { articleno: article.articleno },
-      });
+      this.$router
+        .push({
+          name: "noticeDetail",
+          params: { articleno: article.articleno },
+        })
+        .catch(() => {
+          console.log("uncaught error");
+        });
     },
   },
 };
