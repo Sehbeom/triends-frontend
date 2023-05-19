@@ -32,7 +32,7 @@ const routes = [
     component: AttractionReviewView,
   },
   {
-    path: "review/regist",
+    path: "regist",
     name: "reviewregist",
     component: () =>
       import(/* webpackChunkName: "review" */ "../components/review/ReviewWrite.vue"),
