@@ -71,7 +71,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
 .navbar {
   background-color: #f2f0eb;
 }
@@ -79,5 +79,10 @@ export default {
   width: 1200px;
   flex-direction: row;
   justify-content: space-around;
+}
+::v-deep {
+  .navbar-collapse {
+    justify-content: center;
+  }
 }
 </style>
