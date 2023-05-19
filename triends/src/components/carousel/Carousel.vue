@@ -9,6 +9,7 @@
         >
           <div class="card-carousel--card" v-for="item in items.items" :key="item.id">
             <attraction-recommand-card :item="item" v-if="items.type === 'attractionCarousel'" />
+            <dimmed-image-card v-if="items.type === 'dimmedImageCarousel'" :image="item" />
           </div>
         </div>
       </div>
@@ -19,10 +20,11 @@
 
 <script>
 import AttractionRecommandCard from "../AttractionRecommandCard.vue";
+import DimmedImageCard from "../DimmedImageCard.vue";
 
 export default {
   name: "CarouselContainer",
-  components: { AttractionRecommandCard },
+  components: { AttractionRecommandCard, DimmedImageCard },
   props: { items: {} },
   data() {
     return {

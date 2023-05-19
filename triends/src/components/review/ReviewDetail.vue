@@ -14,7 +14,7 @@
               </div>
             </b-sidebar>
           </div>
-          <div class="row align-items-center">
+          <!-- <div class="row align-items-center">
             <div class="col-1">
               <button class="button-container-left" @click="scrollLeft">←</button>
             </div>
@@ -28,7 +28,8 @@
             <div class="col-1">
               <button class="button-container-right" @click="scrollRight">→</button>
             </div>
-          </div>
+          </div> -->
+          <carousel-container :items="items" />
           <div class="review-content">
             여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이
             들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~
@@ -72,27 +73,32 @@
 import PageDetailHeader from "@/components/layout/PageDetailHeader.vue";
 import ArticleLayout from "@/components/layout/ArticleLayout.vue";
 import UserAndButton from "../layout/UserAndButton.vue";
-import DimmedImageCard from "../DimmedImageCard.vue";
+// import DimmedImageCard from "../DimmedImageCard.vue";
+import CarouselContainer from "../carousel/Carousel.vue";
 
 export default {
   components: {
     PageDetailHeader,
     ArticleLayout,
     UserAndButton,
-    DimmedImageCard,
+    // DimmedImageCard,
+    CarouselContainer,
   },
   data() {
     return {
       scrollAmount: 0,
-      images: [
-        { index: 1, src: "/img/ssafy_logo.9aceab8b.png" },
-        { index: 2, src: "/img/ssafy_logo.9aceab8b.png" },
-        { index: 3, src: "/img/ssafy_logo.9aceab8b.png" },
-        { index: 4, src: "/img/ssafy_logo.9aceab8b.png" },
-        { index: 5, src: "/img/ssafy_logo.9aceab8b.png" },
-        { index: 6, src: "/img/ssafy_logo.9aceab8b.png" },
-        { index: 7, src: "/img/ssafy_logo.9aceab8b.png" },
-      ],
+      items: {
+        type: "dimmedImageCarousel",
+        items: [
+          { index: 1, src: "/img/ssafy_logo.9aceab8b.png" },
+          { index: 2, src: "/img/ssafy_logo.9aceab8b.png" },
+          { index: 3, src: "/img/ssafy_logo.9aceab8b.png" },
+          { index: 4, src: "/img/ssafy_logo.9aceab8b.png" },
+          { index: 5, src: "/img/ssafy_logo.9aceab8b.png" },
+          { index: 6, src: "/img/ssafy_logo.9aceab8b.png" },
+          { index: 7, src: "/img/ssafy_logo.9aceab8b.png" },
+        ],
+      },
       comments: [{}],
       // isModalViewed: false,
     };
