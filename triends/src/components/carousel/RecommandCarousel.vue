@@ -8,20 +8,13 @@
         <b-dropdown-item>조회수</b-dropdown-item>
       </b-dropdown>
     </div>
-    <!-- 이 밑은 카드 컨테이너. 여행 리뷰 페이지의 카드들을 모아놓는 부분 -->
-    <b-container class="bv-example-row mb-3">
-      <b-row cols="3">
-        <b-col :key="item.id" v-for="item in items">
-          <attraction-recommand-card :item="item" />
-        </b-col>
-      </b-row>
-    </b-container>
+    <carousel-container :items="items" />
   </div>
 </template>
 
 <script>
 import PageDetailHeader from "@/components/layout/PageDetailHeader.vue";
-import AttractionRecommandCard from "@/components/AttractionRecommandCard.vue";
+import CarouselContainer from "./Carousel.vue";
 
 export default {
   props: {
@@ -30,35 +23,62 @@ export default {
   data() {
     // 이곳은 api 연동 후 사라질 데이터입니다
     return {
-      items: [
-        {
-          id: 1,
-          title: "attraction1",
-          content: "test card content. wanna go home",
-          count: 4,
-        },
-        {
-          id: 2,
-          title: "attraction2",
-          content: "test card content. wanna go home",
-          count: 2,
-        },
-        {
-          id: 3,
-          title: "attraction3",
-          content: "test card content. wanna go home",
-          count: 3,
-        },
-        {
-          id: 4,
-          title: "attraction4",
-          content: "test card content. wanna go home",
-          count: 4,
-        },
-      ],
+      items: {
+        type: "attractionCarousel",
+        items: [
+          {
+            id: 1,
+            title: "attraction1",
+            content: "test card content. wanna go home",
+            count: 4,
+          },
+          {
+            id: 2,
+            title: "attraction2",
+            content: "test card content. wanna go home",
+            count: 2,
+          },
+          {
+            id: 3,
+            title: "attraction3",
+            content: "test card content. wanna go home",
+            count: 3,
+          },
+          {
+            id: 4,
+            title: "attraction4",
+            content: "test card content. wanna go home",
+            count: 4,
+          },
+          {
+            id: 1,
+            title: "attraction1",
+            content: "test card content. wanna go home",
+            count: 4,
+          },
+          {
+            id: 2,
+            title: "attraction2",
+            content: "test card content. wanna go home",
+            count: 2,
+          },
+          {
+            id: 3,
+            title: "attraction3",
+            content: "test card content. wanna go home",
+            count: 3,
+          },
+          {
+            id: 4,
+            title: "attraction4",
+            content: "test card content. wanna go home",
+            count: 4,
+          },
+        ],
+      },
     };
   },
-  components: { AttractionRecommandCard, PageDetailHeader },
+  components: { PageDetailHeader, CarouselContainer },
   name: "RecommandCarousel",
 };
 </script>
