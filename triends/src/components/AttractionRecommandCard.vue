@@ -31,5 +31,6 @@ export default {
 <style scoped>
 .mb-2 {
   margin-top: 1vw;
+  width: 600px;
 }
 </style>
