@@ -17,67 +17,80 @@
           <b-form-select
             class="review-plan-select"
             id="review-plan"
-            v-model="form.plans"
+            v-model="form.planselected"
             :options="plans"
           />
         </b-form-group>
 
         <!-- 플랜 선택시 관광지 카드 보이기 -->
-        <div class="img-wrap">
-          <b-row>
-            <b-col v-for="attraction in attractions" :key="attraction.id">
-              <attraction-review-card />
-            </b-col>
-          </b-row>
-        </div>
+        <div class="filled-wrap" v-if="form.planselected"><recommand-carousel /></div>
+        <div class="blank-wrap" v-else>플랜을 선택해주세요.</div>
 
         <b-form-group class="input-form" label-for="review-plan">
           <h5>여행은 어땠나요?</h5>
           <b-form-textarea
             id="textarea"
-            v-model="text"
+            v-model="form.content"
             placeholder="리뷰 내용을 작성해주세요"
             rows="15"
           ></b-form-textarea>
         </b-form-group>
+        <b-button type="submit" variant="primary">작성완료</b-button>
+        <b-button type="reset" variant="danger">작성취소</b-button>
+        <b-button router-link :to="{ name: 'review' }">목록으로</b-button>
       </b-form>
     </div>
   </article-layout>
 </template>
 
 <script>
-import AttractionReviewCard from "../AttractionReviewCard.vue";
 import ArticleLayout from "../layout/ArticleLayout.vue";
+import RecommandCarousel from "@/components/carousel/RecommandCarousel.vue";
 
 export default {
   components: {
     ArticleLayout,
-    AttractionReviewCard,
+    RecommandCarousel,
   },
   data() {
     return {
       form: {
         title: "",
-        plans: null,
+        planselected: null,
+        content: "",
       },
-      attractions: [
-        { id: "1", title: "관광지1" },
-        { id: "2", title: "관광지2" },
-        { id: "3", title: "관광지3" },
-        { id: "4", title: "관광지4" },
-        { id: "4", title: "관광지5" },
-        { id: "4", title: "관광지6" },
-        { id: "4", title: "관광지7" },
-        { id: "4", title: "관광지8" },
-        { id: "4", title: "관광지9" },
-        { id: "4", title: "관광지10" },
-      ],
       plans: [
         { text: "플랜을 선택해주세요.", value: null },
-        "강릉여행",
-        "제주도여행",
-        "부산여행",
-        "여수여행",
+        { text: "강릉여행", value: "a" },
+        { text: "제주도여행", value: "b" },
+        { text: "부산여행", value: "c" },
+        { text: "여수여행", value: "d" },
+      ],
+      items: [
+        {
+          id: 1,
+          title: "attraction1",
+          content: "test card content. wanna go home",
+          count: 4,
+        },
+        {
+          id: 2,
+          title: "attraction2",
+          content: "test card content. wanna go home",
+          count: 2,
+        },
+        {
+          id: 3,
+          title: "attraction3",
+          content: "test card content. wanna go home",
+          count: 3,
+        },
+        {
+          id: 4,
+          title: "attraction4",
+          content: "test card content. wanna go home",
+          count: 4,
+        },
       ],
     };
   },
@@ -101,7 +114,6 @@ export default {
 <style scoped>
 .input-form {
   text-align: left;
-  background-color: red;
   width: 100%;
   margin-bottom: 40px;
   font-weight: bolder;
@@ -111,6 +123,7 @@ export default {
   height: 40px;
   border-radius: 8px;
   color: rgb(108, 117, 125);
+  border-style: rgb(108, 117, 125);
 }
 .img-wrap {
   text-align: left;

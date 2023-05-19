@@ -14,11 +14,19 @@
               </div>
             </b-sidebar>
           </div>
-          <div class="img-wrap" ref="target">
-            <!-- <button class="left-paddle paddle" @click="scrollLeft">왼쪽</button>
-            <button class="right-paddle paddle" @click="scrollRight">오른쪽</button> -->
-            <div class="menu" v-for="image in images" :key="image" ref="menu">
-              <div class="menu-img"><img :src="image" /></div>
+          <div class="row align-items-center">
+            <div class="col-1">
+              <button class="button-container-left" @click="scrollLeft">←</button>
+            </div>
+            <div class="col-10">
+              <div class="scroll-container" ref="scrollContent">
+                <div class="scroll-content" v-for="image in images" :key="image.index">
+                  <dimmed-image-card :image="image" />
+                </div>
+              </div>
+            </div>
+            <div class="col-1">
+              <button class="button-container-right" @click="scrollRight">→</button>
             </div>
           </div>
           <div class="review-content">
@@ -60,6 +68,59 @@
   </div>
 </template>
 
+<script>
+import PageDetailHeader from "@/components/layout/PageDetailHeader.vue";
+import ArticleLayout from "@/components/layout/ArticleLayout.vue";
+import UserAndButton from "../layout/UserAndButton.vue";
+import DimmedImageCard from "../DimmedImageCard.vue";
+
+export default {
+  components: {
+    PageDetailHeader,
+    ArticleLayout,
+    UserAndButton,
+    DimmedImageCard,
+  },
+  data() {
+    return {
+      scrollAmount: 0,
+      images: [
+        { index: 1, src: "/img/ssafy_logo.9aceab8b.png" },
+        { index: 2, src: "/img/ssafy_logo.9aceab8b.png" },
+        { index: 3, src: "/img/ssafy_logo.9aceab8b.png" },
+        { index: 4, src: "/img/ssafy_logo.9aceab8b.png" },
+        { index: 5, src: "/img/ssafy_logo.9aceab8b.png" },
+        { index: 6, src: "/img/ssafy_logo.9aceab8b.png" },
+        { index: 7, src: "/img/ssafy_logo.9aceab8b.png" },
+      ],
+      comments: [{}],
+      // isModalViewed: false,
+    };
+  },
+  methods: {
+    scrollLeft() {
+      const scrollContent = this.$refs.scrollContent;
+      scrollContent.scrollLeft -= 200; // 좌측으로 스크롤할 픽셀 수 조정
+      console.log(scrollContent);
+    },
+    scrollRight() {
+      const scrollContent = this.$refs.scrollContent;
+      console.log(scrollContent);
+      scrollContent.scrollLeft += 200; // 우측으로 스크롤할 픽셀 수 조정
+      console.log(scrollContent);
+    },
+    bringLeftToTop() {
+      const scrollContainer = this.$el.querySelector(".scroll-container");
+      const leftButton = this.$el.querySelector(".scroll-button.left");
+      scrollContainer.prepend(leftButton);
+    },
+  },
+  mounted() {
+    this.bringLeftToTop();
+  },
+};
+</script>
+
 <style scoped lang="scss">
 .review-page-container {
   margin-top: 5vw;
@@ -74,14 +135,50 @@
   }
 }
 .img-wrap {
-  text-align: left;
   height: 250px;
   margin: 20px;
+  overflow: scroll;
+  white-space: nowrap;
 }
-.menu {
+.test {
   text-align: left;
   display: inline-block;
+}
+.scroll-container {
+  position: relative;
+  overflow-x: scroll;
   white-space: nowrap;
+}
+.scroll-content {
+  display: inline-block;
+}
+.button-container-left {
+  left: 10px;
+}
+.button-container-right {
+  right: 10px;
+}
+.button {
+  background-color: #ddd;
+  color: #333;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+.left {
+  position: fixed;
+  left: 10px;
+  z-index: 3;
+  scroll-behavior: smooth;
+}
+.right {
+  position: fixed;
+  right: 10px;
+  z-index: 3;
+  scroll-behavior: smooth;
+}
+.test::-webkit-scrollbar {
+  display: none;
 }
 .write-comment {
   margin-bottom: 20px;
@@ -99,54 +196,3 @@
   height: 100%;
 }
 </style>
-
-<script>
-import PageDetailHeader from "@/components/layout/PageDetailHeader.vue";
-import ArticleLayout from "@/components/layout/ArticleLayout.vue";
-import UserAndButton from "../layout/UserAndButton.vue";
-
-export default {
-  components: {
-    PageDetailHeader,
-    ArticleLayout,
-    UserAndButton,
-  },
-  data() {
-    return {
-      scrollAmount: 0,
-      images: [
-        "/img/ssafy_logo.9aceab8b.png",
-        "/img/ssafy_logo.9aceab8b.png",
-        "/img/ssafy_logo.9aceab8b.png",
-        "/img/ssafy_logo.9aceab8b.png",
-        "/img/ssafy_logo.9aceab8b.png",
-        "/img/ssafy_logo.9aceab8b.png",
-        "/img/ssafy_logo.9aceab8b.png",
-      ],
-    };
-  },
-  methods: {
-    scrollLeft: function () {
-      this.scrollLeft;
-      const menu = this.$refs.menu;
-      console.log(menu);
-      console.log(window);
-      window.scrollBy({
-        top: 200,
-        behavior: "smooth",
-      });
-      menu.scrollBy({
-        left: 200,
-        behavior: "smooth",
-      });
-    },
-    scrollRight: function () {
-      const menu = this.$refs.menu;
-      menu.scrollBy({
-        left: -200,
-        behavior: "smooth",
-      });
-    },
-  },
-};
-</script>
