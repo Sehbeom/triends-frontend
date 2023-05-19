@@ -31,7 +31,7 @@ export default {
 .image-container > img {
   position: relative;
   display: inline-block;
-  height: 200px;
+  width: 320px;
 }
 
 .modal-button {
