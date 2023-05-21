@@ -1,43 +1,37 @@
 <template>
   <div class="review">
     <article-layout>
-      <page-detail-header title="리뷰 제목이 들어갈 자리입니다."></page-detail-header>
+      <page-detail-header
+        title="리뷰 제목이 들어갈 자리입니다."
+      ></page-detail-header>
       <div class="review-page-container">
         <b-container style="width: 90%; min-width: 1000px">
           <user-and-button username="사용자이름" />
           <hr />
           <div>
             <b-button v-b-toggle.sidebar>날짜별 사진보기</b-button>
-            <b-sidebar id="sidebar" title="일자별 여행지" shadow class="my-sidebar">
+            <b-sidebar
+              id="sidebar"
+              title="일자별 여행지"
+              shadow
+              class="my-sidebar"
+            >
               <div class="px-3 py-2">
                 <b-btn>1일차</b-btn>
               </div>
             </b-sidebar>
           </div>
-          <!-- <div class="row align-items-center">
-            <div class="col-1">
-              <button class="button-container-left" @click="scrollLeft">←</button>
-            </div>
-            <div class="col-10">
-              <div class="scroll-container" ref="scrollContent">
-                <div class="scroll-content" v-for="image in images" :key="image.index">
-                  <dimmed-image-card :image="image" />
-                </div>
-              </div>
-            </div>
-            <div class="col-1">
-              <button class="button-container-right" @click="scrollRight">→</button>
-            </div>
-          </div> -->
-          <carousel-container :items="items" />
+          <custom-carousel :items="items" />
           <div class="review-content">
-            여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이
-            들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~
-            여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이
-            들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈
-            자리입니다~여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~
-            여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이
-            들어갈 자리입니다~
+            여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈
+            자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이
+            들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기
+            내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~
+            여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈
+            자리입니다~ 여행후기 내용이 들어갈 자리입니다~여행후기 내용이 들어갈
+            자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이
+            들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기
+            내용이 들어갈 자리입니다~
           </div>
           <hr />
           댓글
@@ -74,7 +68,7 @@ import PageDetailHeader from "@/components/layout/PageDetailHeader.vue";
 import ArticleLayout from "@/components/layout/ArticleLayout.vue";
 import UserAndButton from "../layout/UserAndButton.vue";
 // import DimmedImageCard from "../DimmedImageCard.vue";
-import CarouselContainer from "../carousel/Carousel.vue";
+import CustomCarousel from "../carousel/CustomCarousel.vue";
 
 export default {
   components: {
@@ -82,15 +76,16 @@ export default {
     ArticleLayout,
     UserAndButton,
     // DimmedImageCard,
-    CarouselContainer,
+    CustomCarousel,
   },
   data() {
     return {
       scrollAmount: 0,
       items: {
         type: "dimmedImageCarousel",
+        auto: "false",
         items: [
-          { index: 1, src: "/img/ssafy_logo.9aceab8b.png" },
+          { index: 1, src: "./mainpage.png" },
           { index: 2, src: "/img/ssafy_logo.9aceab8b.png" },
           { index: 3, src: "/img/ssafy_logo.9aceab8b.png" },
           { index: 4, src: "/img/ssafy_logo.9aceab8b.png" },
