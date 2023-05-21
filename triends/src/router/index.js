@@ -30,18 +30,27 @@ const routes = [
     path: "/reivew",
     name: "review",
     component: AttractionReviewView,
+    redirect: "/review/list",
+    children:[
+      {
+        path: "list",
+        name: "reviewList",
+        component: () =>
+          import(/* webpackChunkName: "review" */ "@/components/review/ReviewList.vue"),
+      },
+      {
+        path: "detail/:aritlceno",
+        name: "reviewDetail",
+        component: () =>
+          import(/* webpackChunkName: "review" */ "@/components/review/ReviewDetail.vue"),
+      },
+    ],
   },
   {
     path: "regist",
     name: "reviewregist",
     component: () =>
-      import(/* webpackChunkName: "review" */ "../components/review/ReviewWrite.vue"),
-  },
-  {
-    path: "detail",
-    name: "reviewdetail",
-    component: () =>
-      import(/* webpackChunkName: "review" */ "../components/review/ReviewDetail.vue"),
+      import(/* webpackChunkName: "review" */ "@/components/review/ReviewWrite.vue"),
   },
   {
     path: "/mypage",

@@ -14,30 +14,9 @@
               </div>
             </b-sidebar>
           </div>
-          <!-- <div class="row align-items-center">
-            <div class="col-1">
-              <button class="button-container-left" @click="scrollLeft">←</button>
-            </div>
-            <div class="col-10">
-              <div class="scroll-container" ref="scrollContent">
-                <div class="scroll-content" v-for="image in images" :key="image.index">
-                  <dimmed-image-card :image="image" />
-                </div>
-              </div>
-            </div>
-            <div class="col-1">
-              <button class="button-container-right" @click="scrollRight">→</button>
-            </div>
-          </div> -->
           <carousel-container :items="items" />
           <div class="review-content">
-            여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이
-            들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~
-            여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이
-            들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈
-            자리입니다~여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~
-            여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이 들어갈 자리입니다~ 여행후기 내용이
-            들어갈 자리입니다~
+            {{review.content}}
           </div>
           <hr />
           댓글
@@ -73,20 +52,23 @@
 import PageDetailHeader from "@/components/layout/PageDetailHeader.vue";
 import ArticleLayout from "@/components/layout/ArticleLayout.vue";
 import UserAndButton from "../layout/UserAndButton.vue";
-// import DimmedImageCard from "../DimmedImageCard.vue";
 import CarouselContainer from "../carousel/Carousel.vue";
+import http from "@/util/http-common";
 
 export default {
+  name: "ReviewDetail",
+  props:{
+    review:Object,
+  },
   components: {
     PageDetailHeader,
     ArticleLayout,
     UserAndButton,
-    // DimmedImageCard,
     CarouselContainer,
   },
   data() {
     return {
-      scrollAmount: 0,
+      article:{},
       items: {
         type: "dimmedImageCarousel",
         items: [
@@ -100,30 +82,16 @@ export default {
         ],
       },
       comments: [{}],
-      // isModalViewed: false,
     };
   },
-  methods: {
-    scrollLeft() {
-      const scrollContent = this.$refs.scrollContent;
-      scrollContent.scrollLeft -= 200; // 좌측으로 스크롤할 픽셀 수 조정
-      console.log(scrollContent);
-    },
-    scrollRight() {
-      const scrollContent = this.$refs.scrollContent;
-      console.log(scrollContent);
-      scrollContent.scrollLeft += 200; // 우측으로 스크롤할 픽셀 수 조정
-      console.log(scrollContent);
-    },
-    bringLeftToTop() {
-      const scrollContainer = this.$el.querySelector(".scroll-container");
-      const leftButton = this.$el.querySelector(".scroll-button.left");
-      scrollContainer.prepend(leftButton);
-    },
-  },
-  mounted() {
-    this.bringLeftToTop();
-  },
+  created(){
+    this.articleno=this.$route.params.articleno;
+    let getreview='review/'+this.articleno;
+    console.log(getreview);
+    http.get(getreview).then(({data})=>{
+      this.article=data.data;
+    })
+  }
 };
 </script>
 
