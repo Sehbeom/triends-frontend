@@ -7,13 +7,18 @@
         <hr />
         <div>
           <b-button v-b-toggle.sidebar>날짜별 사진보기</b-button>
-          <b-sidebar id="sidebar" title="일자별 여행지" shadow class="my-sidebar">
+          <b-sidebar
+            id="sidebar"
+            title="일자별 여행지"
+            shadow
+            class="my-sidebar"
+          >
             <div class="px-3 py-2">
               <b-btn>1일차</b-btn>
             </div>
           </b-sidebar>
         </div>
-        <carousel-container :items="items" />
+        <custom-carousel :items="items" />
         <div class="review-content">
           {{ article.content }}
         </div>
@@ -49,15 +54,15 @@
 <script>
 import PageDetailHeader from "@/components/layout/PageDetailHeader.vue";
 import UserAndButton from "../layout/UserAndButton.vue";
-import CarouselContainer from "../carousel/Carousel.vue";
 import http from "@/util/http-common";
+import CustomCarousel from "../carousel/CustomCarousel.vue";
 
 export default {
   name: "ReviewDetail",
   components: {
     PageDetailHeader,
     UserAndButton,
-    CarouselContainer,
+    CustomCarousel,
   },
   data() {
     return {
