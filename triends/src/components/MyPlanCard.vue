@@ -1,11 +1,13 @@
 <template>
   <div class="plan-container">
     <div class="image-container">
-      <img :src="item.img" alt="" class="plan-img" />
+      <img :src="item.thumbnail" alt="" class="plan-img" />
     </div>
     <div class="plan-data">
-      <span class="plan-title">{{ item.title }}</span>
-      <span class="plan-date">2022.01~2022.03</span>
+      <div class="plan-header">
+        <span class="plan-title">{{ item.title }}</span>
+        <span class="plan-date">2022.01~2022.03</span>
+      </div>
       <div class="plan-button">
         <span>누구누구 외 3명</span>
         <b-button v-b-toggle.sidebar-backdrop>Toggle Sidebar</b-button>
@@ -29,35 +31,52 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  height: 20vw;
-  margin: 0.5vw;
+  width: 90%;
+  height: 15vw;
+  margin-bottom: 30px;
   border-radius: 15px;
   min-width: 500px;
+  min-height: 300px;
 }
 .plan-img {
   object-fit: cover;
   height: 100%;
   width: 100%;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
+
 .image-container {
-  width: 40%;
+  width: 45%;
   height: 100%;
+}
+.plan-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .plan-data {
   display: flex;
+  text-align: left;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   margin-left: 10px;
-  width: 70%;
+  padding: 10px 10px 10px 10px;
+  width: 55%;
   height: 100%;
   background-color: tomato;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border: solid 3px;
 }
 .plan-title {
-  text-align: left;
+  width: 100%;
+  font-size: 2rem;
+  font-weight: bold;
 }
 .plan-date {
-  text-align: left;
+  width: 100%;
+  font-size: 1.5rem;
 }
 .plan-button {
   margin-top: 2vw;

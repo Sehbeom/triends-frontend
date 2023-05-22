@@ -5,6 +5,7 @@ import store from "./store";
 import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import "@/assets/style/common.css";
 import "@/assets/fonts/font.css";
 import VueCarousel from "vue-carousel";
 import axios from "axios";
