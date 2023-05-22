@@ -27,4 +27,10 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+body {
+  -ms-overflow-style: none;
+}
+body::-webkit-scrollbar {
+  display: none;
+}
 </style>
