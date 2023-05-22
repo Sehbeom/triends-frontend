@@ -16,6 +16,9 @@
       <router-link :to="{ name: 'review' }">
         <page-button-item title="여행지 리뷰" :icon="review" />
       </router-link>
+      <router-link :to="{ name: 'friends' }">
+        <page-button-item title="친구 관리" :icon="friends" />
+      </router-link>
     </div>
   </div>
 </template>
@@ -27,6 +30,7 @@ import icon2 from "@/assets/icons/recommand.png";
 import icon3 from "@/assets/icons/plan.png";
 import icon4 from "@/assets/icons/myplan.png";
 import icon5 from "@/assets/icons/review.png";
+import icon6 from "@/assets/icons/friends.png";
 
 export default {
   name: "PageButtonHeader",
@@ -38,6 +42,7 @@ export default {
       plan: icon3,
       myplan: icon4,
       review: icon5,
+      friends: icon6
     };
   },
 };

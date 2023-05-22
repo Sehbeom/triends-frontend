@@ -7,13 +7,13 @@ import recommendedattraction from "./recommendedattraction";
 import plan from "./plan";
 import myplan from "./myplan";
 import review from "./review";
-// import friends from "./friends";
+import friends from "./friends";
 import mypage from "./mypage";
 import user from "./user";
 
 Vue.use(VueRouter);
 
-const routes = [home, plan, review, mypage, myplan, notice, recommendedattraction, user];
+const routes = [home, plan, review, mypage, myplan, notice, recommendedattraction, user, friends];
 
 const router = new VueRouter({
   mode: "history",
