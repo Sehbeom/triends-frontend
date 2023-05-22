@@ -5,10 +5,13 @@ import store from "./store";
 import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import "@/assets/fonts/font.css";
+import VueCarousel from "vue-carousel";
 
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
+Vue.use(VueCarousel);
 
 new Vue({
   router,
