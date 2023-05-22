@@ -23,9 +23,7 @@
             </router-link>
           </b-dropdown-item>
           <b-dropdown-item href="#">
-            <router-link :to="{ name: 'signIn' }" class="link">
-              <b-icon icon="key"></b-icon> 로그인
-            </router-link>
+            <user-login-modal />
           </b-dropdown-item>
         </b-dropdown>
       </div>
