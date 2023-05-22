@@ -34,8 +34,13 @@
 </template>
 
 <script>
+import UserLoginModal from "../user/UserLoginModal.vue";
+
 export default {
   name: "HeaderNaviBar",
+  components: {
+    UserLoginModal,
+  },
 };
 </script>
 

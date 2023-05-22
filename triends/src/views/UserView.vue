@@ -1,7 +1,6 @@
 <template>
   <div>
     <b-container>
-      <h2>user fucking view</h2>
       <router-view></router-view>
     </b-container>
   </div>
