@@ -17,6 +17,7 @@ export default {
   display: flex;
   justify-content: center;
   min-width: 1000px;
+  min-height: 70vh;
 }
 .article {
   width: 80%;

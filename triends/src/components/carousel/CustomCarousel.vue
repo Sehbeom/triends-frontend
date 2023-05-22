@@ -2,7 +2,7 @@
   <div>
     <carousel
       :per-page="3"
-      :autoplay="false"
+      :autoplay="true"
       :loop="true"
       :autoplay-timeout="5000"
       :center-mode="true"

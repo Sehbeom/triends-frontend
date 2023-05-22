@@ -52,7 +52,7 @@ export default {
   position: sticky;
   top: 0px;
   background-color: white;
-
+  border-bottom: solid 1px;
   z-index: 10;
 }
 .header-content {
