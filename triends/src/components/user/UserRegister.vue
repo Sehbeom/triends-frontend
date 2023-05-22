@@ -79,6 +79,7 @@
 </template>
 
 <script>
+import http from "@/util/http-common";
 export default {
   name: "UserRegister",
   data() {
@@ -96,20 +97,12 @@ export default {
   },
   methods: {
     confirm() {
-      console.log(
-        this.user.userid +
-          " " +
-          this.user.userpwd +
-          "" +
-          this.user.username +
-          "" +
-          this.user.usertel +
-          "" +
-          this.user.useremail +
-          "" +
-          this.user.userprofile
-      );
-      alert("로그인!!!");
+      let loginform={id:this.user.userid,password:this.user.userpwd,name:this.user.username,email:this.user.useremail}
+      console.log(loginform);
+      http.post("user", loginform).then(({data})=>{
+        console.log(data);
+      })
+
     },
     movePage() {
       this.$router.push({ name: "home" });
