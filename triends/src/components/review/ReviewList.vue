@@ -1,13 +1,18 @@
 <template>
-<div>
+  <div>
     <page-detail-header title="여행지 리뷰" />
     <div class="write-btn">
-        <b-button><router-link :to="{ name: 'reviewregist' }">글쓰기</router-link></b-button>
+      <b-button><router-link :to="{ name: 'reviewregist' }">글쓰기</router-link></b-button>
     </div>
-    <div class="review-card-container" v-for="review in reviews" :key="review.reviewId" @click="viewReview(review)">
-        <attraction-review-card :review="review"></attraction-review-card>
+    <div
+      class="review-card-container"
+      v-for="review in reviews"
+      :key="review.reviewId"
+      @click="viewReview(review)"
+    >
+      <attraction-review-card :review="review"></attraction-review-card>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -41,26 +46,26 @@ export default {
     AttractionReviewCard,
     PageDetailHeader,
   },
-  created(){
-    http.get("review/list/0").then(({data})=>{
-      console.log(data)
-      this.reviews=data.data;
+  created() {
+    http.get("review/list/0").then(({ data }) => {
+      console.log(data);
+      this.reviews = data.data;
       console.log(this.reviews);
-    })
+    });
   },
-  methods:{
-    viewReview(review){
+  methods: {
+    viewReview(review) {
       console.log(review.reviewId);
       this.$router
-      .push({
-        name:"reviewDetail",
-        params:{aritlceno:review.reviewId},
-      })
-      .catch(()=>{
-        console.log("uncaght error");
-      })
-    }
-  }
+        .push({
+          name: "reviewDetail",
+          params: { articleno: review.reviewId },
+        })
+        .catch(() => {
+          console.log("uncaght error");
+        });
+    },
+  },
 };
 </script>
 

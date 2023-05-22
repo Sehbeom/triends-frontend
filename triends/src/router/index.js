@@ -1,12 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import AttractionView from "../views/AttractionReviewView.vue";
+// import AttractionView from "../views/AttractionReviewView.vue";
 import MyPageView from "../views/MyPageView.vue";
 import MyplanView from "../views/MyPlanView.vue";
 import RecommandedAttractionView from "../views/RecommandedAttractionView.vue";
 import MakePlanView from "../views/MakePlanView.vue";
-import AttractionReviewView from "../views/AttractionReviewView.vue";
 
 Vue.use(VueRouter);
 
@@ -17,19 +16,14 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/attraction",
-    name: "attraction",
-    component: AttractionView,
-  },
-  {
     path: "/plan",
     name: "plan",
     component: MakePlanView,
   },
   {
-    path: "/reivew",
+    path: "/review",
     name: "review",
-    component: AttractionReviewView,
+    component: () => import(/* webpackChunkName: "review" */ "@/views/AttractionReviewView.vue"),
     redirect: "/review/list",
     children:[
       {
@@ -39,7 +33,7 @@ const routes = [
           import(/* webpackChunkName: "review" */ "@/components/review/ReviewList.vue"),
       },
       {
-        path: "detail/:aritlceno",
+        path: "detail/:articleno",
         name: "reviewDetail",
         component: () =>
           import(/* webpackChunkName: "review" */ "@/components/review/ReviewDetail.vue"),
