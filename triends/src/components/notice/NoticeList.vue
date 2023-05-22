@@ -20,40 +20,6 @@ import http from "@/util/http-common";
 export default {
   components: { PageDetailHeader },
   name: "NoticeList",
-  // data() {
-  //   return {
-  //     articles: [
-  //       {
-  //         articleno: 1,
-  //         title: "1번 글",
-  //       },
-  //       {
-  //         articleno: 2,
-  //         title: "2번 글",
-  //       },
-  //       {
-  //         articleno: 3,
-  //         title: "3번 글",
-  //       },
-  //       {
-  //         articleno: 4,
-  //         title: "4번 글",
-  //       },
-  //       {
-  //         articleno: 5,
-  //         title: "5번 글",
-  //       },
-  //       {
-  //         articleno: 6,
-  //         title: "6번 글",
-  //       },
-  //       {
-  //         articleno: 7,
-  //         title: "7번 글",
-  //       },
-  //     ],
-  //   };
-  // },
   data() {
     return {
       articles: [],
