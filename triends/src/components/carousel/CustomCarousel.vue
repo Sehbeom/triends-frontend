@@ -2,20 +2,17 @@
   <div>
     <carousel
       :per-page="3"
-      :autoplay="false"
+      :autoplay="items.auto === 'true'"
       :loop="true"
       :autoplay-timeout="5000"
       :center-mode="true"
     >
       <slide v-for="item in items.items" :key="item.key" :center-mode="true">
-        <attraction-recommand-card
-          :item="item"
-          v-if="items.type === 'attractionCarousel'"
-        />
-        <dimmed-image-card
-          v-if="items.type === 'dimmedImageCarousel'"
-          :image="item"
-        />
+        <div class="component-container">
+          <attraction-recommand-card :item="item" v-if="items.type === 'attractionCarousel'" />
+          <dimmed-image-card v-if="items.type === 'dimmedImageCarousel'" :image="item" />
+          <friend-card v-if="items.type === 'friendList'" />
+        </div>
       </slide>
     </carousel>
   </div>
@@ -34,5 +31,10 @@ export default {
 };
 </script>
 
-Carousel
-<style></style>
+<style>
+.component-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+</style>
