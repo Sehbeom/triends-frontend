@@ -7,11 +7,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "@/assets/fonts/font.css";
 import VueCarousel from "vue-carousel";
+import axios from "axios";
 
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
 Vue.use(VueCarousel);
+Vue.prototype.$axios = axios;
 
 new Vue({
   router,
