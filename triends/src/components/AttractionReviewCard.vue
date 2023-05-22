@@ -1,10 +1,10 @@
 <template>
-  <div class="review-card" @click="$router.push({ name: 'reviewdetail' })">
-    <img src="../assets/logo.png" alt="" style="" />
+  <div class="review-card">
+    <img src="../assets/logo.png" alt="no image" style="" />
 
     <div class="content-section">
-      <div class="title">{{ item.title }}</div>
-      <div>{{ item.content }}</div>
+      <div class="title">{{ review.subject }}</div>
+      <div>{{ review.content }}</div>
     </div>
   </div>
 </template>
@@ -12,7 +12,7 @@
 <script>
 // import { useRouter, useRoute } from 'vue-router'
 export default {
-  props: { item: {} },
+  props: { review: {} },
   name: "AttractionReviewCard",
   methods: {
     // route() {
