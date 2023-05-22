@@ -32,10 +32,11 @@ export default {
   justify-content: space-between;
   align-items: center;
   width: 90%;
-  height: 20vw;
+  height: 15vw;
   margin-bottom: 30px;
   border-radius: 15px;
   min-width: 500px;
+  min-height: 300px;
 }
 .plan-img {
   object-fit: cover;
@@ -48,6 +49,11 @@ export default {
 .image-container {
   width: 45%;
   height: 100%;
+}
+.plan-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .plan-data {
   display: flex;

@@ -33,7 +33,7 @@ export default {
     return {
       items: {
         type: "attractionCarousel",
-        auto: "true",
+        auto: "false",
         items: [
           {
             id: 1,

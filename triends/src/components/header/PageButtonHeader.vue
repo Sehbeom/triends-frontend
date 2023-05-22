@@ -48,7 +48,7 @@ export default {
   width: 80%;
   display: flex;
   align-content: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 .button-layout {
   display: flex;

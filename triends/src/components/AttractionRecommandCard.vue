@@ -1,7 +1,7 @@
 <template>
   <div class="attraction-card">
     <img :src="item.img" alt="" class="card-img" />
-    <div class="card-content">
+    <div class="card-content" :style="{ 'background-color': color }">
       <span class="card-title">{{ item.title }}</span>
       <span class="card-text">{{ item.content }}</span>
     </div>
@@ -9,9 +9,16 @@
 </template>
 
 <script>
+import { selectRandomColor } from "@/util/color-util";
+
 export default {
   props: {
     item: {},
+  },
+  data() {
+    return {
+      color: "var(" + selectRandomColor() + ")",
+    };
   },
   name: "AttractionRecommandCard",
 };
@@ -35,7 +42,6 @@ export default {
   text-align: left;
   margin-top: 10px;
   padding-left: 15px;
-  background-color: rgb(250, 88, 60);
   border-bottom-left-radius: 17px;
   border-bottom-right-radius: 17px;
   display: flex;
