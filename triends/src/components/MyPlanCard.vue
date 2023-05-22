@@ -1,53 +1,25 @@
 <template>
   <div class="plan-container">
-    <img src="../assets/happyhouse.png" alt="" class="plan-img" />
+    <div class="image-container">
+      <img :src="item.img" alt="" class="plan-img" />
+    </div>
     <div class="plan-data">
-      <span class="plan-title">title</span>
+      <span class="plan-title">{{ item.title }}</span>
       <span class="plan-date">2022.01~2022.03</span>
       <div class="plan-button">
         <span>누구누구 외 3명</span>
         <b-button v-b-toggle.sidebar-backdrop>Toggle Sidebar</b-button>
       </div>
     </div>
-    <b-sidebar
-      id="sidebar-backdrop"
-      title="Sidebar with backdrop"
-      :backdrop-variant="variant"
-      backdrop
-      shadow
-    >
-      <div class="px-3 py-2">
-        <b-form-group label="Backdrop variant" label-for="backdrop-variant">
-          <b-form-select
-            id="backdrop-variant"
-            v-model="variant"
-            :options="variants"
-          ></b-form-select>
-        </b-form-group>
-      </div>
-    </b-sidebar>
   </div>
 </template>
 
 <script>
 export default {
   name: "MyPlanCard",
+  props: { item: {} },
   data() {
-    return {
-      variant: "dark",
-      variants: [
-        "transparent",
-        "white",
-        "light",
-        "dark",
-        "primary",
-        "secondary",
-        "success",
-        "danger",
-        "warning",
-        "info",
-      ],
-    };
+    return {};
   },
 };
 </script>
@@ -55,24 +27,31 @@ export default {
 <style scoped>
 .plan-container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  background-color: beige;
   width: 100%;
-  height: 12vw;
+  height: 20vw;
   margin: 0.5vw;
   border-radius: 15px;
   min-width: 500px;
 }
 .plan-img {
-  width: 120px;
-  height: 70px;
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+.image-container {
+  width: 40%;
+  height: 100%;
 }
 .plan-data {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 50%;
+  margin-left: 10px;
+  width: 70%;
+  height: 100%;
+  background-color: tomato;
 }
 .plan-title {
   text-align: left;

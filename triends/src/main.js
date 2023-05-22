@@ -5,14 +5,13 @@ import store from "./store";
 import BootstrapVue from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
-import axios from "axios";
+import "@/assets/fonts/font.css";
+import VueCarousel from "vue-carousel";
 
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
-// Vue.use(axios);
-
-Vue.prototype.$axios=axios
+Vue.use(VueCarousel);
 
 new Vue({
   router,

@@ -59,14 +59,17 @@ const routes = [
   {
     path: "/notice",
     name: "notice",
-    component: () => import(/* webpackChunkName: "notice" */ "@/views/NoticeView.vue"),
+    component: () =>
+      import(/* webpackChunkName: "notice" */ "@/views/NoticeView.vue"),
     redirect: "/notice/list",
     children: [
       {
         path: "list",
         name: "noticeList",
         component: () =>
-          import(/* webpackChunkName: "notice" */ "@/components/notice/NoticeList.vue"),
+          import(
+            /* webpackChunkName: "notice" */ "@/components/notice/NoticeList.vue"
+          ),
       },
       // {
       //   path: "write",
@@ -78,7 +81,9 @@ const routes = [
         path: "detail/:articleno",
         name: "noticeDetail",
         component: () =>
-          import(/* webpackChunkName: "board" */ "@/components/notice/NoticeDetail.vue"),
+          import(
+            /* webpackChunkName: "board" */ "@/components/notice/NoticeDetail.vue"
+          ),
       },
       // {
       //   path: "modify/:articleno",
@@ -102,18 +107,24 @@ const routes = [
   {
     path: "/user",
     name: "user",
-    component: () => import(/* webpackChunkName: "user" */ "@/views/UserView.vue"),
+    component: () =>
+      import(/* webpackChunkName: "user" */ "@/views/UserView.vue"),
     children: [
       {
         path: "signin",
         name: "signIn",
-        component: () => import(/* webpackChunkName: "user" */ "@/components/user/UserLogin.vue"),
+        component: () =>
+          import(
+            /* webpackChunkName: "user" */ "@/components/user/UserLogin.vue"
+          ),
       },
       {
         path: "signup",
         name: "signUp",
         component: () =>
-          import(/* webpackChunkName: "user" */ "@/components/user/UserRegister.vue"),
+          import(
+            /* webpackChunkName: "user" */ "@/components/user/UserRegister.vue"
+          ),
       },
     ],
   },

@@ -64,8 +64,9 @@ export default {
       article: {},
       items: {
         type: "dimmedImageCarousel",
+        auto: "false",
         items: [
-          { index: 1, src: "/img/ssafy_logo.9aceab8b.png" },
+          { index: 1, src: "./mainpage.png" },
           { index: 2, src: "/img/ssafy_logo.9aceab8b.png" },
           { index: 3, src: "/img/ssafy_logo.9aceab8b.png" },
           { index: 4, src: "/img/ssafy_logo.9aceab8b.png" },
