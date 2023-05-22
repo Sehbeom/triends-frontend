@@ -15,7 +15,7 @@
 
 <script>
 import PageDetailHeader from "@/components/layout/PageDetailHeader.vue";
-import http from "@/util/http-common"
+import http from "@/util/http-common";
 
 export default {
   components: { PageDetailHeader },
@@ -54,17 +54,17 @@ export default {
   //     ],
   //   };
   // },
-  data(){
-    return{
-      articles:[]
-    }
+  data() {
+    return {
+      articles: [],
+    };
   },
-  created(){
-    http.get('notice/list').then(({data})=>{
+  created() {
+    http.get("notice/list").then(({ data }) => {
       console.log(data);
-      this.articles=data.data;
+      this.articles = data.data;
       console.log(this.articles);
-    })
+    });
   },
   methods: {
     viewNotice(article) {

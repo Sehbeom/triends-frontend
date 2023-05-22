@@ -1,5 +1,6 @@
 <template>
   <div>
+    <page-button-header />
     <article-layout>
       <router-view />
     </article-layout>
@@ -8,9 +9,13 @@
 
 <script>
 import ArticleLayout from "@/components/layout/ArticleLayout.vue";
+import PageButtonHeader from "@/components/header/PageButtonHeader.vue";
 
 export default {
-  components: { ArticleLayout },
+  components: {
+    ArticleLayout,
+    PageButtonHeader,
+  },
   name: "NoticeView",
 };
 </script>
