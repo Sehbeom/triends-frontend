@@ -19,6 +19,7 @@ export default {
 
 <style scoped>
 .attraction-card {
+  max-width: 400px;
   width: 90%;
   min-width: 270px;
 }
@@ -39,6 +40,7 @@ export default {
   border-bottom-right-radius: 17px;
   display: flex;
   flex-direction: column;
+  border: 3px solid;
 }
 .card-title {
   margin-top: 10px;
