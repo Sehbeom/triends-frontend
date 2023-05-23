@@ -14,6 +14,7 @@
         carouselTitle="핫한 여행지"
         icon="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Fire.png"
         align="false"
+        :items="items"
       />
     </article-layout>
   </div>
@@ -24,14 +25,38 @@ import PageButtonHeader from "@/components/header/PageButtonHeader.vue";
 import ArticleLayout from "@/components/layout/ArticleLayout.vue";
 import RecommandCarousel from "@/components/carousel/RecommandCarousel.vue";
 import InfinitSlide from "@/components/carousel/InfinitSlide.vue";
+import { getAttractionByLikes } from "@/apis/attraction";
 
 export default {
   name: "HomeView",
+  data() {
+    return {
+      items: {
+        type: String,
+        auto: String,
+        items: Object,
+      },
+    };
+  },
   components: {
     PageButtonHeader,
     ArticleLayout,
     RecommandCarousel,
     InfinitSlide,
+  },
+  created() {
+    getAttractionByLikes(
+      ({ data }) => {
+        this.items.items = data.data;
+        this.items.type = "attractionCarousel";
+        this.items.auto = "false";
+        console.log(this.items.items);
+      },
+      (error) => {
+        console.log(error);
+        this.$router.push({ name: "error" });
+      }
+    );
   },
 };
 </script>

@@ -15,7 +15,7 @@
 
 <script>
 import PageDetailHeader from "@/components/layout/PageDetailHeader.vue";
-import http from "@/util/http-common";
+import { getNoticeList } from "@/apis/notice";
 
 export default {
   components: { PageDetailHeader },
@@ -26,11 +26,17 @@ export default {
     };
   },
   created() {
-    http.get("notice/list").then(({ data }) => {
-      console.log(data);
-      this.articles = data.data;
-      console.log(this.articles);
-    });
+    getNoticeList(
+      ({ data }) => {
+        console.log(data);
+        this.articles = data.data;
+        console.log(this.articles);
+      },
+      (error) => {
+        console.log(error);
+        this.$router.push({ name: "error" });
+      }
+    );
   },
   methods: {
     viewNotice(article) {
