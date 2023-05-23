@@ -38,9 +38,9 @@ const memberStore = {
       await login(
         user,
         ({ data }) => {
-          if (data.message === "success") {
-            let accessToken = data["access-token"];
-            let refreshToken = data["refresh-token"];
+          if (data.message === "로그인 성공했습니다.") {
+            let accessToken = data.data["access-token"];
+            let refreshToken = data.data["refresh-token"];
             console.log("login success token created!!!! >> ", accessToken, refreshToken);
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
@@ -48,6 +48,7 @@ const memberStore = {
             sessionStorage.setItem("access-token", accessToken);
             sessionStorage.setItem("refresh-token", refreshToken);
           } else {
+            console.log(data);
             commit("SET_IS_LOGIN", false);
             commit("SET_IS_LOGIN_ERROR", true);
             commit("SET_IS_VALID_TOKEN", false);
@@ -60,12 +61,12 @@ const memberStore = {
     },
     async getUserInfo({ commit, dispatch }, token) {
       let decodeToken = jwtDecode(token);
-      // console.log("2. getUserInfo() decodeToken :: ", decodeToken);
+      console.log("2. getUserInfo() decodeToken :: ", decodeToken);
       await findById(
-        decodeToken.userid,
+        decodeToken.userId,
         ({ data }) => {
-          if (data.message === "success") {
-            commit("SET_USER_INFO", data.userInfo);
+          if (data.message === "유저 정보 조회가 완료되었습니다.") {
+            commit("SET_USER_INFO", data.data.userInfo);
             // console.log("3. getUserInfo data >> ", data);
           } else {
             console.log("유저 정보 없음!!!!");
@@ -84,9 +85,9 @@ const memberStore = {
     async tokenRegeneration({ commit, state }) {
       console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("access-token"));
       await tokenRegeneration(
-        JSON.stringify(state.userInfo),
+        state.userInfo,
         ({ data }) => {
-          if (data.message === "success") {
+          if (data.message === "사용자 정보가 인증되었습니다.") {
             let accessToken = data["access-token"];
             console.log("재발급 완료 >> 새로운 토큰 : {}", accessToken);
             sessionStorage.setItem("access-token", accessToken);

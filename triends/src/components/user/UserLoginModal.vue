@@ -48,11 +48,8 @@ export default {
       if (this.isLogin) {
         await this.getUserInfo(token);
         console.log("userInfo :: ", this.userInfo);
-        this.$router.push({ name: "main" });
+        this.$router.push({ name: "home" }).catch(() => {});
       }
-    },
-    movePage() {
-      this.$router.push({ name: "join" });
     },
   },
 };
