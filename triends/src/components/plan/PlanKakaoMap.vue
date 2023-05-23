@@ -7,10 +7,7 @@
           v-model="searchKeyword"
           placeholder="검색어를 입력해주세요"
         ></b-form-input>
-        <b-button
-          class="box-button"
-          variant="outline-primary"
-          @click="searchByMap()"
+        <b-button class="box-button" variant="outline-primary" @click="searchByMap()"
           >검색</b-button
         >
       </div>
@@ -31,6 +28,7 @@ export default {
   name: "PlanKakoMap",
   components: {
     PlanSideTab,
+    AttractionOverlay,
   },
   data() {
     return {
@@ -60,10 +58,7 @@ export default {
       console.log("mapp by loadScript");
       const script = document.createElement("script");
       const serviceKey = "93afce403fa4b93b85720e811bebec2b";
-      script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?appkey=" +
-        serviceKey +
-        "&autoload=false";
+      script.src = "//dapi.kakao.com/v2/maps/sdk.js?appkey=" + serviceKey + "&autoload=false";
       console.log(script.src);
       script.onload = () => window.kakao.maps.load(this.loadMap);
       document.head.appendChild(script);

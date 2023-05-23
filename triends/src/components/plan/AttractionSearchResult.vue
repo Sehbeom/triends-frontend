@@ -22,7 +22,8 @@ export default {
   },
   methods: {
     viewInfo(item) {
-      console.log(item.contentId);
+      let info = item;
+      this.$emit("drawMarker", info);
     },
   },
 };
