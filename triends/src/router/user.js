@@ -1,6 +1,7 @@
 import UserView from "../views/UserView";
 import UserLogin from "../components/user/UserLogin";
 import UserRegister from "../components/user/UserRegister";
+import UserPreference from "../components/user/UserPreference";
 
 export default {
   path: "/user",
@@ -17,5 +18,10 @@ export default {
       name: "signUp",
       component: UserRegister,
     },
+    {
+      path: "preference",
+      name: "preference",
+      component: UserPreference,
+    }
   ],
 };

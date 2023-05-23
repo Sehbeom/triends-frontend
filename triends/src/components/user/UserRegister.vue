@@ -66,6 +66,7 @@
                 @keyup.enter="confirm"
               ></b-form-input>
             </b-form-group>
+
             <b-button type="button" variant="primary" class="m-1" @click="confirm"
               >회원가입</b-button
             >
@@ -79,6 +80,7 @@
 </template>
 
 <script>
+import http from "@/util/http-common";
 export default {
   name: "UserRegister",
   data() {
@@ -92,24 +94,39 @@ export default {
         useremail: "",
         userprofile: "",
       },
+      preferenceIds: [],
+      options: [
+        { text: "관광지", value: "12" },
+        { text: "문화시설", value: "14" },
+        { text: "축제공연행사", value: "15" },
+        { text: "여행코스", value: "25" },
+        { text: "레포츠", value: "28" },
+        { text: "숙박", value: "32" },
+        { text: "쇼핑", value: "38" },
+        { text: "음식점", value: "39" },
+      ],
     };
   },
   methods: {
     confirm() {
-      console.log(
-        this.user.userid +
-          " " +
-          this.user.userpwd +
-          "" +
-          this.user.username +
-          "" +
-          this.user.usertel +
-          "" +
-          this.user.useremail +
-          "" +
-          this.user.userprofile
-      );
-      alert("로그인!!!");
+      if (!this.user.userid) alert("아이디를 입력해주세요");
+      else if (!this.user.userpwd) alert("이름을 입력해주세요");
+      else if (!this.user.username) alert("비밀번호를 입력해주세요");
+      else if (!this.user.useremail) alert("이메일을 입력해주세요");
+      else {
+        let loginform = {
+          id: this.user.userid,
+          password: this.user.userpwd,
+          name: this.user.username,
+          email: this.user.useremail,
+        };
+        console.log(loginform);
+        http.post("user", JSON.stringify(loginform)).then(({ data }) => {
+          console.log(data.data[data.data.length - 1].userId);
+          sessionStorage.setItem("userid", data.data[data.data.length - 1].userId);
+          this.$router.push({ name: "preference" });
+        });
+      }
     },
     movePage() {
       this.$router.push({ name: "home" });
