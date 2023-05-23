@@ -21,13 +21,10 @@
 <script>
 import AttractionRecommandCard from "../AttractionRecommandCard.vue";
 import DimmedImageCard from "../DimmedImageCard.vue";
-
 export default {
   name: "CustomCarousel",
   components: { AttractionRecommandCard, DimmedImageCard },
-  props: {
-    items: {},
-  },
+  props: { items: {} },
 };
 </script>
 
