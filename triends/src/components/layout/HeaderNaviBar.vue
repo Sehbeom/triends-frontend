@@ -16,16 +16,30 @@
           width="50"
           height="50"
         />
-        <b-dropdown text="회원가입" right>
-          <b-dropdown-item href="#">
-            <router-link :to="{ name: 'signUp' }" class="link">
-              <b-icon icon="person-circle"></b-icon> 회원가입
-            </router-link>
-          </b-dropdown-item>
-          <b-dropdown-item href="#">
-            <user-login-modal />
-          </b-dropdown-item>
-        </b-dropdown>
+        <div v-if="user == null">
+          <b-dropdown text="회원가입" right>
+            <b-dropdown-item href="#">
+              <router-link :to="{ name: 'signUp' }" class="link">
+                <b-icon icon="person-circle"></b-icon> 회원가입
+              </router-link>
+            </b-dropdown-item>
+            <b-dropdown-item href="#">
+              <user-login-modal />
+            </b-dropdown-item>
+          </b-dropdown>
+        </div>
+        <div v-else>
+          <b-dropdown text="마이페이지" right>
+            <b-dropdown-item href="#">
+              <router-link :to="{ name: 'mypage' }" class="link">
+                <b-icon icon="person-circle"></b-icon> 내정보
+              </router-link>
+            </b-dropdown-item>
+            <b-dropdown-item href="#" @click="logout()">
+              <b-icon icon="person-circle"></b-icon> 로그아웃
+            </b-dropdown-item>
+          </b-dropdown>
+        </div>
       </div>
     </div>
   </div>
@@ -38,6 +52,18 @@ export default {
   name: "HeaderNaviBar",
   components: {
     UserLoginModal,
+  },
+  data() {
+    return {
+      user: sessionStorage.getItem("userid"),
+    };
+  },
+  methods: {
+    logout() {
+      console.log(sessionStorage.getItem("userid"));
+      sessionStorage.clear();
+      window.location.href = `${window.location.href}`;
+    },
   },
 };
 </script>
