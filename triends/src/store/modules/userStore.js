@@ -2,7 +2,7 @@ import jwtDecode from "jwt-decode";
 import router from "@/router";
 import { login, findById, tokenRegeneration, logout } from "@/apis/user";
 
-const memberStore = {
+const userStore = {
   namespaced: true,
   state: {
     isLogin: false,
@@ -41,7 +41,11 @@ const memberStore = {
           if (data.message === "로그인 성공했습니다.") {
             let accessToken = data.data["access-token"];
             let refreshToken = data.data["refresh-token"];
-            console.log("login success token created!!!! >> ", accessToken, refreshToken);
+            console.log(
+              "login success token created!!!! >> ",
+              accessToken,
+              refreshToken
+            );
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
@@ -83,12 +87,16 @@ const memberStore = {
       );
     },
     async tokenRegeneration({ commit, state }) {
-      console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("access-token"));
+      console.log(
+        "토큰 재발급 >> 기존 토큰 정보 : {}",
+        sessionStorage.getItem("access-token")
+      );
       await tokenRegeneration(
         state.userInfo,
         ({ data }) => {
-          if (data.message === "사용자 정보가 인증되었습니다.") {
-            let accessToken = data["access-token"];
+          console.log(data);
+          if (data.message === "토큰 재발급이 완료되었습니다.") {
+            let accessToken = data.data["access-token"];
             console.log("재발급 완료 >> 새로운 토큰 : {}", accessToken);
             sessionStorage.setItem("access-token", accessToken);
             commit("SET_IS_VALID_TOKEN", true);
@@ -143,4 +151,4 @@ const memberStore = {
   },
 };
 
-export default memberStore;
+export default userStore;

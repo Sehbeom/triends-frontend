@@ -10,46 +10,14 @@
         />
       </router-link>
       <div class="header-right">
-        <b-dropdown class="p-0 m-0" size="lg" variant="link" dropright toggle-class="text-decoration-none" no-caret>
-          <template #button-content>
-            <div 
-              :class="notificationClicked ? 'notification' : 'notification alarmanimation'"
-              @click="notificationClick">
-                <div class="reddot" v-if="notifications.length"></div>
-                <img 
-                  src="../../assets/icons/notification.png"
-                  width="40"
-                  height="40" />
-            </div>
-          </template>
-          <div class="notification-dropdown">
-              <div 
-                class="notification-dropdown-onenoti" 
-                v-for="(notification, index) in notifications"
-                :key="notification.notificationId">
-                <div class="notification-dropdown-onenoti-contents">
-                  <div class="notification-dropdown-text">
-                    <span>{{ notification.content }}</span>
-                  </div>
-                  <div class="notification-dropdown-btns">
-                    <b-button size="sm" variant="success">수락</b-button>
-                    <b-button size="sm" variant="danger">거절</b-button>
-                  </div>
-                </div>
-                <div class="notification-dropdown-divider" v-if="index < (notifications.length - 1)"></div>
-              </div>
-              
-          </div>
-          
-        </b-dropdown>
-
-        <img
-          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Bust%20in%20Silhouette.png"
-          alt="Bust in Silhouette"
-          width="50"
-          height="50"
-        />
-        <div v-if="user == null">
+        <div v-if="!isLogin">
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Bust%20in%20Silhouette.png"
+            alt="Bust in Silhouette"
+            width="50"
+            height="50"
+            class="person-img"
+          />
           <b-dropdown text="회원가입" right>
             <b-dropdown-item href="#">
               <router-link :to="{ name: 'signUp' }" class="link">
@@ -62,6 +30,60 @@
           </b-dropdown>
         </div>
         <div v-else>
+          <b-dropdown
+            class="p-0 m-0"
+            size="lg"
+            variant="link"
+            dropright
+            toggle-class="text-decoration-none"
+            no-caret
+          >
+            <template #button-content>
+              <div
+                :class="
+                  notificationClicked
+                    ? 'notification'
+                    : 'notification alarmanimation'
+                "
+                @click="notificationClick"
+              >
+                <div class="reddot" v-if="notifications.length"></div>
+                <img
+                  src="../../assets/icons/notification.png"
+                  width="40"
+                  height="40"
+                />
+              </div>
+            </template>
+            <div class="notification-dropdown">
+              <div
+                class="notification-dropdown-onenoti"
+                v-for="(notification, index) in notifications"
+                :key="notification.notificationId"
+              >
+                <div class="notification-dropdown-onenoti-contents">
+                  <div class="notification-dropdown-text">
+                    <span>{{ notification.content }}</span>
+                  </div>
+                  <div class="notification-dropdown-btns">
+                    <b-button size="sm" variant="success">수락</b-button>
+                    <b-button size="sm" variant="danger">거절</b-button>
+                  </div>
+                </div>
+                <div
+                  class="notification-dropdown-divider"
+                  v-if="index < notifications.length - 1"
+                ></div>
+              </div>
+            </div>
+          </b-dropdown>
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Man%20Raising%20Hand.png"
+            alt="Man Raising Hand"
+            width="50"
+            height="50"
+            class="person-img"
+          />
           <b-dropdown text="마이페이지" right>
             <b-dropdown-item href="#">
               <router-link :to="{ name: 'mypage' }" class="link">
@@ -81,36 +103,43 @@
 <script>
 import UserLoginModal from "../user/UserLoginModal.vue";
 
+import { mapState } from "vuex";
+
+const userStore = "userStore";
+
 export default {
   name: "HeaderNaviBar",
   components: {
     UserLoginModal,
   },
+  computed: {
+    ...mapState(userStore, ["isLogin"]),
+  },
   created() {
     this.notifications = [
       {
         notificationId: 1,
-        content: "전상호섹시가이님이 친구 요청을 보냈습니다."
+        content: "전상호섹시가이님이 친구 요청을 보냈습니다.",
       },
       {
         notificationId: 2,
-        content: "신우종폼미쳐타이님이 친구 요청을 보냈습니다."
+        content: "신우종폼미쳐타이님이 친구 요청을 보냈습니다.",
       },
       {
         notificationId: 3,
-        content: "즐거운 일본 여행 플랜에 초대되었습니다."
+        content: "즐거운 일본 여행 플랜에 초대되었습니다.",
       },
       {
         notificationId: 4,
-        content: "제발 보내줘 기막힌 휴양지 여행 플랜에 초대되었습니다."
+        content: "제발 보내줘 기막힌 휴양지 여행 플랜에 초대되었습니다.",
       },
       {
         notificationId: 5,
-        content: "troment님이 친구 요청을 보냈습니다."
+        content: "troment님이 친구 요청을 보냈습니다.",
       },
       {
         notificationId: 5,
-        content: "troment님이 친구 요청을 보냈습니다."
+        content: "troment님이 친구 요청을 보냈습니다.",
       },
     ];
 
@@ -123,15 +152,14 @@ export default {
   data() {
     return {
       notifications: [],
-      notificationClicked: false
-    }
+      notificationClicked: false,
+    };
   },
   methods: {
     notificationClick: function () {
       this.notificationClicked = true;
-
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -161,10 +189,7 @@ export default {
 
 .notification {
   position: relative;
-  
   cursor: pointer;
-
-  margin-right: 15px;
 }
 
 .alarmanimation {
@@ -172,22 +197,22 @@ export default {
   transform-origin: 50% 50%;
 }
 
-@keyframes rotate_image{
-    0% {
-      transform: rotate(0deg);
-    }
-    10% {
-      transform: rotate(15deg);
-    }
-    20% {
-      transform: rotate(-15deg);
-    }
-    30%{
-      transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
+@keyframes rotate_image {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(15deg);
+  }
+  20% {
+    transform: rotate(-15deg);
+  }
+  30% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 .notification-dropdown {
@@ -245,5 +270,8 @@ export default {
 
   top: 7px;
   right: 8px;
+}
+.person-img {
+  margin-right: 10px;
 }
 </style>

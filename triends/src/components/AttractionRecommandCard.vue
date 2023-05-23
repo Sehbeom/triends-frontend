@@ -1,9 +1,14 @@
 <template>
   <div class="attraction-card">
-    <img :src="item.firstImage || './images/no-image.png'" alt="" class="card-img" />
+    <img
+      :src="item.firstImage || './images/no-image.png'"
+      alt=""
+      class="card-img"
+    />
     <div class="card-content" :style="{ 'background-color': color }">
       <span class="card-title">{{ item.title }}</span>
       <span class="card-text">{{ item.addr1 }}</span>
+      <!-- {{ item.contentId }} -->
     </div>
   </div>
 </template>
