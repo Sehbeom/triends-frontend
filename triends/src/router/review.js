@@ -1,6 +1,9 @@
+import { onlyAuthUser } from "./onlyAuth";
+
 export default {
   path: "/review",
   name: "review",
+  beforeEnter: onlyAuthUser,
   component: () => import(/* webpackChunkName: "review" */ "@/views/AttractionReviewView.vue"),
   redirect: "/review/list",
   children: [
