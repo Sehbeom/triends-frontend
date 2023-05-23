@@ -3,11 +3,19 @@
   <div>
     <page-button-header />
     <article-layout>
-      <infinit-slide />
-      <recommand-carousel carouselTitle="요즘 뜨는 여행지" align="true" :items="likeItems" />
+      <infinite-slide-recommand />
+      <recommand-carousel
+        carouselTitle="요즘 뜨는 여행지"
+        align="true"
+        :items="likeItems"
+      />
       <hr style="margin-bottom: 5vw" />
       <div v-if="isLogin">
-        <recommand-carousel carouselTitle="이런 곳은 어때요?" align="true" :items="myItems" />
+        <recommand-carousel
+          carouselTitle="이런 곳은 어때요?"
+          align="true"
+          :items="myItems"
+        />
       </div>
       <div v-else>
         <img
@@ -26,14 +34,19 @@
 import ArticleLayout from "@/components/layout/ArticleLayout.vue";
 import RecommandCarousel from "@/components/carousel/RecommandCarousel.vue";
 import PageButtonHeader from "@/components/header/PageButtonHeader.vue";
-import InfinitSlide from "@/components/carousel/InfinitSlide.vue";
+import InfiniteSlideRecommand from "@/components/carousel/InfiniteSlideRecommand.vue";
 import { getAttractionByLikes, getAttractionById } from "@/apis/attraction";
 import { mapState } from "vuex";
 
 const userStore = "userStore";
 
 export default {
-  components: { ArticleLayout, RecommandCarousel, PageButtonHeader, InfinitSlide },
+  components: {
+    ArticleLayout,
+    RecommandCarousel,
+    PageButtonHeader,
+    InfiniteSlideRecommand,
+  },
   computed: {
     ...mapState(userStore, ["isLogin", "userInfo"]),
   },

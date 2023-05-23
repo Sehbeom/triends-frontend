@@ -14,17 +14,21 @@ async function findById(userid, success, fail) {
 
 async function tokenRegeneration(user, success, fail) {
   // need to implement
-  api.defaults.headers["refresh-token"] = sessionStorage.getItem("refresh-token"); //axios header에 refresh-token 셋팅
+  api.defaults.headers["refresh-token"] =
+    sessionStorage.getItem("refresh-token"); //axios header에 refresh-token 셋팅
   console.log(user);
   await api
-    .get(`/user/authorization?userId=` + user.userId)
+    .get(`/user/authorization/refresh?userId=` + user.userId)
     .then(success)
     .catch(fail);
 }
 
 async function logout(user, success, fail) {
   //원래는 get으로 보내야함...
-  await api.post(`/user/logout`, JSON.stringify(user)).then(success).catch(fail);
+  await api
+    .post(`/user/logout`, JSON.stringify(user))
+    .then(success)
+    .catch(fail);
 }
 
 export { login, findById, tokenRegeneration, logout };
