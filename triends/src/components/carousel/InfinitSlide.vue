@@ -1,5 +1,5 @@
 <template>
-  <infinite-slide-bar class="infinite-slide">
+  <infinite-slide-bar class="infinite-slide" :style="{ height: height }">
     <span class="slide-content"
       >여행을 떠나고 싶으신가요? Triends에서 친구와 함께 여행을 떠나보세요!
       <img
@@ -15,15 +15,19 @@
 import InfiniteSlideBar from "vue-infinite-slide-bar";
 export default {
   name: "InfiniteSlide",
+  props: {
+    height: String,
+  },
   components: { InfiniteSlideBar },
 };
 </script>
 
 <style>
 .infinite-slide {
-  margin-top: 60px;
-  margin-bottom: 100px;
-  height: 120px;
+  /* margin-top: 60px;
+  margin-bottom: 100px; */
+  /* height: 120px; */
+  /* height: 80px; */
   background-color: #78ff78;
 
   width: 100vw !important;
