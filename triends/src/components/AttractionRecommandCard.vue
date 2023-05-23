@@ -17,7 +17,7 @@ export default {
   },
   data() {
     return {
-      color: "var(" + selectRandomColor() + ")",
+      color: selectRandomColor(),
     };
   },
   name: "AttractionRecommandCard",
