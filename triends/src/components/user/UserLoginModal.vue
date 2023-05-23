@@ -1,42 +1,20 @@
 <template>
   <div>
     <span v-b-modal.modal-prevent-closing>로그인</span>
-    <b-modal
-      id="modal-prevent-closing"
-      ref="modal"
-      title="로그인"
-      @show="resetModal"
-      @hidden="resetModal"
-      @ok="handleOk"
-    >
-      <form ref="form" @submit.stop.prevent="handleSubmit">
-        <b-form-group
-          label="아이디"
-          label-for="id-input"
-          invalid-feedback="id is required"
-          :state="nameState"
-        >
-          <b-form-input
-            id="id-input"
-            v-model="user.userid"
-            :state="nameState"
-            required
-          ></b-form-input>
+    <b-modal id="modal-prevent-closing" ref="modal" title="로그인" @ok="handleOk">
+      <form ref="form">
+        <b-form-group label="아이디" label-for="id-input" invalid-feedback="id is required">
+          <b-form-input id="id-input" v-model="user.userid" required></b-form-input>
         </b-form-group>
       </form>
-      <form ref="form" @submit.stop.prevent="handleSubmit">
+      <form ref="form">
         <b-form-group
           label="비밀번호"
+          form="password"
           label-for="pwd-input"
           invalid-feedback="password is required"
-          :state="nameState"
         >
-          <b-form-input
-            id="pwd-input"
-            v-model="user.userpwd"
-            :state="nameState"
-            required
-          ></b-form-input>
+          <b-form-input id="pwd-input" v-model="user.userpwd" required></b-form-input>
         </b-form-group>
       </form>
     </b-modal>
@@ -44,6 +22,8 @@
 </template>
 
 <script>
+import http from "@/util/http-common";
+import { formToJSON } from "axios";
 export default {
   name: "UserLoginModal",
   data() {
@@ -53,6 +33,27 @@ export default {
         userpwd: "",
       },
     };
+  },
+  methods: {
+    handleOk() {
+      let form = new FormData();
+      form.append("userId", this.user.userid);
+      form.append("userPwd", this.user.userpwd);
+      console.log(formToJSON(form));
+
+      let map = { userId: this.user.userid, userPwd: this.user.userpwd };
+      console.log(map);
+
+      http.post("/user/login", JSON.stringify(map)).then(({ data }) => {
+        console.log(data);
+        if (data.data == null) {
+          alert("아이디 혹은 비밀번호를 확인해주세요.");
+        } else {
+          sessionStorage.setItem("userid", data.data.userId);
+        }
+        window.location.href = `${window.location.href}`;
+      });
+    },
   },
 };
 </script>
