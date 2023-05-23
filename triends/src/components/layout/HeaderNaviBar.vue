@@ -28,8 +28,9 @@
                 v-for="(notification, index) in notifications"
                 :key="notification.notificationId">
                 <div class="notification-dropdown-onenoti-contents">
-                  <div class="notification-dropdown-text">
-                    <span>{{ notification.content }}</span>
+                  <div class="notification-dropdown-text" v-b-modal.modal-center>
+                    <span>{{ notification.additionalInfo + notificationSentences[notification.notificationType] }}</span>
+                    <notification-info-modal :id="notification.notificationId" />
                   </div>
                   <div class="notification-dropdown-btns">
                     <b-button size="sm" variant="success">수락</b-button>
@@ -76,27 +77,38 @@ export default {
     this.notifications = [
       {
         notificationId: 1,
-        content: "전상호섹시가이님이 친구 요청을 보냈습니다."
+        receiver: 6,
+        sender: 2,
+        notificationType: "friend",
+        additionalInfo: "전상호섹시가이"
       },
       {
         notificationId: 2,
-        content: "신우종폼미쳐타이님이 친구 요청을 보냈습니다."
+        receiver: 6,
+        sender: 2,
+        notificationType: "friend",
+        additionalInfo: "신우종폼미쳐타이"
       },
       {
         notificationId: 3,
-        content: "즐거운 일본 여행 플랜에 초대되었습니다."
+        receiver: 6,
+        sender: 2,
+        notificationType: "plan",
+        additionalInfo: "즐거운 일본"
       },
       {
         notificationId: 4,
-        content: "제발 보내줘 기막힌 휴양지 여행 플랜에 초대되었습니다."
+        receiver: 6,
+        sender: 2,
+        notificationType: "plan",
+        additionalInfo: "제발 보내줘 기막힌 휴양지"
       },
       {
         notificationId: 5,
-        content: "troment님이 친구 요청을 보냈습니다."
-      },
-      {
-        notificationId: 5,
-        content: "troment님이 친구 요청을 보냈습니다."
+        receiver: 6,
+        sender: 2,
+        notificationType: "friend",
+        additionalInfo: "troment"
       },
     ];
 
@@ -109,7 +121,11 @@ export default {
   data() {
     return {
       notifications: [],
-      notificationClicked: false
+      notificationClicked: false,
+      notificationSentences: {
+        "friend": "님이 친구 요청을 보냈습니다.",
+        "plan": "여행 플랜에 초대되었습니다."
+      }
     }
   },
   methods: {
@@ -177,15 +193,35 @@ export default {
 }
 
 .notification-dropdown {
-  width: 450px;
+  width: 500px;
   max-height: 300px;
   overflow: scroll;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 0px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent; 
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1); 
+  border-radius: 5px;
+  transition: background-color 3s ease-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.6); 
+  transition: background-color 3s ease-out;
+}
+
+::v-deep{
 .dropdown .dropdown-menu {
   --bs-dropdown-padding-y: 0 !important;
-  /* padding-top: 0 !important;
-  padding-bottom: 0 !important; */
+}
 }
 
 .notification-dropdown-divider {
