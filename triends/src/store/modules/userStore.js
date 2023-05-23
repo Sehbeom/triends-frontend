@@ -66,8 +66,8 @@ const memberStore = {
         decodeToken.userId,
         ({ data }) => {
           if (data.message === "유저 정보 조회가 완료되었습니다.") {
-            commit("SET_USER_INFO", data.data.userInfo);
-            // console.log("3. getUserInfo data >> ", data);
+            commit("SET_USER_INFO", data.data);
+            console.log("3. getUserInfo data >> ", data);
           } else {
             console.log("유저 정보 없음!!!!");
           }
