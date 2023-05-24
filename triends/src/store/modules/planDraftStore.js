@@ -5,13 +5,14 @@ const planDraftStore = {
   state: {
     myPlan: null,
     day: 0,
+    isSelected: false,
   },
   getters: {
     getMyPlanItems: function (state) {
       return state.myPlan.planInfo.courseInfo;
     },
     getDateArray: function (state) {
-      var options = [];
+      var options = [{ text: "날짜를 선택해주세요!", value: null }];
       for (let index = 1; index <= state.day; index++) {
         options.push({ text: index, value: index });
       }
@@ -32,6 +33,12 @@ const planDraftStore = {
       state.myPlan = newPlan;
       state.day = 1;
     },
+    SET_SELECTED_TRUE: (state) => {
+      state.isSelected = true;
+    },
+    SET_SELECTED_FALSE: (state) => {
+      state.isSelected = false;
+    },
   },
   actions: {
     savePlan: () => {},
@@ -45,6 +52,12 @@ const planDraftStore = {
     },
     addDay({ commit }) {
       commit("SET_NEW_DAY");
+    },
+    setMyPlanSelected({ commit }) {
+      commit("SET_SELECTED_TRUE");
+    },
+    setMyPlanSelectedFalse({ commit }) {
+      commit("SET_SELECTED_FALSE");
     },
   },
 };
