@@ -68,7 +68,7 @@
                   </div>
                   <div class="notification-dropdown-btns">
                     <b-button size="sm" variant="success">수락</b-button>
-                    <b-button size="sm" variant="danger">거절</b-button>
+                    <b-button size="sm" variant="danger" @click="refuse(notification.notificationId)">거절</b-button>
                   </div>
                 </div>
                 <div
@@ -103,6 +103,7 @@
 
 <script>
 import UserLoginModal from "../user/UserLoginModal.vue";
+import { getNotificationList, refuseNotification } from "@/apis/notification";
 
 import { mapState } from "vuex";
 
@@ -114,57 +115,30 @@ export default {
     UserLoginModal,
   },
   computed: {
-    ...mapState(userStore, ["isLogin"]),
+    ...mapState(userStore, ["isLogin", "userInfo"]),
   },
   created() {
-    this.notifications = [
-      {
-        notificationId: 1,
-        receiver: 6,
-        sender: 2,
-        notificationType: "friend",
-        additionalInfo: "전상호섹시가이"
-      },
-      {
-        notificationId: 2,
-        receiver: 6,
-        sender: 2,
-        notificationType: "friend",
-        additionalInfo: "신우종폼미쳐타이"
-      },
-      {
-        notificationId: 3,
-        receiver: 6,
-        sender: 2,
-        notificationType: "plan",
-        additionalInfo: "즐거운 일본"
-      },
-      {
-        notificationId: 4,
-        receiver: 6,
-        sender: 2,
-        notificationType: "plan",
-        additionalInfo: "제발 보내줘 기막힌 휴양지"
-      },
-      {
-        notificationId: 5,
-        receiver: 6,
-        sender: 2,
-        notificationType: "friend",
-        additionalInfo: "troment"
-      },
-    ];
-
-    if (this.notifications.length) {
-      this.notificationClicked = false;
-    } else {
-      this.notificationClicked = true;
+    if (this.isLogin) {
+      getNotificationList(
+        this.userInfo.userId,
+        ({data}) => {
+          this.notifications = data.data;
+          if (this.notifications.length > 0) {
+            this.notificationClicked = false;
+          } else {
+            this.notificationClicked = true;
+          }
+        },
+        ({error}) => {
+          console.log(error);
+        }
+      )
     }
   },
   data() {
     return {
       notifications: [],
-      notificationClicked: false,
+      notificationClicked: true,
       notificationSentences: {
         "friend": "님이 친구 요청을 보냈습니다.",
         "plan": "여행 플랜에 초대되었습니다."
@@ -175,6 +149,9 @@ export default {
     notificationClick: function () {
       this.notificationClicked = true;
     },
+    refuse: function(notificationId) {
+      refuseNotification(notificationId);
+    }
   },
 };
 </script>
