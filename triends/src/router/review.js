@@ -15,7 +15,13 @@ export default {
     },
     {
       path: "detail/:articleno",
-      name: "reviewDetail",
+      name: "unloginDetail",
+      component: () =>
+        import(/* webpackChunkName: "review" */ "@/components/review/ReviewDetail.vue"),
+    },
+    {
+      path: "detail/",
+      name: "loginDetail",
       component: () =>
         import(/* webpackChunkName: "review" */ "@/components/review/ReviewDetail.vue"),
     },

@@ -1,54 +1,132 @@
 <template>
-  <div class="review-card">
-    <img src="../assets/logo.png" alt="no image" style="" />
-
-    <div class="content-section">
-      <div class="title">{{ review.subject }}</div>
-      <div>{{ review.content }}</div>
+  <div class="review-container">
+    <div class="image-container">
+      <img :src="review.thumbnail" alt="" class="review-img" />
+    </div>
+    <div class="review-data" :style="{ 'background-color': color }">
+      <div class="review-header">
+        <span class="review-title">{{ review.subject }}</span>
+        <span class="review-username">{{ review.writerName }}</span>
+        <span class="review-date">{{ review.startDate + " ~ " + review.endDate }}</span>
+        <span class="review-course">
+          <span class="longcourse" v-for="course in review.attractions" :key="course"
+            >{{ course }} -
+          </span>
+        </span>
+        <span class="review-content">{{ review.content }}</span>
+        <span class="review-popular">
+          <span class="review-likes">💕 {{ review.likes }} </span>
+          <span class="review-rating">👍 {{ review.scrapped }}</span>
+          <button class="view-btn" @click="viewReview(review)">리뷰 보기</button>
+        </span>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-// import { useRouter, useRoute } from 'vue-router'
+import { mapState } from "vuex";
+
+const userStore = "userStore";
+
 export default {
   props: { review: {} },
   name: "AttractionReviewCard",
   methods: {
-    // route() {
-    //   $router.push({ path: "/detail" });
-    //   // detail id 추가할것임.
-    // },
+    viewReview(review) {
+      console.log(review.reviewId);
+      console.log(this.userInfo.userId);
+      if (!this.userInfo.userId) {
+        this.$router
+          .push({
+            name: "unloginDetail",
+            params: { articleno: review.reviewId },
+          })
+          .catch(() => {
+            console.log("uncaght error");
+          });
+      } else {
+        this.$router
+          .push({
+            name: "loginDetail",
+            query: { reviewId: review.reviewId, userId: this.userInfo.userId },
+          })
+          .catch(() => {
+            console.log("uncaght error");
+          });
+      }
+    },
+  },
+  computed: {
+    ...mapState(userStore, ["userInfo"]),
   },
 };
 </script>
 
 <style scoped>
-.review-card {
-  width: 100%;
-  height: 15vw;
-  background-color: beige;
-  margin-top: 1vw;
-  margin-bottom: 1vw;
+.review-container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  cursor: pointer;
+  width: 90%;
+  height: 15vw;
+  margin-bottom: 30px;
+  border-radius: 15px;
+  min-width: 500px;
+  min-height: 300px;
 }
-.image-section {
-  width: 25%;
-}
-.content-section {
-  width: 60%;
+.review-img {
+  object-fit: cover;
   height: 100%;
-  text-align: left;
-  text-decoration: none;
+  width: 100%;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
-.title {
-  font-size: 3rem;
+
+.image-container {
+  width: 35%;
+  height: 100%;
+}
+.review-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.review-data {
+  display: flex;
+  text-align: left;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 10px;
+  padding: 10px 10px 10px 10px;
+  width: 65%;
+  height: 100%;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border: solid 3px black;
+}
+.review-title {
+  width: 100%;
+  font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 7%;
-  margin-top: 3%;
-  color: black;
+}
+.review-date {
+  width: 100%;
+  font-size: 1.5rem;
+}
+.review-course {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 70%;
+}
+.review-popular {
+  display: inline-block;
+}
+.view-btn {
+  font-size: 12px;
+  width: 70px;
+  height: 30px;
+  border-radius: 5px;
 }
 </style>

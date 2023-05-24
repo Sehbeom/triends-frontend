@@ -1,8 +1,19 @@
 <template>
   <div class="image-container">
-    <img :src="image.src" />
-    <b-button class="modal-button" :v-b-modal="String(image.index)">Show Modal</b-button>
-    <!-- <b-modal :id="String(image.index)">Hello From My Modal!</b-modal> -->
+    <img :src="item.firstImage" />
+    <div class="dimmed-container">
+      <div class="attraction-title" :v-b-modal="String(item.contentId)">{{ item.title }}</div>
+      <b-modal :id="String(item.key)">Hello From My Modal!</b-modal>
+      <div class="inner">
+        <div class="star-rating">
+          <div class="star" v-for="index in 5" :key="index" @click="check(index)">
+            <span v-if="index < score">🌟</span>
+            <span v-if="index >= score">⭐</span>
+          </div>
+        </div>
+      </div>
+      <!-- <b-button :v-b-modal="String(item.key)">Show Modal</b-button> -->
+    </div>
   </div>
 </template>
 
@@ -10,7 +21,26 @@
 export default {
   name: "DimmedImageCard",
   props: {
-    image: {},
+    item: {},
+  },
+  data() {
+    return {
+      score: 0,
+      rating: {
+        contentId: 0,
+        rates: 0,
+      },
+    };
+  },
+  methods: {
+    check(index) {
+      this.score = index + 1;
+
+      this.rating.contentId = this.item.contentId;
+      this.rating.rates = this.score - 1;
+
+      this.$emit("rating", this.rating);
+    },
   },
 };
 </script>
@@ -31,15 +61,15 @@ export default {
 .image-container > img {
   position: relative;
   display: inline-block;
+  height: 200px;
   width: 320px;
 }
 
-.modal-button {
+.dimmed-container {
   position: absolute;
-  top: 75%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #ddd;
   color: #333;
   border: none;
   padding: 10px;
@@ -48,7 +78,7 @@ export default {
   transition: opacity 0.3s ease; /* 페이드 인/아웃 효과 적용 */
 }
 
-.image-container:hover .modal-button {
+.image-container:hover .dimmed-container {
   opacity: 1; /* 호버 시 버튼 표시 */
   z-index: 2;
 }
@@ -57,8 +87,22 @@ export default {
   overflow-x: scroll;
   white-space: nowrap;
 }
-
+.attraction-title {
+  font-size: 150%;
+  font-weight: bolder;
+  color: aliceblue;
+  margin-bottom: 10px;
+}
 .scroll-content {
+  display: inline-block;
+}
+.inner {
+  margin-bottom: 15px;
+  width: 200px;
+  z-index: 5;
+}
+.inner > .star-rating > .star {
+  font-size: 150%;
   display: inline-block;
 }
 </style>
