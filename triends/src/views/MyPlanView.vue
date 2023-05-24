@@ -36,13 +36,19 @@ export default {
           {
             id: 1,
             thumbnail: "./images/dummy1.jpg",
+            startDate: "2023-09-01",
+            endDate: "2023-09-05",
             title: "뜨거운 사막여행!",
             content: "미국 사막의 뜨거운 열기를 느껴보세요",
+            members: ["1", "2"],
             count: 4,
           },
           {
             id: 2,
             thumbnail: "./images/dummy2.jpg",
+            startDate: "2023-09-01",
+            endDate: "2023-09-05",
+
             title: "두오모에서의 로맨틱한 저녁",
             content: "'냉정과 열정사이' 그 배경인 두오모",
             count: 2,
@@ -50,6 +56,8 @@ export default {
           {
             id: 3,
             thumbnail: "./images/dummy3.jpg",
+            startDate: "2023-09-01",
+            endDate: "2023-09-05",
             title: "이국적인 곳",
             content: "다영한 조명과 문화 그 빛깔을 느껴보세요",
             count: 3,

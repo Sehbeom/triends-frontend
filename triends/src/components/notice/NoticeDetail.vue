@@ -6,14 +6,14 @@
     <div class="article-content">
       {{ article.content }}
     </div>
-    <hr/>
+    <hr />
   </div>
 </template>
 
 <script>
 import PageDetailHeader from "../layout/PageDetailHeader.vue";
 import UserAndButton from "../layout/UserAndButton.vue";
-import http from "@/util/http-common";
+import { getNoticeById } from "@/apis/notice";
 
 export default {
   components: { PageDetailHeader, UserAndButton },
@@ -25,7 +25,7 @@ export default {
         // articleTitle: "",
         // articleContent: "",
         // articleWriter: "admin",
-        article:Object,
+        article: Object,
       },
     };
   },
@@ -34,11 +34,18 @@ export default {
     // this.article.articleTitle = "test";
     // this.article.articleContent =
     //   "test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text test article text ";
-    this.articleno=this.$route.params.articleno;
-    let getnotice='notice/'+this.articleno;
-    http.get(getnotice).then(({data})=>{
-      this.article=data.data;
-    })
+    this.articleno = this.$route.params.articleno;
+    getNoticeById(
+      this.articleno,
+      ({ data }) => {
+        this.article = data.data;
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+        this.$router.push({ name: "error" });
+      }
+    );
   },
 };
 </script>

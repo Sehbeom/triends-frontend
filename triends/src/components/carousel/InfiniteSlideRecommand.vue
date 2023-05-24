@@ -1,20 +1,23 @@
 <template>
-  <infinite-slide-bar class="infinite-slide" :style="{ height: height }">
-    <span class="slide-content"
-      >여행을 떠나고 싶으신가요? Triends에서 친구와 함께 여행을 떠나보세요!
+  <infinite-slide-bar class="infinite-slide">
+    <span class="slide-content">
+      새롭게 떠날 여행지를 찾아보세요!
       <img
-        src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Airplane%20Departure.png"
-        alt="Airplane Departure"
+        src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Disguised%20Face.png"
+        alt="Disguised Face"
         width="100"
         height="100"
-    /></span>
+        style="margin-left: 10px"
+      />
+    </span>
   </infinite-slide-bar>
 </template>
 
 <script>
 import InfiniteSlideBar from "vue-infinite-slide-bar";
+
 export default {
-  name: "InfiniteSlide",
+  name: "InfiniteSlideRecommand",
   props: {
     height: String,
   },
@@ -22,23 +25,18 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .infinite-slide {
-  /* margin-top: 60px;
-  margin-bottom: 100px; */
-  /* height: 120px; */
-  /* height: 80px; */
-  background-color: #78ff78;
-
   width: 100vw !important;
   min-width: 1300px !important;
   display: flex;
-  /* flex-direction: column; */
-
+  height: 110px;
   align-items: center;
+  background-color: var(--card-orange);
   margin-left: calc(-50vw + 50%);
   border-top: solid;
   border-bottom: solid;
+  margin-bottom: 50px;
 }
 .slide-content {
   width: 1500px;

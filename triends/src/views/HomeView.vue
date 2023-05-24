@@ -3,20 +3,18 @@
     <page-button-header />
     <article-layout>
       <div class="img-section">
-        <img
-          src="../assets/mainpage.png"
-          alt=""
-          width="100%"
-          class="main-image"
-        />
+        <img src="../assets/mainpage.png" alt="" width="100%" class="main-image" />
         <span class="img-text">여행을 떠나볼까요?</span>
         <a href="recommand" class="img-button">여행지 둘러보기</a>
       </div>
-      <infinit-slide />
+      <div class="infinite-slide-container">
+        <infinit-slide height="120px" />
+      </div>
       <recommand-carousel
         carouselTitle="핫한 여행지"
         icon="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Fire.png"
         align="false"
+        :items="items"
       />
     </article-layout>
   </div>
@@ -27,20 +25,48 @@ import PageButtonHeader from "@/components/header/PageButtonHeader.vue";
 import ArticleLayout from "@/components/layout/ArticleLayout.vue";
 import RecommandCarousel from "@/components/carousel/RecommandCarousel.vue";
 import InfinitSlide from "@/components/carousel/InfinitSlide.vue";
+import { getAttractionByLikes } from "@/apis/attraction";
 
 export default {
   name: "HomeView",
+  data() {
+    return {
+      items: {
+        type: String,
+        auto: String,
+        items: Object,
+      },
+    };
+  },
   components: {
     PageButtonHeader,
     ArticleLayout,
     RecommandCarousel,
     InfinitSlide,
   },
+  created() {
+    getAttractionByLikes(
+      ({ data }) => {
+        this.items.items = data.data;
+        this.items.type = "attractionCarousel";
+        this.items.auto = "false";
+        console.log(this.items.items);
+      },
+      (error) => {
+        console.log(error);
+        this.$router.push({ name: "error" });
+      }
+    );
+  },
 };
 </script>
 <style scoped>
 .img-section {
   position: relative;
+}
+.infinite-slide-container {
+  margin-top: 60px;
+  margin-bottom: 100px;
 }
 .img-text {
   position: absolute;

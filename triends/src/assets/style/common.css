@@ -2,9 +2,11 @@
     --card-tomato: rgb(250, 88, 60);
     --card-deep-green: rgb(1,177, 86);
     --card-bright-green: rgb(0, 235, 151);
-    --card-yello: rgb(254, 172, 0);
+    --card-light-yello: rgb(254, 172, 0);
+    --card-deep-yello: rgb(253,174,1);
     --card-orange: rgb(254,118,43);
-    --card-pink: rgb(254, 86, 95);
+    --card-deep-pink: rgb(254, 86, 95);
+    --card-light-pink: rgb(253,148,166);
     --card-light-purple: rgb(209, 168, 250);
     --card-deep-purple: rgb(180, 121, 234);
 }

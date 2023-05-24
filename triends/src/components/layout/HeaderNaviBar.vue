@@ -10,23 +10,57 @@
         />
       </router-link>
       <div class="header-right">
-        <b-dropdown class="p-0 m-0" size="lg" variant="link" dropright toggle-class="text-decoration-none" no-caret>
-          <template #button-content>
-            <div 
-              :class="notificationClicked ? 'notification' : 'notification alarmanimation'"
-              @click="notificationClick">
+        <div v-if="!isLogin">
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Bust%20in%20Silhouette.png"
+            alt="Bust in Silhouette"
+            width="50"
+            height="50"
+            class="person-img"
+          />
+          <b-dropdown text="회원가입" right>
+            <b-dropdown-item href="#">
+              <router-link :to="{ name: 'signUp' }" class="link">
+                <b-icon icon="person-circle"></b-icon> 회원가입
+              </router-link>
+            </b-dropdown-item>
+            <b-dropdown-item href="#">
+              <user-login-modal />
+            </b-dropdown-item>
+          </b-dropdown>
+        </div>
+        <div v-else>
+          <b-dropdown
+            class="p-0 m-0"
+            size="lg"
+            variant="link"
+            dropright
+            toggle-class="text-decoration-none"
+            no-caret
+          >
+            <template #button-content>
+              <div
+                :class="
+                  notificationClicked
+                    ? 'notification'
+                    : 'notification alarmanimation'
+                "
+                @click="notificationClick"
+              >
                 <div class="reddot" v-if="notifications.length"></div>
-                <img 
+                <img
                   src="../../assets/icons/notification.png"
                   width="40"
-                  height="40" />
-            </div>
-          </template>
-          <div class="notification-dropdown">
-              <div 
-                class="notification-dropdown-onenoti" 
+                  height="40"
+                />
+              </div>
+            </template>
+            <div class="notification-dropdown">
+              <div
+                class="notification-dropdown-onenoti"
                 v-for="(notification, index) in notifications"
-                :key="notification.notificationId">
+                :key="notification.notificationId"
+              >
                 <div class="notification-dropdown-onenoti-contents">
                   <div class="notification-dropdown-text" v-b-modal.modal-center>
                     <span>{{ notification.additionalInfo + notificationSentences[notification.notificationType] }}</span>
@@ -37,29 +71,31 @@
                     <b-button size="sm" variant="danger">거절</b-button>
                   </div>
                 </div>
-                <div class="notification-dropdown-divider" v-if="index < (notifications.length - 1)"></div>
+                <div
+                  class="notification-dropdown-divider"
+                  v-if="index < notifications.length - 1"
+                ></div>
               </div>
-              
-          </div>
-          
-        </b-dropdown>
-
-        <img
-          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Bust%20in%20Silhouette.png"
-          alt="Bust in Silhouette"
-          width="50"
-          height="50"
-        />
-        <b-dropdown text="회원가입" right>
-          <b-dropdown-item href="#">
-            <router-link :to="{ name: 'signUp' }" class="link">
-              <b-icon icon="person-circle"></b-icon> 회원가입
-            </router-link>
-          </b-dropdown-item>
-          <b-dropdown-item href="#">
-            <user-login-modal />
-          </b-dropdown-item>
-        </b-dropdown>
+            </div>
+          </b-dropdown>
+          <img
+            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Man%20Raising%20Hand.png"
+            alt="Man Raising Hand"
+            width="50"
+            height="50"
+            class="person-img"
+          />
+          <b-dropdown text="마이페이지" right>
+            <b-dropdown-item href="#">
+              <router-link :to="{ name: 'mypage' }" class="link">
+                <b-icon icon="person-circle"></b-icon> 내정보
+              </router-link>
+            </b-dropdown-item>
+            <b-dropdown-item href="#" @click="logout()">
+              <b-icon icon="person-circle"></b-icon> 로그아웃
+            </b-dropdown-item>
+          </b-dropdown>
+        </div>
       </div>
     </div>
   </div>
@@ -68,10 +104,17 @@
 <script>
 import UserLoginModal from "../user/UserLoginModal.vue";
 
+import { mapState } from "vuex";
+
+const userStore = "userStore";
+
 export default {
   name: "HeaderNaviBar",
   components: {
     UserLoginModal,
+  },
+  computed: {
+    ...mapState(userStore, ["isLogin"]),
   },
   created() {
     this.notifications = [
@@ -131,9 +174,8 @@ export default {
   methods: {
     notificationClick: function () {
       this.notificationClicked = true;
-
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -163,10 +205,7 @@ export default {
 
 .notification {
   position: relative;
-  
   cursor: pointer;
-
-  margin-right: 15px;
 }
 
 .alarmanimation {
@@ -174,22 +213,22 @@ export default {
   transform-origin: 50% 50%;
 }
 
-@keyframes rotate_image{
-    0% {
-      transform: rotate(0deg);
-    }
-    10% {
-      transform: rotate(15deg);
-    }
-    20% {
-      transform: rotate(-15deg);
-    }
-    30%{
-      transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(0deg);
-    }
+@keyframes rotate_image {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(15deg);
+  }
+  20% {
+    transform: rotate(-15deg);
+  }
+  30% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 .notification-dropdown {
@@ -267,5 +306,8 @@ export default {
 
   top: 7px;
   right: 8px;
+}
+.person-img {
+  margin-right: 10px;
 }
 </style>

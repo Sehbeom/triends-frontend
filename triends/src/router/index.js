@@ -10,10 +10,22 @@ import review from "./review";
 import friends from "./friends";
 import mypage from "./mypage";
 import user from "./user";
+import error from "./error";
 
 Vue.use(VueRouter);
 
-const routes = [home, plan, review, mypage, myplan, notice, recommendedattraction, user, friends];
+const routes = [
+  home,
+  plan,
+  review,
+  mypage,
+  myplan,
+  notice,
+  recommendedattraction,
+  user,
+  friends,
+  error,
+];
 
 const router = new VueRouter({
   mode: "history",

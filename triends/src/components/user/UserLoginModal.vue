@@ -1,42 +1,20 @@
 <template>
   <div>
     <span v-b-modal.modal-prevent-closing>로그인</span>
-    <b-modal
-      id="modal-prevent-closing"
-      ref="modal"
-      title="로그인"
-      @show="resetModal"
-      @hidden="resetModal"
-      @ok="handleOk"
-    >
-      <form ref="form" @submit.stop.prevent="handleSubmit">
-        <b-form-group
-          label="아이디"
-          label-for="id-input"
-          invalid-feedback="id is required"
-          :state="nameState"
-        >
-          <b-form-input
-            id="id-input"
-            v-model="user.userid"
-            :state="nameState"
-            required
-          ></b-form-input>
+    <b-modal id="modal-prevent-closing" ref="modal" title="로그인" @ok="confirm">
+      <form ref="form">
+        <b-form-group label="아이디" label-for="id-input" invalid-feedback="id is required">
+          <b-form-input id="id-input" v-model="user.userId" required></b-form-input>
         </b-form-group>
       </form>
-      <form ref="form" @submit.stop.prevent="handleSubmit">
+      <form ref="form">
         <b-form-group
           label="비밀번호"
+          form="password"
           label-for="pwd-input"
           invalid-feedback="password is required"
-          :state="nameState"
         >
-          <b-form-input
-            id="pwd-input"
-            v-model="user.userpwd"
-            :state="nameState"
-            required
-          ></b-form-input>
+          <b-form-input id="pwd-input" v-model="user.userPwd" required></b-form-input>
         </b-form-group>
       </form>
     </b-modal>
@@ -44,15 +22,35 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
+const memberStore = "userStore";
+
 export default {
   name: "UserLoginModal",
   data() {
     return {
       user: {
-        userid: "",
-        userpwd: "",
+        userId: "",
+        userPwd: "",
       },
     };
+  },
+  computed: {
+    ...mapState(memberStore, ["isLogin", "isLoginError", "userInfo"]),
+  },
+  methods: {
+    ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+    async confirm() {
+      await this.userConfirm(this.user);
+      let token = sessionStorage.getItem("access-token");
+      console.log("token >> " + token);
+      if (this.isLogin) {
+        await this.getUserInfo(token);
+        console.log("userInfo :: ", this.userInfo);
+        this.$router.push({ name: "home" }).catch(() => {});
+      }
+    },
   },
 };
 </script>
