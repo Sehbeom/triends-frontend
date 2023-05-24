@@ -1,9 +1,9 @@
 <template>
   <div class="review">
-    <page-detail-header :title="article.subject"></page-detail-header>
+    <page-detail-header :title="articledata.subject"></page-detail-header>
     <div class="review-page-container">
       <b-container style="width: 90%; min-width: 1000px">
-        <user-and-button :username="article.userName" />
+        <user-and-button :username="articledata.userName" />
         <hr />
         <div>
           <b-button v-b-toggle.sidebar>날짜별 사진보기</b-button>
@@ -13,9 +13,9 @@
             </div>
           </b-sidebar>
         </div>
-        <custom-carousel :items="items" />
+        <custom-carousel :items="images" />
         <div class="review-content">
-          {{ article.content }}
+          {{ articledata.content }}
         </div>
         <hr />
         댓글
@@ -30,7 +30,7 @@
               ></textarea>
             </b-col>
             <b-col sm="1">
-              <b-button class="form-btn">댓글 등록</b-button>
+              <b-button class="form-btn">등록</b-button>
             </b-col>
           </b-row>
         </div>
@@ -64,36 +64,49 @@ export default {
   },
   data() {
     return {
-      article: {},
+      articledata:{},
       items: {
         type: "dimmedImageCarousel",
         auto: "false",
         items: [
-          { index: 1, src: "./mainpage.png" },
-          { index: 2, src: "/img/ssafy_logo.9aceab8b.png" },
-          { index: 3, src: "/img/ssafy_logo.9aceab8b.png" },
-          { index: 4, src: "/img/ssafy_logo.9aceab8b.png" },
-          { index: 5, src: "/img/ssafy_logo.9aceab8b.png" },
-          { index: 6, src: "/img/ssafy_logo.9aceab8b.png" },
-          { index: 7, src: "/img/ssafy_logo.9aceab8b.png" },
+          {
+            days:0,
+            images:[],
+          }
+
+          // { index: 1, src: "./mainpage.png" },
+          // { index: 2, src: "/img/ssafy_logo.9aceab8b.png" },
+          // { index: 3, src: "/img/ssafy_logo.9aceab8b.png" },
+          // { index: 4, src: "/img/ssafy_logo.9aceab8b.png" },
+          // { index: 5, src: "/img/ssafy_logo.9aceab8b.png" },
+          // { index: 6, src: "/img/ssafy_logo.9aceab8b.png" },
+          // { index: 7, src: "/img/ssafy_logo.9aceab8b.png" },
         ],
       },
       comments: [{}],
     };
   },
   created() {
-    console.log(this.$route.params);
-    this.articleno = this.$route.params.articleno;
-    let getreview = "review/detail/" + this.articleno;
-    console.log(getreview);
+    console.log(this.$route.query.reviewId);
     if (!this.userInfo.userId) {
+      this.articleno = this.$route.params.articleno;
+      let getreview = "review/detail/" + this.articleno;
+      console.log(getreview);
       console("no lpogin");
     } else {
+      let tmpdays=[];
       reviewDetail(
-        this.articleno,
+        this.$route.query.reviewId,
         this.userInfo.userId,
         ({ data }) => {
-          console.log(data);
+          this.articledata=data.data;
+          console.log(this.articledata.planInfo.courseInfo);
+          let ttt=this.articledata.planInfo.courseInfo;
+          for(let i=0;i<ttt.length;i++){
+            tmpdays.days[i]=ttt[i].attractionInfo.daysId
+          }
+          // this.items.images.days=
+          // this.items.items=this.articledata.planInfo.courseInfo.courses.attractionInfo.firstImage
         },
         (error) => {
           console.log(error);
