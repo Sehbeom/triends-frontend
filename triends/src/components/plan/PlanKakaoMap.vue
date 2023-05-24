@@ -28,7 +28,6 @@ export default {
   name: "PlanKakoMap",
   components: {
     PlanSideTab,
-    AttractionOverlay,
   },
   data() {
     return {

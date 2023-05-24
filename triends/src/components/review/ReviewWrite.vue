@@ -1,12 +1,12 @@
 <template>
   <article-layout>
     <div class="form-container">
-      <b-form @submit="onSubmit" @reset="onReset">
+      <b-form @submit="register" @reset="reset">
         <b-form-group class="input-form" label-for="review-title">
           <h5>리뷰 제목</h5>
           <b-form-input
             id="review-title"
-            v-model="form.title"
+            v-model="form.subject"
             type="text"
             placeholder="리뷰 제목을 입력해주세요."
           />
@@ -17,13 +17,19 @@
           <b-form-select
             class="review-plan-select"
             id="review-plan"
-            v-model="form.planselected"
-            :options="plans"
-          />
+            v-model="form.planId"
+            @change="selectPlan"
+          >
+            <b-form-select-option v-for="plan in plans" :key="plan.planId" :value="plan.planId">{{
+              plan.title
+            }}</b-form-select-option>
+          </b-form-select>
         </b-form-group>
 
         <!-- 플랜 선택시 관광지 카드 보이기 -->
-        <div class="filled-wrap" v-if="form.planselected"><recommand-carousel /></div>
+        <div class="filled-wrap" v-if="form.planId">
+          <custom-carousel :items="items" @ratingAttr="ratingAttr" />
+        </div>
         <div class="blank-wrap" v-else>플랜을 선택해주세요.</div>
 
         <b-form-group class="input-form" label-for="review-plan">
@@ -45,68 +51,100 @@
 
 <script>
 import ArticleLayout from "../layout/ArticleLayout.vue";
-import RecommandCarousel from "@/components/carousel/RecommandCarousel.vue";
+// import RecommandCarousel from "@/components/carousel/RecommandCarousel.vue";
+import CustomCarousel from "../carousel/CustomCarousel.vue";
+import { reviewWrite, getPlanList, getPlanCourse } from "@/apis/review";
+import { mapState } from "vuex";
+
+const userStore = "userStore";
 
 export default {
   components: {
     ArticleLayout,
-    RecommandCarousel,
+    // RecommandCarousel,
+    CustomCarousel,
   },
   data() {
     return {
       form: {
-        title: "",
-        planselected: null,
+        userId: null,
+        planId: null,
+        subject: "",
         content: "",
       },
-      plans: [
-        { text: "플랜을 선택해주세요.", value: null },
-        { text: "강릉여행", value: "a" },
-        { text: "제주도여행", value: "b" },
-        { text: "부산여행", value: "c" },
-        { text: "여수여행", value: "d" },
-      ],
-      items: [
-        {
-          id: 1,
-          title: "attraction1",
-          content: "test card content. wanna go home",
-          count: 4,
-        },
-        {
-          id: 2,
-          title: "attraction2",
-          content: "test card content. wanna go home",
-          count: 2,
-        },
-        {
-          id: 3,
-          title: "attraction3",
-          content: "test card content. wanna go home",
-          count: 3,
-        },
-        {
-          id: 4,
-          title: "attraction4",
-          content: "test card content. wanna go home",
-          count: 4,
-        },
-      ],
+      plans: [],
+      items: {
+        type: "dimmedImageCarousel",
+        items: [],
+      },
     };
   },
+  created() {
+    let userId = this.userInfo.userId;
+    getPlanList(
+      userId,
+      ({ data }) => {
+        this.plans = data.data;
+        console.log(this.plans);
+      },
+      (error) => {
+        console.log(error);
+        this.$router.push({ name: "error" });
+      }
+    );
+  },
   methods: {
-    onSubmit(event) {
-      event.preventDefault();
-      alert(JSON.stringify(this.form));
+    selectPlan() {
+      console.log(this.form.planId);
+      let totalCourses = [];
+      let key = 0;
+      getPlanCourse(
+        this.form.planId,
+        ({ data }) => {
+          data.data.courseInfo.forEach((element) => {
+            element.courses.forEach((el) => {
+              key += 1;
+              let tmp = el.attractionInfo;
+              tmp["key"] = key;
+              // console.log(tmp);
+              totalCourses.push(tmp);
+            });
+          });
+          this.items.items = totalCourses;
+        },
+        (error) => {
+          console.log(error);
+          this.$router.push({ name: "error" });
+        }
+      );
     },
-    onReset(event) {
-      event.preventDefault();
-      this.form.title = "";
-      this.form.plans = null;
+    ratingAttr(value) {
+      console.log(value.contentId + " " + value.score);
+    },
+    register() {
+      this.form.userId = this.userInfo.userId;
+      reviewWrite(
+        JSON.stringify(this.form),
+        ({ data }) => {
+          console.log(data);
+        },
+        (error) => {
+          console.log(error);
+          this.$router.push({ name: "error" });
+        }
+      );
+    },
+    reset() {
+      this.form.subject = "";
+      this.form.planId = null;
+      this.form.content = "";
       this.$nextTick(() => {
         this.show = true;
       });
     },
+  },
+  computed: {
+    ...mapState(userStore, ["userInfo"]),
   },
 };
 </script>
