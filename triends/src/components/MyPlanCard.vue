@@ -7,10 +7,12 @@
       <div class="plan-data" :style="{ 'background-color': color }">
         <div class="plan-header">
           <span class="plan-title">{{ item.title }}</span>
-          <span class="plan-date">{{ item.startDate + "~" + item.endDate }}</span>
+          <span class="plan-date">{{
+            item.startDate + "~" + item.endDate
+          }}</span>
         </div>
         <div class="plan-button">
-          <span>{{ item.members?.length }}</span>
+          <span>{{ item.members.length }}</span>
           <b-button v-b-toggle.sidebar-backdrop>Toggle Sidebar</b-button>
         </div>
       </div>

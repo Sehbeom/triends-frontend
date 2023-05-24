@@ -36,5 +36,6 @@ export default {
 .search-result-container {
   max-height: 780px;
   overflow-y: scroll;
+  margin-top: 5px;
 }
 </style>

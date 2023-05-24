@@ -7,7 +7,11 @@
           v-model="searchKeyword"
           placeholder="검색어를 입력해주세요"
         ></b-form-input>
-        <b-button class="box-button" variant="outline-primary" @click="searchByMap()"
+        <b-button
+          v-if="isSearchable == true"
+          class="box-button"
+          variant="outline-primary"
+          @click="searchByMap()"
           >검색</b-button
         >
       </div>
@@ -23,6 +27,7 @@ import PlanSideTab from "@/components/plan/PlanSideTab.vue";
 import { mapActions, mapState } from "vuex";
 
 const attractionStore = "attractionStore";
+const planDraftStore = "planDraftStore";
 
 export default {
   name: "PlanKakoMap",
@@ -45,41 +50,46 @@ export default {
     }
   },
   computed: {
-    ...mapState(attractionStore, ["selectedAttraction", "isRecommanded"]),
-    setMarker() {
+    ...mapState(attractionStore, [
+      "selectedAttraction",
+      "isRecommanded",
+      "isSearchable",
+    ]),
+    ...mapState(planDraftStore, ["isSelected", "myPlan"]),
+    setSearchedPosition() {
       return this.selectedAttraction;
+    },
+    setPlanMarker() {
+      return this.isSelected;
     },
   },
   watch: {
-    setMarker() {
-      for (var j = 0; j < this.markers.length; j++) {
-        this.markers[j].setMap(null);
-      }
-      this.markers = [];
-
+    setSearchedPosition() {
+      this.initMarkers();
       const positions = this.selectedAttraction;
-      console.log("positions", positions);
+      // console.log("positions?", positions);
       var imageSrc = "";
       if (!this.isRecommanded) {
-        imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+        imageSrc =
+          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
       } else {
-        imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
+        imageSrc =
+          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
       }
-      for (var i = 0; i < positions.length; i++) {
-        var imageSize = new kakao.maps.Size(24, 35);
+      this.setMarker(positions, imageSrc);
+    },
+    setPlanMarker() {
+      this.initMarkers();
 
-        // 마커 이미지를 생성합니다
-        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
-        // 마커를 생성합니다
-        var marker = new kakao.maps.Marker({
-          map: this.map, // 마커를 표시할 지도
-          position: new kakao.maps.LatLng(positions[i].latitude, positions[i].longitude), // 마커를 표시할 위치
-          title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-          image: markerImage, // 마커 이미지
+      const positions = [];
+      this.myPlan.planInfo.courseInfo.forEach((day) => {
+        day.courses.forEach((course) => {
+          positions.push(course);
         });
-        this.markers.push(marker);
-      }
+      });
+      var imageSrc =
+        "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
+      this.setMarker(positions, imageSrc);
     },
   },
 
@@ -91,7 +101,10 @@ export default {
       /* global kakao */
       const script = document.createElement("script");
       const serviceKey = "93afce403fa4b93b85720e811bebec2b";
-      script.src = "//dapi.kakao.com/v2/maps/sdk.js?appkey=" + serviceKey + "&autoload=false";
+      script.src =
+        "//dapi.kakao.com/v2/maps/sdk.js?appkey=" +
+        serviceKey +
+        "&autoload=false";
       console.log(script.src);
       script.onload = () => window.kakao.maps.load(this.loadMap);
       document.head.appendChild(script);
@@ -116,6 +129,32 @@ export default {
       let searchurl = `?neLat=${neLatLng.Ma}&neLng=${neLatLng.La}&swLat=${swLatLng.Ma}&swLng=${swLatLng.La}&keyword=${this.searchKeyword}`;
       console.log(searchurl);
       this.getAttraction(searchurl);
+    },
+    setMarker(positions, imageSrc) {
+      for (var i = 0; i < positions.length; i++) {
+        var imageSize = new kakao.maps.Size(24, 35);
+
+        // 마커 이미지를 생성합니다
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+          map: this.map, // 마커를 표시할 지도
+          position: new kakao.maps.LatLng(
+            positions[i].latitude,
+            positions[i].longitude
+          ), // 마커를 표시할 위치
+          title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+          image: markerImage, // 마커 이미지
+        });
+        this.markers.push(marker);
+      }
+    },
+    initMarkers() {
+      for (var j = 0; j < this.markers.length; j++) {
+        this.markers[j].setMap(null);
+      }
+      this.markers = [];
     },
   },
 };
@@ -148,6 +187,6 @@ export default {
   display: flex;
 }
 .side-tab-container {
-  width: 500px;
+  width: 600px;
 }
 </style>

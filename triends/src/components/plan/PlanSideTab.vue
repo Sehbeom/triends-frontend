@@ -3,7 +3,7 @@
     <b-tab title="검색결과" @click="setKeyword()" active
       ><attraction-search-result :items="selectedAttraction"
     /></b-tab>
-    <b-tab title="내플랜"><attraction-plan /></b-tab>
+    <b-tab title="내플랜" @click="setMyPlan()"><attraction-plan /></b-tab>
     <b-tab title="추천여행지" @click="setRecommand()"
       ><attraction-search-result type="recommanded" :items="selectedAttraction"
     /></b-tab>
@@ -17,6 +17,7 @@ import AttractionPlan from "./AttractionPlan.vue";
 import AttractionSearchResult from "./AttractionSearchResult.vue";
 
 const attractionStore = "attractionStore";
+const planDraftStore = "planDraftStore";
 
 export default {
   name: "PlanSideTab",
@@ -24,22 +25,31 @@ export default {
     AttractionSearchResult,
     AttractionPlan,
   },
-  methods: {
-    drawMarker(latlng) {
-      this.marker = latlng;
-      this.$emit("draw", this.marker);
-    },
-  },
+
   computed: {
     ...mapState(attractionStore, ["selectedAttraction"]),
   },
   methods: {
-    ...mapActions(attractionStore, ["setSearchTypeKeyword", "setSearchTypeRecommand"]),
+    ...mapActions(attractionStore, [
+      "setSearchTypeKeyword",
+      "setSearchTypeRecommand",
+      "setSearchable",
+    ]),
+    ...mapActions(planDraftStore, [
+      "setMyPlanSelected",
+      "setMyPlanSelectedFalse",
+    ]),
     setKeyword() {
       this.setSearchTypeKeyword();
+      this.setMyPlanSelectedFalse();
     },
     setRecommand() {
       this.setSearchTypeRecommand();
+      this.setMyPlanSelectedFalse();
+    },
+    setMyPlan() {
+      this.setMyPlanSelected();
+      this.setSearchable();
     },
   },
 };

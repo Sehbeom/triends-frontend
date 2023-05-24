@@ -3,7 +3,10 @@
     <div class="result-name">{{ course.title }}</div>
     <div>
       <div col="3" class="result-img">
-        <img :src="course.firstImage" alt="no image" />
+        <img
+          :src="course.firstImage || './images/no-image.png'"
+          alt="no image"
+        />
       </div>
       <div col="9" class="result-add">{{ course.addr1 }}{{ course.addr2 }}</div>
       <div class="result-tel">{{ course.tel }}</div>
