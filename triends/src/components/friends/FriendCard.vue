@@ -11,7 +11,17 @@
         </div>
         <div class="btncontainer">
             <div class="friendrequestbtn">
-                <b-button variant="success" @click="() => clickEvent()">친구 추가</b-button>
+                <b-button 
+                v-if="friendStatus == 'friend'"
+                variant="danger" 
+                @click="clickEvent(userId)">친구 삭제</b-button>
+                <b-button 
+                v-if="friendStatus == 'requested'"
+                variant="success" disabled>요청 완료!</b-button>
+                <b-button 
+                v-if="!friendStatus"
+                variant="success" 
+                @click="clickEvent(userId)">친구 추가</b-button>
             </div>
         </div>
     </div>
@@ -23,6 +33,9 @@ import defaultimg from "@/assets/icons/defaultprofile.png";
 export default {
     name: "FriendCard",
     props: {
+        userId: {
+            type: Number
+        },
         imgsrc: {
             type: String
         },
@@ -31,6 +44,10 @@ export default {
         },
         clickEvent: {
             type: Function
+        },
+        friendStatus: {
+            type: String,
+            required: true
         }
     },
     data() {

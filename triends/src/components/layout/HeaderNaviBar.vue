@@ -29,10 +29,10 @@
             </b-dropdown-item>
           </b-dropdown>
         </div>
-        <div v-else>
+        <div v-else :class="{'removeborder' : (notifications.length == 0)}">
           <b-dropdown
             class="p-0 m-0"
-            size="lg"
+            size="sm"
             variant="link"
             dropright
             toggle-class="text-decoration-none"
@@ -67,7 +67,8 @@
                     <notification-info-modal :id="notification.notificationId" />
                   </div>
                   <div class="notification-dropdown-btns">
-                    <b-button size="sm" variant="success">수락</b-button>
+                    <b-button size="sm" variant="success" 
+                    @click="accept(notification)">수락</b-button>
                     <b-button size="sm" variant="danger" @click="refuse(notification.notificationId)">거절</b-button>
                   </div>
                 </div>
@@ -103,7 +104,7 @@
 
 <script>
 import UserLoginModal from "../user/UserLoginModal.vue";
-import { getNotificationList, refuseNotification } from "@/apis/notification";
+import { getNotificationList, refuseNotification, acceptPlanMember, acceptFriendRequest } from "@/apis/notification";
 
 import { mapState } from "vuex";
 
@@ -119,20 +120,7 @@ export default {
   },
   created() {
     if (this.isLogin) {
-      getNotificationList(
-        this.userInfo.userId,
-        ({data}) => {
-          this.notifications = data.data;
-          if (this.notifications.length > 0) {
-            this.notificationClicked = false;
-          } else {
-            this.notificationClicked = true;
-          }
-        },
-        ({error}) => {
-          console.log(error);
-        }
-      )
+      this.getNotifications(true);
     }
   },
   data() {
@@ -149,8 +137,62 @@ export default {
     notificationClick: function () {
       this.notificationClicked = true;
     },
+    getNotifications: function (firstRendered) {
+      getNotificationList(
+        this.userInfo.userId,
+        ({ data }) => {
+          this.notifications = data.data;
+          console.log("notifications : " + this.notifications);
+          if (firstRendered) {
+            if (this.notifications.length > 0) {
+              this.notificationClicked = false;
+            } else {
+              this.notificationClicked = true;
+            }
+          }
+        },
+        ({ error }) => {
+          console.log(error);
+          this.$router.push({ name: "error" });
+        }
+      )
+    },
     refuse: function(notificationId) {
-      refuseNotification(notificationId);
+      refuseNotification(
+        notificationId,
+        () => {
+          this.getNotifications();
+        },
+        (error) => {
+          console.log(error);
+          this.$router.push({ name: "error" });
+        }
+      );
+    },
+    accept: function (notification) {
+      if (notification.notificationType == "friend") {
+        acceptFriendRequest(
+          notification,
+          () => {
+            this.getNotifications();
+          },
+          (error) => {
+            console.log(error);
+            this.$router.push({ name: "error" });
+          }
+        )
+      } else {
+        acceptPlanMember(
+          notification,
+          () => {
+            this.getNotifications();
+          },
+          (error) => {
+            console.log(error);
+            this.$router.push({ name: "error" });
+          }
+        )
+      }
     }
   },
 };
@@ -237,6 +279,12 @@ export default {
 ::v-deep{
 .dropdown .dropdown-menu {
   --bs-dropdown-padding-y: 0 !important;
+}
+}
+
+.removeborder::v-deep {
+  .dropdown .dropdown-menu {
+  --bs-dropdown-border-width: 0 !important;
 }
 }
 
