@@ -9,6 +9,7 @@
 
 <script>
 import AttracionSearchResultItem from "./AttracionSearchResultItem.vue";
+
 export default {
   name: "AttractionSerchResult",
   components: {
@@ -16,7 +17,9 @@ export default {
   },
   props: {
     items: [],
+    type: String,
   },
+
   data() {
     return {};
   },

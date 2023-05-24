@@ -1,11 +1,52 @@
+import { Plan } from "@/util/plan-util";
+
 const planDraftStore = {
   namespaced: true,
   state: {
-    selectedPlans: null,
+    myPlan: null,
+    day: 0,
   },
-  getters: {},
-  mutations: {},
-  actions: {},
+  getters: {
+    getMyPlanItems: function (state) {
+      return state.myPlan.planInfo.courseInfo;
+    },
+    getDateArray: function (state) {
+      var options = [];
+      for (let index = 1; index <= state.day; index++) {
+        options.push({ text: index, value: index });
+      }
+      return options;
+    },
+  },
+  mutations: {
+    SET_NEW_DAY: (state) => {
+      state.day++;
+      console.log("date ", state.day);
+      state.myPlan.planInfo.courseInfo.push({ day: state.day, courses: [] });
+    },
+    SET_NEW_COURSE: (state, { course, day }) => {
+      console.log("fuck!!!!!", state.myPlan.planInfo.courseInfo);
+      state.myPlan.planInfo.courseInfo[day - 1].courses.push(course);
+    },
+    SET_NEW_PLAN: (state, newPlan) => {
+      state.myPlan = newPlan;
+      state.day = 1;
+    },
+  },
+  actions: {
+    savePlan: () => {},
+    createPlan({ commit }, userId) {
+      var newPlan = new Plan(userId);
+      console.log("plan created!!", newPlan);
+      commit("SET_NEW_PLAN", newPlan);
+    },
+    addCourse({ commit }, { course, day }) {
+      commit("SET_NEW_COURSE", { course, day });
+    },
+    addDay({ commit }) {
+      commit("SET_NEW_DAY");
+    },
+  },
 };
 
 export default planDraftStore;
