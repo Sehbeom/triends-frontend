@@ -24,6 +24,12 @@ export default {
     AttractionSearchResult,
     AttractionPlan,
   },
+  methods: {
+    drawMarker(latlng) {
+      this.marker = latlng;
+      this.$emit("draw", this.marker);
+    },
+  },
   computed: {
     ...mapState(attractionStore, ["selectedAttraction"]),
   },

@@ -4,12 +4,7 @@
     <div class="write-btn">
       <b-button><router-link :to="{ name: 'reviewregist' }">글쓰기</router-link></b-button>
     </div>
-    <div
-      class="review-card-container"
-      v-for="review in reviews"
-      :key="review.reviewId"
-      @click="viewReview(review)"
-    >
+    <div class="review-card-container" v-for="review in reviews" :key="review.reviewId">
       <attraction-review-card :review="review"></attraction-review-card>
     </div>
   </div>
@@ -38,19 +33,7 @@ export default {
       console.log(this.reviews);
     });
   },
-  methods: {
-    viewReview(review) {
-      console.log(review.reviewId);
-      this.$router
-        .push({
-          name: "reviewDetail",
-          params: { articleno: review.reviewId },
-        })
-        .catch(() => {
-          console.log("uncaght error");
-        });
-    },
-  },
+  methods: {},
 };
 </script>
 
@@ -61,5 +44,6 @@ export default {
 }
 .write-btn {
   text-align: right;
+  padding-bottom: 20px;
 }
 </style>
