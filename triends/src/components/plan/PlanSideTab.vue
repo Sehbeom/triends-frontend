@@ -24,11 +24,15 @@ export default {
     AttractionSearchResult,
     AttractionPlan,
   },
+
   computed: {
     ...mapState(attractionStore, ["selectedAttraction"]),
   },
   methods: {
-    ...mapActions(attractionStore, ["setSearchTypeKeyword", "setSearchTypeRecommand"]),
+    ...mapActions(attractionStore, [
+      "setSearchTypeKeyword",
+      "setSearchTypeRecommand",
+    ]),
     setKeyword() {
       this.setSearchTypeKeyword();
     },

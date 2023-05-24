@@ -7,12 +7,7 @@
         <hr />
         <div>
           <b-button v-b-toggle.sidebar>날짜별 사진보기</b-button>
-          <b-sidebar
-            id="sidebar"
-            title="일자별 여행지"
-            shadow
-            class="my-sidebar"
-          >
+          <b-sidebar id="sidebar" title="일자별 여행지" shadow class="my-sidebar">
             <div class="px-3 py-2">
               <b-btn>1일차</b-btn>
             </div>
@@ -54,8 +49,11 @@
 <script>
 import PageDetailHeader from "@/components/layout/PageDetailHeader.vue";
 import UserAndButton from "../layout/UserAndButton.vue";
-import http from "@/util/http-common";
 import CustomCarousel from "../carousel/CustomCarousel.vue";
+import { reviewDetail } from "@/apis/review";
+import { mapState } from "vuex";
+
+const userStore = "userStore";
 
 export default {
   name: "ReviewDetail",
@@ -88,10 +86,24 @@ export default {
     this.articleno = this.$route.params.articleno;
     let getreview = "review/detail/" + this.articleno;
     console.log(getreview);
-    http.get(getreview).then(({ data }) => {
-      this.article = data.data;
-      console.log(this.article);
-    });
+    if (!this.userInfo.userId) {
+      console("no lpogin");
+    } else {
+      reviewDetail(
+        this.articleno,
+        this.userInfo.userId,
+        ({ data }) => {
+          console.log(data);
+        },
+        (error) => {
+          console.log(error);
+          this.$router.push({ name: "error" });
+        }
+      );
+    }
+  },
+  computed: {
+    ...mapState(userStore, ["userInfo"]),
   },
 };
 </script>
