@@ -1,14 +1,24 @@
 <template>
   <div class="search-result" @click="moveMap()">
     <div class="img-container">
-      <img :src="item.firstImage || './images/no-image.png'" alt="no image" class="img" />
+      <img
+        :src="item.firstImage || './images/no-image.png'"
+        alt="no image"
+        class="img"
+      />
     </div>
     <div class="content">
       <div class="title">{{ item.title }}</div>
-      <div class="addr">{{ item.addr1 }}{{ item.addr2 }}</div>
+      <div class="addr">
+        {{ item.addr1 }}
+        {{ item.addr2 }}
+      </div>
       <div class="tel">{{ item.tel }}</div>
-      <div class="submit" v-if="isPlan !== false">
-        <b-button @click="addCourseToStore()" class="submit-button" variant="outline-primary"
+      <div class="submit" v-if="isPlan !== 'plan'">
+        <b-button
+          @click="addCourseToStore()"
+          class="submit-button"
+          variant="outline-primary"
           >계획 추가</b-button
         >
         <b-form-select
@@ -37,7 +47,8 @@ export default {
     ...mapActions(mapMarkStore, ["changeFocusMarker"]),
     addCourseToStore() {
       if (this.selected === null) {
-        alert("일정을 추가할 날짜를 선택해주세요!");
+        // alert("일정을 추가할 날짜를 선택해주세요!");
+        alert(this.isPlan);
       } else {
         let itemParse = { course: this.item, day: this.selected };
         this.addCourse(itemParse);
@@ -103,5 +114,8 @@ export default {
 }
 .submit-button :hover {
   background-color: blue;
+}
+.title {
+  font-weight: bold;
 }
 </style>

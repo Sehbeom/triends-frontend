@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ name: 'plan' }">
+  <div @click="test" class="plan-link">
     <div class="plan-container">
       <div class="image-container">
         <img :src="item.thumbnail" alt="" class="plan-img" />
@@ -7,7 +7,9 @@
       <div class="plan-data" :style="{ 'background-color': color }">
         <div class="plan-header">
           <span class="plan-title">{{ item.title }}</span>
-          <span class="plan-date">{{ item.startDate + "~" + item.endDate }}</span>
+          <span class="plan-date">{{
+            item.startDate + "~" + item.endDate
+          }}</span>
         </div>
         <div class="plan-button">
           <span>{{ item.members }}</span>
@@ -15,11 +17,18 @@
         </div>
       </div>
     </div>
-  </router-link>
+  </div>
 </template>
 
 <script>
 import { selectRandomColor } from "@/util/color-util";
+import { getPlanDetail } from "@/apis/plan";
+import { mapActions, mapState } from "vuex";
+// import plan from "@/router/plan";
+
+const planDraftStore = "planDraftStore";
+const userStore = "userStore";
+
 export default {
   name: "MyPlanCard",
   props: { item: {} },
@@ -27,6 +36,26 @@ export default {
     return {
       color: selectRandomColor(),
     };
+  },
+  computed: {
+    ...mapState(userStore, ["userInfo"]),
+  },
+  methods: {
+    ...mapActions(planDraftStore, ["setModeUpdate", "createPlan"]),
+    async test() {
+      confirm("선택하신 플랜을 편집하시겠습니까?");
+      await getPlanDetail(
+        this.item.planId,
+        ({ data }) => {
+          this.createPlan(this.userInfo.userId);
+          this.setModeUpdate(data.data);
+        },
+        () => {
+          this.$router.push({ name: "error" });
+        }
+      );
+      this.$router.push({ name: "plan" });
+    },
   },
 };
 </script>
@@ -89,5 +118,8 @@ a {
 .plan-button {
   margin-top: 2vw;
   text-align: right;
+}
+.plan-link {
+  cursor: pointer;
 }
 </style>

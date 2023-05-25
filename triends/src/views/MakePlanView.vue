@@ -28,6 +28,12 @@ export default {
   methods: {
     ...mapActions(planDraftStore, ["createPlan"]),
   },
+  beforeRouteLeave(to, from, next) {
+    confirm("작성하신 내용이 지워질 수 있습니다!");
+
+    this.createPlan(this.userInfo.userId);
+    next();
+  },
 };
 </script>
 

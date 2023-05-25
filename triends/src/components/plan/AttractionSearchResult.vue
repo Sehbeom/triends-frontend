@@ -1,7 +1,7 @@
 <template>
   <div class="search-result-container">
     <div v-for="item in items" :key="item.id">
-      <attracion-search-result-item :item="item" />
+      <attracion-search-result-item :item="item" isPlan="attraction" />
       <hr />
     </div>
     <div v-if="!items" class="holder">
