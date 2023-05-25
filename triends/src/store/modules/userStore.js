@@ -1,7 +1,12 @@
 import jwtDecode from "jwt-decode";
 import router from "@/router";
-import { login, findById, tokenRegeneration, logout } from "@/apis/user";
-import { updateUserInfo } from "@/apis/mypage";
+import {
+  login,
+  findById,
+  tokenRegeneration,
+  logout,
+  updateUserInfo,
+} from "@/apis/user";
 
 const userStore = {
   namespaced: true,
