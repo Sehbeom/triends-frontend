@@ -28,6 +28,7 @@ import { mapActions, mapState } from "vuex";
 
 const attractionStore = "attractionStore";
 const planDraftStore = "planDraftStore";
+const mapMarkStore = "mapMarkStore";
 
 export default {
   name: "PlanKakoMap",
@@ -52,14 +53,24 @@ export default {
   computed: {
     ...mapState(attractionStore, ["selectedAttraction", "isRecommanded", "isSearchable"]),
     ...mapState(planDraftStore, ["isSelected", "myPlan"]),
+    ...mapState(mapMarkStore, ["selectedMarker"]),
     setSearchedPosition() {
       return this.selectedAttraction;
     },
     setPlanMarker() {
       return this.isSelected;
     },
+    setFocus() {
+      return this.selectedMarker;
+    },
   },
   watch: {
+    setFocus() {
+      if (this.selectedMarker !== null) {
+        this.map.setCenter(new kakao.maps.LatLng(this.selectedMarker.lat, this.selectedMarker.lng));
+        this.map.setLevel(5, { animate: true });
+      }
+    },
     setSearchedPosition() {
       this.initMarkers();
       const positions = this.selectedAttraction;
@@ -142,6 +153,9 @@ export default {
         this.markers[j].setMap(null);
       }
       this.markers = [];
+    },
+    moveMap() {
+      console.log("prop function");
     },
   },
 };
