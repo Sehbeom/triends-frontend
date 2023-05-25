@@ -46,9 +46,19 @@ async function refuseNotification(notificationId, success, fail) {
     .catch(fail);
 }
 
+async function sendPlanInvitation(userId, receiverId, planId, success, fail) {
+  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+  let body = { userId: userId, receiverId: receiverId, planId: planId };
+  await api
+    .post(`/notification/plan`, JSON.stringify(body))
+    .then(success)
+    .catch(fail);
+}
+
 export {
   getNotificationList,
   refuseNotification,
   acceptPlanMember,
   acceptFriendRequest,
+  sendPlanInvitation,
 };
