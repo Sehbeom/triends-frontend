@@ -49,4 +49,43 @@ async function updateUserInfo(param, success, fail) {
     .catch(fail);
 }
 
-export { login, findById, tokenRegeneration, logout, updateUserInfo };
+async function join(param, success, fail) {
+  await api({
+    method: "post",
+    url: "/user",
+    data: {
+      id: param.id,
+      password: param.password,
+      name: param.name,
+      tel: param.tel,
+      profileimg: param.profileimg,
+      email: param.email,
+    },
+  })
+    .then(success)
+    .catch(fail);
+}
+
+async function registPreferences(param, success, fail) {
+  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+  await api({
+    method: "post",
+    url: "/user/preference",
+    data: {
+      userId: param.userId,
+      preferenceIds: param.preferenceIds,
+    },
+  })
+    .then(success)
+    .catch(fail);
+}
+
+export {
+  login,
+  findById,
+  tokenRegeneration,
+  logout,
+  updateUserInfo,
+  join,
+  registPreferences,
+};
