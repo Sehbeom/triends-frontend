@@ -8,7 +8,8 @@
         <span class="review-title">{{ review.subject }}</span>
         <span class="review-username">🧑 {{ review.writerName }}</span>
         <span class="review-date">📅 {{ review.startDate + " ~ " + review.endDate }}</span>
-        <span class="review-course"> 👟
+        <span class="review-course">
+          👟
           <span class="longcourse" v-for="course in review.attractions" :key="course"
             >{{ course }} -
           </span>
@@ -89,9 +90,9 @@ export default {
 }
 .review-header {
   width: 100%;
-  height:100%;
+  height: 100%;
   display: flex;
-  position:relative;
+  position: relative;
   flex-direction: column;
 }
 .review-data {
@@ -121,12 +122,12 @@ export default {
   white-space: nowrap;
   width: 70%;
 }
-.review-content{
+.review-content {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 80%;
-  height:2rem;
+  height: 2rem;
 }
 .review-popular {
   display: inline-block;

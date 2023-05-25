@@ -2,14 +2,26 @@
   <div class="image-container">
     <img :src="item.firstImage" />
     <div class="dimmed-container">
-      <div class="attraction-title" :v-b-modal="String(item.contentId)">{{ item.title }}</div>
-      <b-modal :id="String(item.key)">Hello From My Modal!</b-modal>
+      <div class="attraction-title" :v-b-modal="String(item.contentId)">
+        {{ item.title }}
+      </div>
+      <b-modal :id="String(item.contentId)">{{ item.contentId }}</b-modal>
       <div class="inner">
-        <div class="star-rating">
+        <div class="star-rating" v-if="canrating === 'write'">
           <div class="star" v-for="index in 5" :key="index" @click="check(index)">
             <span v-if="index < score">🌟</span>
             <span v-if="index >= score">⭐</span>
           </div>
+        </div>
+        <div class="star-rated" v-else @mouseover="getRating(item)">
+          글보기는 rating불가능!
+          {{ getRating(item) }}
+          <span v-if="getRating(item) < 0.5">⭐⭐⭐⭐⭐</span>
+          <span v-if="0.5 <= getRating(item) && getRating(item) < 1.5">🌟⭐⭐⭐⭐</span>
+          <span v-if="1.5 <= getRating(item) && getRating(item) < 2.5">🌟🌟⭐⭐⭐</span>
+          <span v-if="2.5 <= getRating(item) && getRating(item) < 3.5">🌟🌟🌟⭐⭐</span>
+          <span v-if="3.5 <= getRating(item) && getRating(item) < 4.5">🌟🌟🌟🌟⭐</span>
+          <span v-if="4.5 <= getRating(item)">🌟🌟🌟🌟🌟</span>
         </div>
       </div>
       <!-- <b-button :v-b-modal="String(item.key)">Show Modal</b-button> -->
@@ -22,6 +34,7 @@ export default {
   name: "DimmedImageCard",
   props: {
     item: {},
+    canrating: String,
   },
   data() {
     return {
@@ -38,8 +51,15 @@ export default {
 
       this.rating.contentId = this.item.contentId;
       this.rating.rates = this.score - 1;
+      console.log(this.item);
 
       this.$emit("rating", this.rating);
+    },
+    getRating(contentIdHover) {
+      // console.log("contentId" + contentIdHover.contentId);
+      // console.log("contentId" + contentIdHover.title);
+      // console.log("contentRate" + contentIdHover.rate);
+      return contentIdHover.rate;
     },
   },
 };
