@@ -1,15 +1,18 @@
 <template>
   <div>
     <page-detail-header title="공지사항" />
-    <b-list-group>
-      <b-list-group-item
-        :key="article.noticeId"
-        v-for="article in articles"
-        style="text-align: left"
-        @click="viewNotice(article)"
-        >공지사항: {{ article.subject }}</b-list-group-item
-      >
-    </b-list-group>
+    <div>
+      <b-table
+        striped
+        hover
+        :items="articles"
+        :fields="fields"
+        selectable
+        :select-mode="selectMode"
+        ref="selectableTable"
+        @row-selected="viewNotice"
+      ></b-table>
+    </div>
   </div>
 </template>
 
@@ -23,6 +26,14 @@ export default {
   data() {
     return {
       articles: [],
+      fields: [
+        // A column that needs custom formatting
+        { key: "noticeId", label: "번호" },
+        // A regular column
+        { key: "subject", label: "제목" },
+        // A regular column
+        { key: "createdAt", label: "작성일" },
+      ],
     };
   },
   created() {
@@ -39,12 +50,12 @@ export default {
     );
   },
   methods: {
-    viewNotice(article) {
-      //   console.log(article.articleno);
+    viewNotice(item) {
+      console.log(item);
       this.$router
         .push({
           name: "noticeDetail",
-          params: { articleno: article.noticeId },
+          params: { articleno: item[0].noticeId },
         })
         .catch(() => {
           console.log("uncaught error");
@@ -54,4 +65,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.content {
+  font-size: 2rem;
+  font-weight: bold;
+}
+</style>
