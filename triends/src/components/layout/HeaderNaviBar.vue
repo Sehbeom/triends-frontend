@@ -29,7 +29,7 @@
             </b-dropdown-item>
           </b-dropdown>
         </div>
-        <div v-else :class="{'removeborder' : (notifications.length == 0)}">
+        <div v-else :class="{ removeborder: notifications.length == 0 }">
           <b-dropdown
             class="p-0 m-0"
             size="sm"
@@ -62,14 +62,31 @@
                 :key="notification.notificationId"
               >
                 <div class="notification-dropdown-onenoti-contents">
-                  <div class="notification-dropdown-text" v-b-modal.modal-center>
-                    <span>{{ notification.additionalInfo + notificationSentences[notification.notificationType] }}</span>
-                    <notification-info-modal :id="notification.notificationId" />
+                  <div
+                    class="notification-dropdown-text"
+                    v-b-modal.modal-center
+                  >
+                    <span>{{
+                      notification.additionalInfo +
+                      notificationSentences[notification.notificationType]
+                    }}</span>
+                    <notification-info-modal
+                      :id="notification.notificationId"
+                    />
                   </div>
                   <div class="notification-dropdown-btns">
-                    <b-button size="sm" variant="success" 
-                    @click="accept(notification)">수락</b-button>
-                    <b-button size="sm" variant="danger" @click="refuse(notification.notificationId)">거절</b-button>
+                    <b-button
+                      size="sm"
+                      variant="success"
+                      @click="accept(notification)"
+                      >수락</b-button
+                    >
+                    <b-button
+                      size="sm"
+                      variant="danger"
+                      @click="refuse(notification.notificationId)"
+                      >거절</b-button
+                    >
                   </div>
                 </div>
                 <div
@@ -104,9 +121,14 @@
 
 <script>
 import UserLoginModal from "../user/UserLoginModal.vue";
-import { getNotificationList, refuseNotification, acceptPlanMember, acceptFriendRequest } from "@/apis/notification";
+import {
+  getNotificationList,
+  refuseNotification,
+  acceptPlanMember,
+  acceptFriendRequest,
+} from "@/apis/notification";
 
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 const userStore = "userStore";
 
@@ -128,32 +150,37 @@ export default {
       notifications: [],
       notificationClicked: true,
       notificationSentences: {
-        "friend": "님이 친구 요청을 보냈습니다.",
-        "plan": "여행 플랜에 초대되었습니다."
-      }
-    }
+        friend: "님이 친구 요청을 보냈습니다.",
+        plan: "여행 플랜에 초대되었습니다.",
+      },
+    };
   },
   methods: {
+    ...mapActions(userStore, ["userLogout"]),
     notificationClick: function () {
       this.notificationClicked = true;
     },
     getNotifications: function () {
-      getNotificationList(
-        this.userInfo.userId,
-        ({ data }) => {
-          this.notifications = data.data;
-        },
-        ({ error }) => {
-          console.log(error);
-          this.$router.push({ name: "error" });
-        }
-      )
+      if (this.isLogin && this.userInfo !== null) {
+        getNotificationList(
+          this.userInfo.userId,
+          ({ data }) => {
+            this.notifications = data.data;
+          },
+          ({ error }) => {
+            console.log(error);
+            this.$router.push({ name: "error" });
+          }
+        );
+      }
     },
-    refuse: function(notificationId) {
+    refuse: function (notificationId) {
       refuseNotification(
         notificationId,
         () => {
-          this.getNotifications();
+          if (this.isLogin) {
+            this.getNotifications();
+          }
         },
         (error) => {
           console.log(error);
@@ -166,26 +193,34 @@ export default {
         acceptFriendRequest(
           notification,
           () => {
-            this.getNotifications();
+            if (this.isLogin) {
+              this.getNotifications();
+            }
           },
           (error) => {
             console.log(error);
             this.$router.push({ name: "error" });
           }
-        )
+        );
       } else {
         acceptPlanMember(
           notification,
           () => {
-            this.getNotifications();
+            if (this.isLogin) {
+              this.getNotifications();
+            }
           },
           (error) => {
             console.log(error);
             this.$router.push({ name: "error" });
           }
-        )
+        );
       }
-    }
+    },
+    logout() {
+      console.log("logout!");
+      this.userLogout(this.userInfo.userId);
+    },
   },
   watch: {
     notifications(newNotifications) {
@@ -196,9 +231,11 @@ export default {
       }
     },
     userInfo() {
-      this.getNotifications();
-    }
-  }
+      if (this.isLogin) {
+        this.getNotifications();
+      }
+    },
+  },
 };
 </script>
 
@@ -266,30 +303,30 @@ export default {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: transparent; 
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.1); 
+  background-color: rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   transition: background-color 3s ease-out;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 0, 0.6); 
+  background-color: rgba(0, 0, 0, 0.6);
   transition: background-color 3s ease-out;
 }
 
-::v-deep{
-.dropdown .dropdown-menu {
-  --bs-dropdown-padding-y: 0 !important;
-}
+::v-deep {
+  .dropdown .dropdown-menu {
+    --bs-dropdown-padding-y: 0 !important;
+  }
 }
 
 .removeborder::v-deep {
   .dropdown .dropdown-menu {
-  --bs-dropdown-border-width: 0 !important;
-}
+    --bs-dropdown-border-width: 0 !important;
+  }
 }
 
 .notification-dropdown-divider {

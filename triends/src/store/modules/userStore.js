@@ -32,11 +32,15 @@ const userStore = {
       state.isLogin = true;
       state.userInfo = userInfo;
     },
+    SET_LOGOUT: (state) => {
+      state.isLogin = false;
+      console.log(state.isLogin);
+    },
   },
   actions: {
-    async userConfirm({ commit }, user) {
+    async userConfirm({ commit }, userId) {
       await login(
-        user,
+        userId,
         ({ data }) => {
           if (data.message === "로그인 성공했습니다.") {
             let accessToken = data.data["access-token"];
@@ -110,7 +114,7 @@ const userStore = {
             await logout(
               state.userInfo.userid,
               ({ data }) => {
-                if (data.message === "success") {
+                if (data.message === "로그아웃 되었습니다.") {
                   console.log("리프레시 토큰 제거 성공");
                 } else {
                   console.log("리프레시 토큰 제거 실패");
@@ -135,10 +139,14 @@ const userStore = {
       await logout(
         userid,
         ({ data }) => {
-          if (data.message === "success") {
+          console.log("sdslkdfskflls :::::: ", data);
+          if (data.message === "로그아웃 되었습니다.") {
+            console.log("logouted!!!!!!!!!");
+
             commit("SET_IS_LOGIN", false);
             commit("SET_USER_INFO", null);
             commit("SET_IS_VALID_TOKEN", false);
+            commit("SET_LOGOUT");
           } else {
             console.log("유저 정보 없음!!!!");
           }
