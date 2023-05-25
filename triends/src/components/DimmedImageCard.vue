@@ -14,7 +14,6 @@
           </div>
         </div>
         <div class="star-rated" v-else @mouseover="getRating(item)">
-          글보기는 rating불가능!
           {{ getRating(item) }}
           <span v-if="getRating(item) < 0.5">⭐⭐⭐⭐⭐</span>
           <span v-if="0.5 <= getRating(item) && getRating(item) < 1.5">🌟⭐⭐⭐⭐</span>
@@ -35,6 +34,7 @@ export default {
   props: {
     item: {},
     canrating: String,
+    rateInfo: [],
   },
   data() {
     return {
@@ -48,18 +48,22 @@ export default {
   methods: {
     check(index) {
       this.score = index + 1;
-
-      this.rating.contentId = this.item.contentId;
-      this.rating.rates = this.score - 1;
-      console.log(this.item);
-
+      console.log(this.item)
+      console.log(this.score);
+      this.rating.contentId=this.item.contentId;
+      this.rating.rates=this.score-1;
       this.$emit("rating", this.rating);
     },
     getRating(contentIdHover) {
-      // console.log("contentId" + contentIdHover.contentId);
-      // console.log("contentId" + contentIdHover.title);
-      // console.log("contentRate" + contentIdHover.rate);
-      return contentIdHover.rate;
+      console.log(this.rateInfo);
+      console.log(contentIdHover);
+      this.rateInfo.forEach((element) => {
+        console.log(element.contentId + " " + element.score);
+        if (element.contentId === contentIdHover.contentId) {
+          contentIdHover.rates=element.score;
+        }
+      });
+      return contentIdHover.rates;
     },
   },
 };
