@@ -135,6 +135,7 @@ export default {
       );
     },
     ratingAttr(value) {
+      console.log(value)
       console.log(value.contentId + " " + value.score);
       let tfri = this.form.rateInfo;
       for (let i = 0; i < tfri.length; i++) {

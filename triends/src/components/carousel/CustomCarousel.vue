@@ -14,6 +14,7 @@
           <dimmed-image-card
             v-if="items.type === 'dimmedImageCarousel'"
             :canrating="items.from"
+            :rateInfo="items.rateInfo"
             :item="item"
             @rating="rating"
           />
@@ -29,7 +30,7 @@ import DimmedImageCard from "../DimmedImageCard.vue";
 export default {
   name: "CustomCarousel",
   components: { AttractionRecommandCard, DimmedImageCard },
-  props: { items: {} },
+  props: { items: {}, },
   data() {
     return {
       rates: {
