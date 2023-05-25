@@ -1,5 +1,5 @@
 <template>
-  <div class="search-result">
+  <div class="search-result" @click="moveMap()">
     <div class="img-container">
       <img :src="item.firstImage || './images/no-image.png'" alt="no image" class="img" />
     </div>
@@ -25,7 +25,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 const planDraftStore = "planDraftStore";
-
+const mapMarkStore = "mapMarkStore";
 export default {
   name: "AttractionSearchResultItem",
   props: {
@@ -34,6 +34,7 @@ export default {
   },
   methods: {
     ...mapActions(planDraftStore, ["addCourse"]),
+    ...mapActions(mapMarkStore, ["changeFocusMarker"]),
     addCourseToStore() {
       if (this.selected === null) {
         alert("일정을 추가할 날짜를 선택해주세요!");
@@ -42,6 +43,10 @@ export default {
         this.addCourse(itemParse);
         alert(this.selected + "일자에 일정이 추가되었습니다!");
       }
+    },
+    moveMap() {
+      let position = { lat: this.item.latitude, lng: this.item.longitude };
+      this.changeFocusMarker(position);
     },
   },
   computed: {

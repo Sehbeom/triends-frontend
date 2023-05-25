@@ -4,6 +4,8 @@ import createPersistedState from "vuex-persistedstate";
 import userStore from "@/store/modules/userStore";
 import attractionStore from "@/store/modules/attractionStore";
 import planDraftStore from "@/store/modules/planDraftStore";
+import mapMarkStore from "@/store/modules/mapMarkStore";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -15,6 +17,7 @@ export default new Vuex.Store({
     userStore,
     attractionStore,
     planDraftStore,
+    mapMarkStore,
   },
   plugins: [
     createPersistedState({
