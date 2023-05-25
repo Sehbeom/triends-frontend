@@ -31,5 +31,11 @@ export default {
       component: () =>
         import(/* webpackChunkName: "review" */ "@/components/review/ReviewWrite.vue"),
     },
+    {
+      path: "modify",
+      name: "reviewmodify",
+      component: () =>
+        import(/* webpackChunkName: "review" */ "@/components/review/ReviewModify.vue"),
+    },
   ],
 };

@@ -1,21 +1,46 @@
 <template>
   <div class="review">
-    <page-detail-header :title="article.subject"></page-detail-header>
+    <page-detail-header :title="articledata.subject"></page-detail-header>
     <div class="review-page-container">
       <b-container style="width: 90%; min-width: 1000px">
-        <user-and-button :username="article.userName" />
+        <user-and-button :username="articledata.userName" />
+        {{ articledata.userId }}
+        {{ this.userInfo.userId }}
         <hr />
-        <div>
+        <div class="sidebar-btn">
           <b-button v-b-toggle.sidebar>날짜별 사진보기</b-button>
           <b-sidebar id="sidebar" title="일자별 여행지" shadow class="my-sidebar">
             <div class="px-3 py-2">
-              <b-btn>1일차</b-btn>
+              <div v-for="item in attraction.attr" :key="item.days">
+                <b-btn v-model="sidebarday" @click="showslide(item.days)"
+                  >{{ item.days }}일차</b-btn
+                >
+                <div v-for="course in item.courses" :key="course">
+                  {{ course.attractionInfo.title }}
+                </div>
+              </div>
             </div>
           </b-sidebar>
         </div>
-        <custom-carousel :items="items" />
+        <custom-carousel :items="items"></custom-carousel>
         <div class="review-content">
-          {{ article.content }}
+          {{ articledata.content }}
+        </div>
+        <div class="control-btn-container">
+          <router-link
+            :to="{ name: 'reviewmodify', query: { reviewid: articledata.reviewId } }"
+            v-if="articledata.userId === this.userInfo.userId"
+            ><b-btn class="control-btn">글수정</b-btn></router-link
+          >
+          <b-btn
+            v-if="articledata.userId === this.userInfo.userId"
+            class="control-btn"
+            @click="deletereview"
+            >글삭제</b-btn
+          >
+          <router-link :to="{ name: 'review' }"
+            ><b-btn class="control-btn">글목록</b-btn></router-link
+          >
         </div>
         <hr />
         댓글
@@ -30,7 +55,7 @@
               ></textarea>
             </b-col>
             <b-col sm="1">
-              <b-button class="form-btn">댓글 등록</b-button>
+              <b-button class="form-btn">등록</b-button>
             </b-col>
           </b-row>
         </div>
@@ -50,7 +75,8 @@
 import PageDetailHeader from "@/components/layout/PageDetailHeader.vue";
 import UserAndButton from "../layout/UserAndButton.vue";
 import CustomCarousel from "../carousel/CustomCarousel.vue";
-import { reviewDetail } from "@/apis/review";
+import { reviewDetail, reviewDelete } from "@/apis/review";
+import { findById } from "@/apis/user";
 import { mapState } from "vuex";
 
 const userStore = "userStore";
@@ -64,36 +90,56 @@ export default {
   },
   data() {
     return {
-      article: {},
+      articledata: {},
+      attraction: {
+        attr: [
+          // { days: courseInfo[i].dayInfo, course: courseInfo[i].courses }
+        ],
+      },
       items: {
         type: "dimmedImageCarousel",
         auto: "false",
-        items: [
-          { index: 1, src: "./mainpage.png" },
-          { index: 2, src: "/img/ssafy_logo.9aceab8b.png" },
-          { index: 3, src: "/img/ssafy_logo.9aceab8b.png" },
-          { index: 4, src: "/img/ssafy_logo.9aceab8b.png" },
-          { index: 5, src: "/img/ssafy_logo.9aceab8b.png" },
-          { index: 6, src: "/img/ssafy_logo.9aceab8b.png" },
-          { index: 7, src: "/img/ssafy_logo.9aceab8b.png" },
-        ],
+        // items: {
+        //   from: "view",
+        //   items: [],
+        // },
+        from: "view",
+        items: [],
       },
       comments: [{}],
+      sidebarday: 1,
     };
   },
   created() {
-    console.log(this.$route.params);
-    this.articleno = this.$route.params.articleno;
-    let getreview = "review/detail/" + this.articleno;
-    console.log(getreview);
+    console.log(this.$route.query.reviewId);
     if (!this.userInfo.userId) {
-      console("no lpogin");
+      this.articleno = this.$route.params.articleno;
+      // let getreview = "review/detail/" + this.articleno;
     } else {
       reviewDetail(
-        this.articleno,
+        this.$route.query.reviewId,
         this.userInfo.userId,
         ({ data }) => {
-          console.log(data);
+          this.articledata = data.data;
+          let courseInfo = this.articledata.planInfo.courseInfo;
+          // console.log(courseInfo);
+          for (let i = 0; i < courseInfo.length; i++) {
+            let tmp = { days: courseInfo[i].dayInfo, courses: courseInfo[i].courses };
+            this.attraction.attr.push(tmp);
+          }
+          console.log(this.attraction.attr);
+
+          findById(
+            this.articledata.userId,
+            ({ data }) => {
+              this.articledata.userName = data.data.name;
+              console.log(this.articledata.userName);
+            },
+            (error) => {
+              console.log(error);
+              this.$router.push({ name: "error" });
+            }
+          );
         },
         (error) => {
           console.log(error);
@@ -101,6 +147,44 @@ export default {
         }
       );
     }
+  },
+  methods: {
+    showslide(day) {
+      let key = 0;
+      let tmpc = [];
+      this.attraction.attr[day - 1].courses.forEach((element) => {
+        let tmp = {};
+        // console.log(element.attractionInfo);
+        tmp["key"] = key++;
+        tmp["contentId"] = element.attractionInfo.contentId;
+        tmp["title"] = element.attractionInfo.title;
+        tmp["firstImage"] = element.attractionInfo.firstImage;
+        tmp["rate"] = element.attractionInfo.rate;
+        tmpc.push(tmp);
+      });
+      this.items.items = tmpc;
+      console.log(this.items);
+    },
+    deletereview() {
+      console.log(this.articledata.reviewId);
+      reviewDelete(
+        this.articledata.reviewId,
+        ({ data }) => {
+          console.log(data);
+          this.$router
+            .push({
+              name: "review",
+            })
+            .catch(() => {
+              console.log("uncaght error");
+            });
+        },
+        (error) => {
+          console.log(error);
+          this.$router.push({ name: "error" });
+        }
+      );
+    },
   },
   computed: {
     ...mapState(userStore, ["userInfo"]),
@@ -120,51 +204,14 @@ export default {
     background-color: rgba(0, 0, 0, 0.5) !important;
   }
 }
-.img-wrap {
-  height: 250px;
-  margin: 20px;
-  overflow: scroll;
-  white-space: nowrap;
+.sidebar-btn {
+  margin-bottom: 30px;
 }
-.test {
-  text-align: left;
-  display: inline-block;
+.control-btn-container {
+  text-align: right;
 }
-.scroll-container {
-  position: relative;
-  overflow-x: scroll;
-  white-space: nowrap;
-}
-.scroll-content {
-  display: inline-block;
-}
-.button-container-left {
-  left: 10px;
-}
-.button-container-right {
-  right: 10px;
-}
-.button {
-  background-color: #ddd;
-  color: #333;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-}
-.left {
-  position: fixed;
-  left: 10px;
-  z-index: 3;
-  scroll-behavior: smooth;
-}
-.right {
-  position: fixed;
-  right: 10px;
-  z-index: 3;
-  scroll-behavior: smooth;
-}
-.test::-webkit-scrollbar {
-  display: none;
+.control-btn {
+  margin-left: 10px;
 }
 .write-comment {
   margin-bottom: 20px;
