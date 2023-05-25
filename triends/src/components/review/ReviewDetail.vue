@@ -121,6 +121,7 @@ export default {
         this.userInfo.userId,
         ({ data }) => {
           this.articledata = data.data;
+          console.log(this.articledata);
           console.log(this.articledata.rateInfo);
           this.items["rateInfo"] = this.articledata.rateInfo;
           console.log(this.items.items);
@@ -155,6 +156,10 @@ export default {
   methods: {
     showslide(day) {
       let key = 0;
+      // while(this.items.items.length>0){
+      //   this.items.items.pop();
+      // }
+      console.log(this.items.items);
       let tmpc = [];
       this.attraction.attr[day - 1].courses.forEach((element) => {
         let tmp = {};
@@ -167,7 +172,7 @@ export default {
         tmp["rate"] = element.attractionInfo.rate;
         tmpc.push(tmp);
       });
-      this.items.items.push(tmpc);
+        this.items.items=tmpc;
       console.log(this.items);
     },
     deletereview() {

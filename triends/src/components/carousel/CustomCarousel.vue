@@ -30,7 +30,7 @@ import DimmedImageCard from "../DimmedImageCard.vue";
 export default {
   name: "CustomCarousel",
   components: { AttractionRecommandCard, DimmedImageCard },
-  props: { items: {} },
+  props: { items: {}, },
   data() {
     return {
       rates: {

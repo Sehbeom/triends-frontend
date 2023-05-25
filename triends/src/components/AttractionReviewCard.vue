@@ -18,7 +18,7 @@
         <div class="review-popular">
           <span class="review-likes">💕 {{ review.likes }} </span>
           <span class="review-rating">👍 {{ review.scrapped }}</span>
-          <button class="view-btn" @click="viewReview(review)">리뷰 보기</button>
+          <button class="view-btn" @click="viewReview(review)" :reviewId="review.reviewId">리뷰 보기</button>
         </div>
       </div>
     </div>

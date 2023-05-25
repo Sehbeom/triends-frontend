@@ -1,7 +1,5 @@
 <template>
   <div class="image-container">
-    {{ rateInfo }}
-    {{ item }}
     <img :src="item.firstImage" />
     <div class="dimmed-container">
       <div class="attraction-title" :v-b-modal="String(item.contentId)">
@@ -16,7 +14,6 @@
           </div>
         </div>
         <div class="star-rated" v-else @mouseover="getRating(item)">
-          글보기는 rating불가능!
           {{ getRating(item) }}
           <span v-if="getRating(item) < 0.5">⭐⭐⭐⭐⭐</span>
           <span v-if="0.5 <= getRating(item) && getRating(item) < 1.5">🌟⭐⭐⭐⭐</span>
@@ -51,23 +48,21 @@ export default {
   methods: {
     check(index) {
       this.score = index + 1;
-      console.log(this.item);
-
+      console.log(this.item)
+      console.log(this.score);
+      this.rating.contentId=this.item.contentId;
+      this.rating.rates=this.score-1;
       this.$emit("rating", this.rating);
     },
     getRating(contentIdHover) {
-      // console.log("contentId" + contentIdHover.contentId);
-      // console.log("contentId" + contentIdHover.title);
-      // console.log("contentRate" + contentIdHover.rate);
+      console.log(this.rateInfo);
+      console.log(contentIdHover);
       this.rateInfo.forEach((element) => {
         console.log(element.contentId + " " + element.score);
-        if (element.contentId === this.rating.contentId) {
-          this.rating.rates = element.score - 1;
+        if (element.contentId === contentIdHover.contentId) {
+          contentIdHover.rates=element.score;
         }
       });
-      // this.rating.contentId = this.rateInfo.contentId;
-      // this.rating.rates = this.rateInfo.score - 1;
-      console.log(this.rating);
       return contentIdHover.rates;
     },
   },
