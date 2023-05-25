@@ -11,14 +11,20 @@
       </router-link>
       <div class="header-right">
         <div v-if="!isLogin">
-          <img
-            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Bust%20in%20Silhouette.png"
-            alt="Bust in Silhouette"
-            width="50"
-            height="50"
-            class="person-img"
-          />
-          <b-dropdown text="회원가입" right>
+          <b-dropdown
+            size="lg"
+            variant="link"
+            toggle-class="text-decoration-none"
+            no-caret
+            ><template #button-content>
+              <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Bust%20in%20Silhouette.png"
+                alt="Bust in Silhouette"
+                width="50"
+                height="50"
+                class="person-img"
+              />
+            </template>
             <b-dropdown-item href="#">
               <router-link :to="{ name: 'signUp' }" class="link">
                 <b-icon icon="person-circle"></b-icon> 회원가입
@@ -96,14 +102,21 @@
               </div>
             </div>
           </b-dropdown>
-          <img
-            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Man%20Raising%20Hand.png"
-            alt="Man Raising Hand"
-            width="50"
-            height="50"
-            class="person-img"
-          />
-          <b-dropdown text="마이페이지" right>
+
+          <b-dropdown
+            size="lg"
+            variant="link"
+            toggle-class="text-decoration-none"
+            no-caret
+            ><template #button-content>
+              <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Man%20Raising%20Hand.png"
+                alt="Man Raising Hand"
+                width="50"
+                height="50"
+                class="person-img"
+              />
+            </template>
             <b-dropdown-item href="#">
               <router-link :to="{ name: 'mypage' }" class="link">
                 <b-icon icon="person-circle"></b-icon> 내정보
