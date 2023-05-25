@@ -1,6 +1,7 @@
 import jwtDecode from "jwt-decode";
 import router from "@/router";
 import { login, findById, tokenRegeneration, logout } from "@/apis/user";
+import { updateUserInfo } from "@/apis/mypage";
 
 const userStore = {
   namespaced: true,
@@ -139,6 +140,22 @@ const userStore = {
             commit("SET_IS_LOGIN", false);
             commit("SET_USER_INFO", null);
             commit("SET_IS_VALID_TOKEN", false);
+          } else {
+            console.log("유저 정보 없음!!!!");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    async updateUserInfo({ commit }, userInfo) {
+      await updateUserInfo(
+        userInfo,
+        ({ data }) => {
+          if (data.message === "유저 정보 수정가 수정되었습니다.") {
+            commit("SET_USER_INFO", data.data);
+            console.log("3. getUserInfo data >> ", data);
           } else {
             console.log("유저 정보 없음!!!!");
           }
