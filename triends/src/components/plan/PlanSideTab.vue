@@ -21,11 +21,11 @@ const planDraftStore = "planDraftStore";
 
 export default {
   name: "PlanSideTab",
+
   components: {
     AttractionSearchResult,
     AttractionPlan,
   },
-
   computed: {
     ...mapState(attractionStore, ["selectedAttraction"]),
   },
@@ -35,10 +35,7 @@ export default {
       "setSearchTypeRecommand",
       "setSearchable",
     ]),
-    ...mapActions(planDraftStore, [
-      "setMyPlanSelected",
-      "setMyPlanSelectedFalse",
-    ]),
+    ...mapActions(planDraftStore, ["setMyPlanSelected", "setMyPlanSelectedFalse"]),
     setKeyword() {
       this.setSearchTypeKeyword();
       this.setMyPlanSelectedFalse();

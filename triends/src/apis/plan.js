@@ -8,4 +8,12 @@ async function postPlan(data, success, fail) {
   await api.post("/plan/create", JSON.stringify(data)).then(success).catch(fail);
 }
 
-export { postPlan };
+async function getPlanList(userId, success, fail) {
+  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+  await api
+    .get("/plan/list?userId=" + userId)
+    .then(success)
+    .catch(fail);
+}
+
+export { postPlan, getPlanList };

@@ -11,6 +11,7 @@
     <div v-for="dayItems in getMyPlanItems" :key="dayItems" class="day-header">
       <plan-day-container :dayItem="dayItems" />
     </div>
+
     <div class="day-add" @click="addDateToPlan">날짜 추가하기 +</div>
   </div>
 </template>
