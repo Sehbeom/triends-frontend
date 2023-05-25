@@ -3,16 +3,33 @@
         <div class="titlecontainer">
             <p>{{title}}</p>
         </div>
-        <div class="scrollcontainer">
-            <div class="cardcontainer" v-for="friend in friends" :key="friend.userId">
-                <friend-card-vue 
-                :imgsrc="friend.profileimg" 
-                :userName="friend.name" 
-                :userId="friend.userId"
-                :clickEvent="() => btnClicked(friend)"
-                :friendStatus="friendStatus[friend.userId]" />
-            </div>          
+        <div class="searchinput" v-if="isSearch">
+            <div class="inputcontainer">
+                <b-form-input v-model="keyword" @keyup="searchByKeyword" placeholder="친구의 이름을 입력해 주세요!"></b-form-input>
+            </div>
+            
         </div>
+        <div class="scrollcontainer" v-if="friends.length > 0">
+            <div 
+            class="cardcontainer" 
+            v-for="friend in friends" 
+            :key="friend.userId">
+                <friend-card-vue 
+                :friend="friend"
+                :clickEvent="btnClickEvent"
+                :isFriend="isFriend" />
+            </div>    
+        </div>
+        <div v-else>
+            <div class="nofriend" v-if="isSearch">
+                <h2>검색창에 이름을 입력해주세요!</h2>
+            </div>
+            <div class="nofriend" v-else>
+                <h2>친구 목록이 비어있어요!</h2>
+                <h4>아래 추천 친구를 통해 새로운 친구를 만들어보세요!</h4>
+            </div>
+        </div>    
+        
         
     </div>
 </template>
@@ -42,54 +59,27 @@ export default {
             type: Function
         },
         isFriend: {
-            type: String
+            type: Boolean
+        },
+        isSearch: {
+            type: Boolean
+        },
+        searchEvent: {
+            type: Function
         }
     },
-    // created() {
-    //     console.log(this.title + this.isFriend)
-    //     if (this.isFriend == "true") {
-    //         for (let i; i < this.friends.length; i++) {
-    //             this.friendStatus[this.friends[i].userId] = "friend";
-    //         }
-    //     }
-    // },
     data() {
         return {
-            friendStatus: {}
+            keyword: ""
         }
     },
-    watch: {
-        friends: {
-            deep: true,
-            handler(newFriends) {
-                if (this.isFriend === true) {
-                    newFriends.forEach((friend) => {
-                        this.$set(this.friendStatus, friend.userId, "friend");
-                    });
-                }
-            },
-        },
-    },
     methods: {
-        btnClicked: function (friend) {
+        searchByKeyword: function () {
             let param = {
                 userId: this.userInfo.userId,
-                receiverId: friend.userId
+                keyword: this.keyword
             };
-            this.btnClickEvent(
-                param,
-                () => {
-                    
-                },
-                (error) => {
-                    console.log(error);
-                    this.$router.push({name: "error"})
-                }
-            );
-            if (this.isFriend === false) {
-                this.friendStatus[friend.userId] = "requested";
-            }
-            console.log("login complete" + this.friendStatus[friend.userId]);
+            this.searchEvent(param);
         }
     }
 };
@@ -125,6 +115,26 @@ export default {
     overflow: scroll;
 
     padding-bottom: 5px;
+}
+
+.nofriend{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchinput {
+    width: 100%;
+    padding-left: 40px;
+    margin-bottom: 40px;
+}
+
+.inputcontainer {
+    width: 30%;
 }
 
 ::-webkit-scrollbar {

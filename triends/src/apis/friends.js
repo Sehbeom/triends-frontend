@@ -41,8 +41,16 @@ async function deleteFriend(param, success, fail) {
   api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
   await api({
     method: "delete",
-    url: `friends?friendId=${param.friendId}&userId=${param.userId}`,
+    url: `/friends?friendId=${param.receiverId}&userId=${param.userId}`,
   })
+    .then(success)
+    .catch(fail);
+}
+
+async function searchFriend(param, success, fail) {
+  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+  await api
+    .get(`/friends/search?userId=${param.userId}&keyword=${param.keyword}`)
     .then(success)
     .catch(fail);
 }
@@ -53,4 +61,5 @@ export {
   getRecommendOfPreference,
   sendFriendRequest,
   deleteFriend,
+  searchFriend,
 };
