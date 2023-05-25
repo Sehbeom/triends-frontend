@@ -1,6 +1,13 @@
 import jwtDecode from "jwt-decode";
-import router from "@/router";
-import { login, findById, tokenRegeneration, logout } from "@/apis/user";
+import router from "@/router/index";
+import {
+  login,
+  findById,
+  tokenRegeneration,
+  logout,
+  updateUserInfo,
+  join,
+} from "@/apis/user";
 
 const userStore = {
   namespaced: true,
@@ -153,6 +160,56 @@ const userStore = {
         },
         (error) => {
           console.log(error);
+        }
+      );
+    },
+    async updateUserInfo({ commit }, userInfo) {
+      await updateUserInfo(
+        userInfo,
+        ({ data }) => {
+          if (data.message === "유저 정보 수정가 수정되었습니다.") {
+            commit("SET_USER_INFO", data.data);
+            console.log("3. getUserInfo data >> ", data);
+          } else {
+            console.log("유저 정보 없음!!!!");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    async joinWithUserConfirm({ commit }, payload) {
+      console.log(payload);
+      await join(
+        payload.user,
+        ({ data }) => {
+          if (data.message === "회원가입이 완료되었습니다.") {
+            let accessToken = data.data["access-token"];
+            let refreshToken = data.data["refresh-token"];
+            console.log(
+              "join success token created!!!! >> ",
+              accessToken,
+              refreshToken
+            );
+            commit("SET_IS_LOGIN", true);
+            commit("SET_IS_LOGIN_ERROR", false);
+            commit("SET_IS_VALID_TOKEN", true);
+            commit("SET_USER_INFO", data.data.userInfo);
+            sessionStorage.setItem("access-token", accessToken);
+            sessionStorage.setItem("refresh-token", refreshToken);
+            payload.router.push({ name: "preference" });
+          } else {
+            console.log(data);
+            commit("SET_IS_LOGIN", false);
+            commit("SET_IS_LOGIN_ERROR", true);
+            commit("SET_IS_VALID_TOKEN", false);
+            payload.router.push({ name: "error" });
+          }
+        },
+        (error) => {
+          console.log(error);
+          payload.router.push({ name: "error" });
         }
       );
     },
