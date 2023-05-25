@@ -23,12 +23,9 @@ async function tokenRegeneration(user, success, fail) {
     .catch(fail);
 }
 
-async function logout(user, success, fail) {
+async function logout(userID, success, fail) {
   //원래는 get으로 보내야함...
-  await api
-    .post(`/user/logout`, JSON.stringify(user))
-    .then(success)
-    .catch(fail);
+  await api.get(`/user/logout?userId=${userID}`).then(success).catch(fail);
 }
 
 export { login, findById, tokenRegeneration, logout };
