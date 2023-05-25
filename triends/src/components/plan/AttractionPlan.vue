@@ -28,7 +28,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .day-container {
   max-height: 780px;
   overflow-y: scroll;

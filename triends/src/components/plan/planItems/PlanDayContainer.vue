@@ -24,13 +24,14 @@ AttracionSearchResultItem AttracionSearchResultItem
 
 <style>
 .day {
-  background-color: aqua;
+  background-color: skyblue;
   width: 100%;
   font-weight: bold;
   text-align: right;
   padding-right: 15px;
 }
 .day-header {
+  border-bottom: turquoise 2px;
   width: 100%;
 }
 </style>

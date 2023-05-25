@@ -1,21 +1,14 @@
 <template>
-  <div class="search-result-container">
+  <div class="search-result">
     <div class="img-container">
-      <img
-        :src="item.firstImage || './images/no-image.png'"
-        alt="no image"
-        class="img"
-      />
+      <img :src="item.firstImage || './images/no-image.png'" alt="no image" class="img" />
     </div>
     <div class="content">
       <div class="title">{{ item.title }}</div>
       <div class="addr">{{ item.addr1 }}{{ item.addr2 }}</div>
       <div class="tel">{{ item.tel }}</div>
       <div class="submit" v-if="isPlan !== false">
-        <b-button
-          @click="addCourseToStore()"
-          class="submit-button"
-          variant="outline-primary"
+        <b-button @click="addCourseToStore()" class="submit-button" variant="outline-primary"
           >계획 추가</b-button
         >
         <b-form-select
@@ -47,6 +40,7 @@ export default {
       } else {
         let itemParse = { course: this.item, day: this.selected };
         this.addCourse(itemParse);
+        alert(this.selected + "일자에 일정이 추가되었습니다!");
       }
     },
   },
@@ -62,9 +56,9 @@ export default {
 </script>
 
 <style scoped>
-.search-result-container {
+.search-result {
   width: 95%;
-  height: 170px;
+  height: 200px;
   display: flex;
   margin-left: 7px;
 }
@@ -80,7 +74,6 @@ export default {
 }
 .content {
   width: 64%;
-  margin-left: 5px;
   border: solid 2px;
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
@@ -95,7 +88,7 @@ export default {
 .select {
   width: 120px;
   height: 38px;
-  font-size: 12px;
+  font-size: 10px;
   border: none;
 }
 .submit-button {
