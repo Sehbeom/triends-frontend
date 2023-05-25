@@ -9,12 +9,18 @@ async function getFriends(userId, success, fail) {
 
 async function getRecommendOfFriends(userId, success, fail) {
   api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
-  await api.get(`/friends/recommend?type=friends&userId=${userId}`).then(success).catch(fail);
+  await api
+    .get(`/friends/recommend?type=friends&userId=${userId}`)
+    .then(success)
+    .catch(fail);
 }
 
 async function getRecommendOfPreference(userId, success, fail) {
   api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
-  await api.get(`/friends/recommend?type=preference&userId=${userId}`).then(success).catch(fail);
+  await api
+    .get(`/friends/recommend?type=preference&userId=${userId}`)
+    .then(success)
+    .catch(fail);
 }
 
 async function sendFriendRequest(param, success, fail) {
@@ -41,10 +47,19 @@ async function deleteFriend(param, success, fail) {
     .catch(fail);
 }
 
+async function searchFriend(param, success, fail) {
+  api.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+  await api
+    .get(`/friends/search?userId=${param.userId}&keyword=${param.keyword}`)
+    .then(success)
+    .catch(fail);
+}
+
 export {
   getFriends,
   getRecommendOfFriends,
   getRecommendOfPreference,
   sendFriendRequest,
   deleteFriend,
+  searchFriend,
 };

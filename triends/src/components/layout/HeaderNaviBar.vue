@@ -137,19 +137,11 @@ export default {
     notificationClick: function () {
       this.notificationClicked = true;
     },
-    getNotifications: function (firstRendered) {
+    getNotifications: function () {
       getNotificationList(
         this.userInfo.userId,
         ({ data }) => {
           this.notifications = data.data;
-          console.log("notifications : " + this.notifications);
-          if (firstRendered) {
-            if (this.notifications.length > 0) {
-              this.notificationClicked = false;
-            } else {
-              this.notificationClicked = true;
-            }
-          }
         },
         ({ error }) => {
           console.log(error);
@@ -195,6 +187,18 @@ export default {
       }
     }
   },
+  watch: {
+    notifications(newNotifications) {
+      if (newNotifications.length > 0) {
+        this.notificationClicked = false;
+      } else {
+        this.notificationClicked = true;
+      }
+    },
+    userInfo() {
+      this.getNotifications();
+    }
+  }
 };
 </script>
 
