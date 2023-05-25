@@ -6,11 +6,9 @@
         <div class="scrollcontainer">
             <div class="cardcontainer" v-for="friend in friends" :key="friend.userId">
                 <friend-card-vue 
-                :imgsrc="friend.profileimg" 
-                :userName="friend.name" 
-                :userId="friend.userId"
-                :clickEvent="() => btnClicked(friend)"
-                :friendStatus="friendStatus[friend.userId]" />
+                :friend="friend"
+                :clickEvent="btnClickEvent"
+                :isFriend="isFriend" />
             </div>          
         </div>
         
@@ -42,56 +40,9 @@ export default {
             type: Function
         },
         isFriend: {
-            type: String
+            type: Boolean
         }
     },
-    // created() {
-    //     console.log(this.title + this.isFriend)
-    //     if (this.isFriend == "true") {
-    //         for (let i; i < this.friends.length; i++) {
-    //             this.friendStatus[this.friends[i].userId] = "friend";
-    //         }
-    //     }
-    // },
-    data() {
-        return {
-            friendStatus: {}
-        }
-    },
-    watch: {
-        friends: {
-            deep: true,
-            handler(newFriends) {
-                if (this.isFriend === true) {
-                    newFriends.forEach((friend) => {
-                        this.$set(this.friendStatus, friend.userId, "friend");
-                    });
-                }
-            },
-        },
-    },
-    methods: {
-        btnClicked: function (friend) {
-            let param = {
-                userId: this.userInfo.userId,
-                receiverId: friend.userId
-            };
-            this.btnClickEvent(
-                param,
-                () => {
-                    
-                },
-                (error) => {
-                    console.log(error);
-                    this.$router.push({name: "error"})
-                }
-            );
-            if (this.isFriend === false) {
-                this.friendStatus[friend.userId] = "requested";
-            }
-            console.log("login complete" + this.friendStatus[friend.userId]);
-        }
-    }
 };
 </script>
 

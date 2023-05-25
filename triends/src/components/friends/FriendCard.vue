@@ -2,11 +2,11 @@
     <div class="cardcontainer">
         <div class="imagetextcontainer">
             <div class="imagecircle">
-                <img v-if="imgsrc" :src="imgsrc" />
+                <img v-if="friend.profileimg" :src="friend.profileimg" />
                 <img v-else :src="defaultimg" />
             </div>
             <div class="nametext">
-                {{userName}}
+                {{friend.name}}
             </div>
         </div>
         <div class="btncontainer">
@@ -14,14 +14,14 @@
                 <b-button 
                 v-if="friendStatus == 'friend'"
                 variant="danger" 
-                @click="clickEvent(userId)">친구 삭제</b-button>
+                @click="() => btnClicked(friend)">친구 삭제</b-button>
                 <b-button 
                 v-if="friendStatus == 'requested'"
                 variant="success" disabled>요청 완료!</b-button>
                 <b-button 
-                v-if="!friendStatus"
+                v-if="friendStatus == 'other'"
                 variant="success" 
-                @click="clickEvent(userId)">친구 추가</b-button>
+                @click="() => btnClicked(friend)">친구 추가</b-button>
             </div>
         </div>
     </div>
@@ -29,30 +29,54 @@
 
 <script>
 import defaultimg from "@/assets/icons/defaultprofile.png";
+import { mapState } from "vuex";
+
+const userStore = "userStore";
 
 export default {
     name: "FriendCard",
+    computed: {
+        ...mapState(userStore, ["isLogin", "userInfo"]),
+    },
     props: {
-        userId: {
-            type: Number
-        },
-        imgsrc: {
-            type: String
-        },
-        userName: {
-            type: String
+        friend: {
+            type: Object
         },
         clickEvent: {
             type: Function
         },
-        friendStatus: {
-            type: String,
-            required: true
+        isFriend: {
+            type: Boolean
+        }
+    },
+    created() {
+        if (this.isFriend === true) {
+            this.friendStatus= "friend";
+        } else {
+            this.friendStatus= "other";
         }
     },
     data() {
         return {
-            defaultimg: defaultimg
+            defaultimg: defaultimg,
+            friendStatus: ""
+        }
+    },
+    methods: {
+        btnClicked: function (friend) {
+            let param = {
+                userId: this.userInfo.userId,
+                receiverId: friend.userId
+            };
+            this.clickEvent(
+                param,
+                () => {
+                    if (this.isFriend === false) {
+                        this.friendStatus = "requested";
+                    }
+                }
+            );
+            console.log("login complete" + this.friendStatus[friend.userId]);
         }
     },
 };
