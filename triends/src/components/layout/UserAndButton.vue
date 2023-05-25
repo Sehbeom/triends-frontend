@@ -1,17 +1,23 @@
 <template>
   <div class="user-container">
-    <img src="../../assets/logo.png" />
+    <img :src="defaultprofile" />
     <span>{{ username }}</span>
-    <b-btn size="sm">친구추가</b-btn>
   </div>
 </template>
 
 <script>
+import defaultprofile from "@/assets/icons/defaultprofile.png";
+
 export default {
   name: "UserLayout",
   props: {
     username: String,
   },
+  data() {
+    return {
+      defaultprofile: defaultprofile
+    }
+  }
 };
 </script>
 

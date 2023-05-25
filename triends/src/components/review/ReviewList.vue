@@ -2,7 +2,11 @@
   <div>
     <page-detail-header title="여행지 리뷰" />
     <div class="write-btn">
-      <b-button><router-link :to="{ name: 'reviewregist' }">글쓰기</router-link></b-button>
+      <b-button 
+      squared 
+      variant="outline-secondary" 
+      size="lg" 
+      @click="() => this.$router.push({ name: 'reviewregist' })">글쓰기</b-button>
     </div>
     <div class="review-card-container" v-for="review in reviews" :key="review.reviewId">
       <attraction-review-card :review="review"></attraction-review-card>
@@ -13,7 +17,7 @@
 <script>
 import AttractionReviewCard from "@/components/AttractionReviewCard.vue";
 import PageDetailHeader from "@/components/layout/PageDetailHeader.vue";
-import http from "@/util/http-common";
+import { reviewList } from "@/apis/review";
 
 export default {
   name: "AttractionReviewView",
@@ -27,11 +31,15 @@ export default {
     PageDetailHeader,
   },
   created() {
-    http.get("review/list/0").then(({ data }) => {
-      console.log(data);
-      this.reviews = data.data;
-      console.log(this.reviews);
-    });
+    reviewList(
+      ({ data }) => {
+        this.reviews = data.data;
+      },
+      ({ error }) => {
+        console.log(error);
+        this.$router.push({ name: "error" });
+      }
+    )
   },
   methods: {},
 };

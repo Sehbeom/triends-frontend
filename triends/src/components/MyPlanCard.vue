@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <b-modal :id="item.planId" title="BootstrapVue">
+    <b-modal :id="item.planId">
       <h3>내 친구 목록</h3>
       <div class="friend-container">
         <div
