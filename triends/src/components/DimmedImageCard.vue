@@ -1,5 +1,7 @@
 <template>
   <div class="image-container">
+    {{ rateInfo }}
+    {{ item }}
     <img :src="item.firstImage" />
     <div class="dimmed-container">
       <div class="attraction-title" :v-b-modal="String(item.contentId)">
@@ -35,6 +37,7 @@ export default {
   props: {
     item: {},
     canrating: String,
+    rateInfo: [],
   },
   data() {
     return {
@@ -48,9 +51,6 @@ export default {
   methods: {
     check(index) {
       this.score = index + 1;
-
-      this.rating.contentId = this.item.contentId;
-      this.rating.rates = this.score - 1;
       console.log(this.item);
 
       this.$emit("rating", this.rating);
@@ -59,7 +59,16 @@ export default {
       // console.log("contentId" + contentIdHover.contentId);
       // console.log("contentId" + contentIdHover.title);
       // console.log("contentRate" + contentIdHover.rate);
-      return contentIdHover.rate;
+      this.rateInfo.forEach((element) => {
+        console.log(element.contentId + " " + element.score);
+        if (element.contentId === this.rating.contentId) {
+          this.rating.rates = element.score - 1;
+        }
+      });
+      // this.rating.contentId = this.rateInfo.contentId;
+      // this.rating.rates = this.rateInfo.score - 1;
+      console.log(this.rating);
+      return contentIdHover.rates;
     },
   },
 };

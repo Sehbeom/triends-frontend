@@ -4,8 +4,8 @@
     <div class="review-page-container">
       <b-container style="width: 90%; min-width: 1000px">
         <user-and-button :username="articledata.userName" />
-        {{ articledata.userId }}
-        {{ this.userInfo.userId }}
+        <!-- {{ articledata.userId }}
+        {{ this.userInfo.userId }} -->
         <hr />
         <div class="sidebar-btn">
           <b-button v-b-toggle.sidebar>날짜별 사진보기</b-button>
@@ -121,6 +121,10 @@ export default {
         this.userInfo.userId,
         ({ data }) => {
           this.articledata = data.data;
+          console.log(this.articledata.rateInfo);
+          this.items["rateInfo"] = this.articledata.rateInfo;
+          console.log(this.items.items);
+
           let courseInfo = this.articledata.planInfo.courseInfo;
           // console.log(courseInfo);
           for (let i = 0; i < courseInfo.length; i++) {
@@ -154,7 +158,8 @@ export default {
       let tmpc = [];
       this.attraction.attr[day - 1].courses.forEach((element) => {
         let tmp = {};
-        // console.log(element.attractionInfo);
+        console.log(element);
+        console.log(element.attractionInfo);
         tmp["key"] = key++;
         tmp["contentId"] = element.attractionInfo.contentId;
         tmp["title"] = element.attractionInfo.title;
@@ -162,7 +167,7 @@ export default {
         tmp["rate"] = element.attractionInfo.rate;
         tmpc.push(tmp);
       });
-      this.items.items = tmpc;
+      this.items.items.push(tmpc);
       console.log(this.items);
     },
     deletereview() {

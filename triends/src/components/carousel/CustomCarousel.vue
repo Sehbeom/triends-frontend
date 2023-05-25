@@ -14,6 +14,7 @@
           <dimmed-image-card
             v-if="items.type === 'dimmedImageCarousel'"
             :canrating="items.from"
+            :rateInfo="items.rateInfo"
             :item="item"
             @rating="rating"
           />
