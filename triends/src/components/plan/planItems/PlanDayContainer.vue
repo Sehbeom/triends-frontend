@@ -1,25 +1,19 @@
 <template>
   <div class="day-header">
-    <div class="day">{{ dayItem.day }}일자</div>
-    <draggable
-      :v-model="dayItem.courses"
-      @start="drag = true"
-      @end="drag = false"
-      :component-data="getComponentData()"
-    >
-      <div v-for="course in dayItem.courses" :key="course">
-        <attraction-search-result-item :item="course" :isPlan="false" />
+    <div class="day">{{ dayItem.dayInfo }}일자</div>
+    <draggable v-model="dayCourseInfo" @start="drag = true" @end="drag = false">
+      <div v-for="course in dayCourseInfo" :key="course">
+        <attraction-search-result-item :item="course" :isPlan="'plan'" />
       </div>
     </draggable>
-    <b-button @click="test()">tt</b-button>
   </div>
 </template>
 
 <script>
 import AttractionSearchResultItem from "../AttracionSearchResultItem.vue";
 import draggable from "vuedraggable";
-// import PlanCard from "./PlanCard.vue";
-
+import { mapGetters, mapActions } from "vuex";
+const planDraftStore = "planDraftStore";
 export default {
   name: "PlanDayContainer",
   components: { AttractionSearchResultItem, draggable },
@@ -27,35 +21,23 @@ export default {
     dayItem: {},
   },
   computed: {
-    courses() {
-      console.log("changed", this.dayItem.courses);
-      return this.dayItem.courses;
+    ...mapGetters(planDraftStore, ["getMyPlanItems"]),
+    dayCourseInfo: {
+      get() {
+        console.log(
+          "fuck",
+          this.getMyPlanItems[this.dayItem.dayInfo - 1].courses
+        );
+        return this.getMyPlanItems[this.dayItem.dayInfo - 1].courses;
+      },
+      set(value) {
+        console.log("changed!!", value);
+        this.updateChanges({ day: this.dayItem.dayInfo, value: value });
+      },
     },
   },
   methods: {
-    handleChange() {
-      console.log("changed", this.dayItem.courses);
-    },
-    inputChanged(value) {
-      this.activeNames = value;
-    },
-    getComponentData() {
-      return {
-        on: {
-          change: this.handleChange,
-          input: this.inputChanged,
-        },
-        attrs: {
-          wrap: true,
-        },
-        props: {
-          value: this.activeNames,
-        },
-      };
-    },
-    test() {
-      console.log("changed", this.dayItem.courses);
-    },
+    ...mapActions(planDraftStore, ["updateChanges"]),
   },
 };
 </script>

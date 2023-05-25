@@ -6,4 +6,7 @@ export default {
   name: "plan",
   beforeEnter: onlyAuthUser,
   component: MakePlanView,
+  beforeRouteLeave() {
+    window.confirm("fuck?");
+  },
 };

@@ -5,10 +5,19 @@
         <page-button-item title="공지사항" link="notice" :icon="notice" />
       </router-link>
       <router-link :to="{ name: 'recommand' }">
-        <page-button-item title="여행지 추천" link="recommand" :icon="recommand" />
+        <page-button-item
+          title="여행지 추천"
+          link="recommand"
+          :icon="recommand"
+        />
       </router-link>
-      <router-link :to="{ name: 'plan' }">
-        <page-button-item title="플랜짜기" link="plan" :icon="plan" />
+      <router-link :to="{ name: 'plan' }" @click="toPlan()">
+        <page-button-item
+          title="플랜짜기"
+          link="plan"
+          :icon="plan"
+          @click="toPlan()"
+        />
       </router-link>
       <router-link :to="{ name: 'myplan' }">
         <page-button-item title="내 플랜" link="myplan" :icon="myplan" />
@@ -42,8 +51,13 @@ export default {
       plan: icon3,
       myplan: icon4,
       review: icon5,
-      friends: icon6
+      friends: icon6,
     };
+  },
+  methods: {
+    toPlan() {
+      alert("fuck!");
+    },
   },
 };
 </script>
