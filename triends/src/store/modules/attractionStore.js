@@ -1,10 +1,14 @@
-import { getAttractionWithKeyword, getAttractionWithRecommand } from "@/apis/map";
+import {
+  getAttractionWithKeyword,
+  getAttractionWithRecommand,
+} from "@/apis/map";
 
 const attractionStore = {
   namespaced: true,
   state: {
     selectedAttraction: null,
     isRecommanded: false,
+    isSearchable: true,
   },
   getters: {},
   mutations: {
@@ -14,10 +18,16 @@ const attractionStore = {
     SET_SEARCH_TYPE_KEYWORD: (state) => {
       state.selectedAttraction = null;
       state.isRecommanded = false;
+      state.isSearchable = true;
     },
     SET_SEARCH_TYPE_RECOMMAND: (state) => {
       state.selectedAttraction = null;
       state.isRecommanded = true;
+      state.isSearchable = true;
+    },
+    SET_SEARCHABLE_FALSE: (state) => {
+      state.isSearchable = false;
+      state.selectedAttraction = null;
     },
   },
   actions: {
@@ -43,6 +53,9 @@ const attractionStore = {
     },
     setSearchTypeRecommand({ commit }) {
       commit("SET_SEARCH_TYPE_RECOMMAND");
+    },
+    setSearchable({ commit }) {
+      commit("SET_SEARCHABLE_FALSE");
     },
   },
 };
