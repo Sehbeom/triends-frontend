@@ -50,11 +50,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(attractionStore, [
-      "selectedAttraction",
-      "isRecommanded",
-      "isSearchable",
-    ]),
+    ...mapState(attractionStore, ["selectedAttraction", "isRecommanded", "isSearchable"]),
     ...mapState(planDraftStore, ["isSelected", "myPlan"]),
     setSearchedPosition() {
       return this.selectedAttraction;
@@ -70,11 +66,9 @@ export default {
       // console.log("positions?", positions);
       var imageSrc = "";
       if (!this.isRecommanded) {
-        imageSrc =
-          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+        imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
       } else {
-        imageSrc =
-          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
+        imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
       }
       this.setMarker(positions, imageSrc);
     },
@@ -82,13 +76,12 @@ export default {
       this.initMarkers();
 
       const positions = [];
-      this.myPlan.planInfo.courseInfo.forEach((day) => {
+      this.myPlan.courseInfo.forEach((day) => {
         day.courses.forEach((course) => {
           positions.push(course);
         });
       });
-      var imageSrc =
-        "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
+      var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png";
       this.setMarker(positions, imageSrc);
     },
   },
@@ -101,10 +94,7 @@ export default {
       /* global kakao */
       const script = document.createElement("script");
       const serviceKey = "93afce403fa4b93b85720e811bebec2b";
-      script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?appkey=" +
-        serviceKey +
-        "&autoload=false";
+      script.src = "//dapi.kakao.com/v2/maps/sdk.js?appkey=" + serviceKey + "&autoload=false";
       console.log(script.src);
       script.onload = () => window.kakao.maps.load(this.loadMap);
       document.head.appendChild(script);
@@ -140,10 +130,7 @@ export default {
         // 마커를 생성합니다
         var marker = new kakao.maps.Marker({
           map: this.map, // 마커를 표시할 지도
-          position: new kakao.maps.LatLng(
-            positions[i].latitude,
-            positions[i].longitude
-          ), // 마커를 표시할 위치
+          position: new kakao.maps.LatLng(positions[i].latitude, positions[i].longitude), // 마커를 표시할 위치
           title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
           image: markerImage, // 마커 이미지
         });

@@ -1,9 +1,17 @@
 <template>
   <div class="day-container">
+    <div class="title-header">
+      <b-form-input
+        v-model="title"
+        placeholder="일정의 제목을 입력하세요"
+        class="input-title"
+      ></b-form-input>
+      <b-button variant="primary" @click="savePlanToServer()">일정 저장</b-button>
+    </div>
     <div v-for="dayItems in getMyPlanItems" :key="dayItems" class="day-header">
       <plan-day-container :dayItem="dayItems" />
     </div>
-    <div class="day-add" @click="addDateToPlan">날짜 추가하기</div>
+    <div class="day-add" @click="addDateToPlan">날짜 추가하기 +</div>
   </div>
 </template>
 
@@ -20,10 +28,23 @@ export default {
     ...mapGetters(planDraftStore, ["getMyPlanItems"]),
   },
   methods: {
-    ...mapActions(planDraftStore, ["addDay"]),
+    ...mapActions(planDraftStore, ["addDay", "savePlan"]),
     addDateToPlan() {
       this.addDay();
     },
+    savePlanToServer() {
+      if (!this.title) {
+        alert("일정의 제목을 입력해주세요!");
+      } else {
+        confirm("일정을 추가하시겠습니까?");
+        this.savePlan(this.title);
+      }
+    },
+  },
+  data() {
+    return {
+      title: "",
+    };
   },
 };
 </script>
@@ -50,5 +71,13 @@ export default {
 }
 .day-header {
   width: 100%;
+}
+.title-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+.input-title {
+  width: 70%;
 }
 </style>
