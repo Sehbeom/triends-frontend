@@ -16,9 +16,16 @@
 </template>
 
 <script>
-import http from "@/util/http-common";
+import { registPreferences } from "@/apis/user";
+import { mapState } from "vuex";
+
+const userStore = "userStore";
+
 export default {
   name: "UserPreference",
+  computed: {
+    ...mapState(userStore, ["isLogin", "userInfo"]),
+  },
   data() {
     return {
       preferenceIds: [],
@@ -35,17 +42,22 @@ export default {
     };
   },
   methods: {
-    confirm() {
-      let tmparr = [];
-      this.preferenceIds.forEach((element) => {
-        tmparr.push(element);
-      });
-      console.log(tmparr);
-      let prefform = { preferenceIds: tmparr };
-      console.log(prefform);
-      http.post("user/preference", JSON.stringify(prefform)).then(({ data }) => {
-        console.log(data);
-      });
+    confirm : function() {
+      let param = {
+        userId: this.userInfo.userId,
+        preferenceIds: this.preferenceIds
+      };
+      registPreferences(
+        param,
+        ({ data }) => {
+          console.log("registed preferences : " + data.data);
+        },
+        ({ error }) => {
+          console.log(error);
+          this.$router.push({ name: "error" });
+        }
+      );
+      this.$router.replace({ name: "home" });
     },
   },
 };

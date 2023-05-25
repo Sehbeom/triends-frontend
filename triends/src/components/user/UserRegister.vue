@@ -16,7 +16,7 @@
             <b-form-group label="아이디" label-for="userid" class="input-form">
               <b-form-input
                 id="userid"
-                v-model="user.userid"
+                v-model="user.id"
                 required
                 placeholder="아이디 입력...."
                 @keyup.enter="confirm"
@@ -26,7 +26,7 @@
               <b-form-input
                 type="password"
                 id="userpwd"
-                v-model="user.userpwd"
+                v-model="user.password"
                 required
                 placeholder="비밀번호 입력...."
                 @keyup.enter="confirm"
@@ -35,7 +35,7 @@
             <b-form-group label="이름" label-for="username" class="input-form">
               <b-form-input
                 id="username"
-                v-model="user.username"
+                v-model="user.name"
                 required
                 placeholder="이름"
                 @keyup.enter="confirm"
@@ -44,7 +44,7 @@
             <b-form-group label="전화번호" label-for="usertel" class="input-form">
               <b-form-input
                 id="usertel"
-                v-model="user.usertel"
+                v-model="user.tel"
                 required
                 placeholder="010-0000-0000"
                 @keyup.enter="confirm"
@@ -53,7 +53,7 @@
             <b-form-group label="이메일" label-for="useremail" class="input-form">
               <b-form-input
                 id="useremail"
-                v-model="user.useremail"
+                v-model="user.email"
                 required
                 placeholder="example@ex.ex"
                 @keyup.enter="confirm"
@@ -62,7 +62,7 @@
             <b-form-group label="프로필 이미지" label-for="userprifile" class="input-form">
               <b-form-input
                 id="userprifile"
-                v-model="user.userprofile"
+                v-model="user.profileimg"
                 @keyup.enter="confirm"
               ></b-form-input>
             </b-form-group>
@@ -80,52 +80,38 @@
 </template>
 
 <script>
-import http from "@/util/http-common";
+import { mapActions } from "vuex";
+
+const userStore = "userStore";
+
 export default {
   name: "UserRegister",
   data() {
     return {
       isLoginError: false,
       user: {
-        userid: "",
-        userpwd: "",
-        username: "",
-        usertel: "",
-        useremail: "",
-        userprofile: "",
+        id: "",
+        password: "",
+        name: "",
+        tel: "",
+        profileimg: "",
+        email: "",
       },
-      preferenceIds: [],
-      options: [
-        { text: "관광지", value: "12" },
-        { text: "문화시설", value: "14" },
-        { text: "축제공연행사", value: "15" },
-        { text: "여행코스", value: "25" },
-        { text: "레포츠", value: "28" },
-        { text: "숙박", value: "32" },
-        { text: "쇼핑", value: "38" },
-        { text: "음식점", value: "39" },
-      ],
     };
   },
   methods: {
+    ...mapActions(userStore, ["joinWithUserConfirm"]),
     confirm() {
-      if (!this.user.userid) alert("아이디를 입력해주세요");
-      else if (!this.user.userpwd) alert("이름을 입력해주세요");
-      else if (!this.user.username) alert("비밀번호를 입력해주세요");
-      else if (!this.user.useremail) alert("이메일을 입력해주세요");
+      if (!this.user.id) alert("아이디를 입력해주세요");
+      else if (!this.user.password) alert("이름을 입력해주세요");
+      else if (!this.user.name) alert("비밀번호를 입력해주세요");
+      else if (!this.user.email) alert("이메일을 입력해주세요");
       else {
-        let loginform = {
-          id: this.user.userid,
-          password: this.user.userpwd,
-          name: this.user.username,
-          email: this.user.useremail,
-        };
-        console.log(loginform);
-        http.post("user", JSON.stringify(loginform)).then(({ data }) => {
-          console.log(data.data[data.data.length - 1].userId);
-          sessionStorage.setItem("userid", data.data[data.data.length - 1].userId);
-          this.$router.push({ name: "preference" });
-        });
+        let payload = {
+          user: this.user,
+          router: this.$router
+        }
+        this.joinWithUserConfirm(payload);
       }
     },
     movePage() {
