@@ -6,9 +6,17 @@
         placeholder="일정의 제목을 입력하세요"
         class="input-title"
       ></b-form-input>
-      <b-button variant="primary" @click="savePlanToServer()">일정 저장</b-button>
+      <b-button v-if="!isUpdate" variant="primary" @click="savePlanToServer()"
+        >일정 저장</b-button
+      ><b-button v-else variant="danger" @click="updatePlanToServer()"
+        >일정 수정</b-button
+      >
     </div>
-    <div v-for="dayItems in getMyPlanItems" :key="dayItems" class="day-header">
+    <div
+      v-for="dayItems in getMyPlanItems"
+      :key="dayItems.dayInfo"
+      class="day-header"
+    >
       <plan-day-container :dayItem="dayItems" />
     </div>
 
@@ -17,7 +25,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 import PlanDayContainer from "./planItems/PlanDayContainer.vue";
 
 const planDraftStore = "planDraftStore";
@@ -26,10 +34,19 @@ export default {
   name: "AttractionPlan",
   components: { PlanDayContainer },
   computed: {
-    ...mapGetters(planDraftStore, ["getMyPlanItems"]),
+    ...mapGetters(planDraftStore, ["getMyPlanItems", "getTitle"]),
+    ...mapState(planDraftStore, ["isUpdate"]),
+    hasTitle() {
+      return this.getTitle;
+    },
+  },
+  watch: {
+    hasTitle() {
+      this.title = "d";
+    },
   },
   methods: {
-    ...mapActions(planDraftStore, ["addDay", "savePlan"]),
+    ...mapActions(planDraftStore, ["addDay", "savePlan", "updatePlan"]),
     addDateToPlan() {
       this.addDay();
     },
@@ -41,11 +58,22 @@ export default {
         this.savePlan(this.title);
       }
     },
+    updatePlanToServer() {
+      if (!this.title) {
+        alert("일정의 제목을 입력해주세요!");
+      } else {
+        confirm("일정을 수정하시겠습니까?");
+        this.updatePlan(this.title);
+      }
+    },
   },
   data() {
     return {
       title: "",
     };
+  },
+  created() {
+    this.title = this.getTitle;
   },
 };
 </script>
