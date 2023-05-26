@@ -14,7 +14,7 @@
           label-for="pwd-input"
           invalid-feedback="password is required"
         >
-          <b-form-input id="pwd-input" v-model="user.userPwd" required></b-form-input>
+          <b-form-input type="password" id="pwd-input" v-model="user.userPwd" required></b-form-input>
         </b-form-group>
       </form>
     </b-modal>

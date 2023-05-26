@@ -122,7 +122,7 @@
                 <b-icon icon="person-circle"></b-icon> 내정보
               </router-link>
             </b-dropdown-item>
-            <b-dropdown-item href="#" @click="logout()">
+            <b-dropdown-item href="#" @click="logout">
               <b-icon icon="person-circle"></b-icon> 로그아웃
             </b-dropdown-item>
           </b-dropdown>
@@ -232,7 +232,11 @@ export default {
     },
     logout() {
       console.log("logout!");
-      this.userLogout(this.userInfo.userId);
+      let param = {
+        userId: this.userInfo.userId,
+        router: this.$router
+      }
+      this.userLogout(param);
     },
   },
   watch: {
@@ -253,6 +257,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+a {
+  text-decoration: none;
+  color: black;
+}
 .header {
   width: 100vw;
   min-width: 1000px;
