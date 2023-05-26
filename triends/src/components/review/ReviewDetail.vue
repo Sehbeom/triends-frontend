@@ -59,13 +59,6 @@
             </b-col>
           </b-row>
         </div>
-        <div class="view-comment">
-          <ul>
-            <li><user-and-button username="댓글유저" />댓글내용</li>
-            <li><user-and-button username="댓글유저" />댓글내용</li>
-            <li><user-and-button username="댓글유저" />댓글내용</li>
-          </ul>
-        </div>
       </b-container>
     </div>
   </div>

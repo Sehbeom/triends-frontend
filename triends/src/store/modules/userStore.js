@@ -142,9 +142,9 @@ const userStore = {
         }
       );
     },
-    async userLogout({ commit }, userid) {
+    async userLogout({ commit }, param) {
       await logout(
-        userid,
+        param.userId,
         ({ data }) => {
           console.log("sdslkdfskflls :::::: ", data);
           if (data.message === "로그아웃 되었습니다.") {
@@ -157,6 +157,7 @@ const userStore = {
           } else {
             console.log("유저 정보 없음!!!!");
           }
+          param.router.replace({ name: "home" });
         },
         (error) => {
           console.log(error);

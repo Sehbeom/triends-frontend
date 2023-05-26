@@ -108,11 +108,13 @@ export default {
         this.form.planId,
         ({ data }) => {
           data.data.courseInfo.forEach((element) => {
+            console.log(element)
             element.courses.forEach((el) => {
               key += 1;
               let tmp = el.attractionInfo;
               tmp["key"] = key;
               totalCourses.push(tmp);
+              console.log(totalCourses);
             });
           });
           console.log(totalCourses);
