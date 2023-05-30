@@ -157,7 +157,7 @@ const userStore = {
           } else {
             console.log("유저 정보 없음!!!!");
           }
-          param.router.replace({ name: "home" });
+          param.router.replace({ name: "home" }).catch(() => {});
         },
         (error) => {
           console.log(error);
