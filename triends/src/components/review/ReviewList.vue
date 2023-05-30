@@ -6,7 +6,7 @@
       squared 
       variant="outline-secondary" 
       size="lg" 
-      @click="() => this.$router.push({ name: 'reviewregist' })">글쓰기</b-button>
+      @click="moveToRegist">글쓰기</b-button>
     </div>
     <div class="review-card-container" v-for="review in reviews" :key="review.reviewId">
       <attraction-review-card :review="review"></attraction-review-card>
@@ -41,7 +41,11 @@ export default {
       }
     )
   },
-  methods: {},
+  methods: {
+    moveToRegist: function () {
+      this.$router.push({ name: 'reviewregist' });
+    }
+  },
 };
 </script>
 

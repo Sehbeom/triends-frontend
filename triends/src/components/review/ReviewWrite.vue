@@ -1,7 +1,7 @@
 <template>
   <article-layout>
     <div class="form-container">
-      <b-form @submit="register" @reset="reset">
+      <b-form @reset="reset">
         <b-form-group class="input-form" label-for="review-title">
           <h5>리뷰 제목</h5>
           <b-form-input
@@ -41,7 +41,7 @@
             rows="15"
           ></b-form-textarea>
         </b-form-group>
-        <b-button type="submit" variant="primary">작성완료</b-button>
+        <b-button @click="register" variant="primary">작성완료</b-button>
         <b-button type="reset" variant="danger">작성취소</b-button>
         <b-button router-link :to="{ name: 'review' }">목록으로</b-button>
       </b-form>
@@ -154,7 +154,7 @@ export default {
         ({ data }) => {
           console.log(data);
           this.$router
-            .push({
+            .replace({
               name: "review",
             })
             .catch(() => {
