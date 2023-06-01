@@ -1,7 +1,7 @@
 # Triends
 
-👉 [Triends API Github]() <br>
-👉 [Sehbeom's Triends Dev Log]()
+👉 [Triends API Github](https://github.com/Sehbeom/triends-api) <br>
+👉 [Sehbeom's Triends Dev Log](https://atlantic-node-a40.notion.site/Triends-7a166e4f7cd84bae95706143c969bec0)
 
 ## 주요 기능
 
