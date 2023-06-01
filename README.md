@@ -1,92 +1,165 @@
-# triends vue 장세범 신우종 전상호
+# Triends
 
+👉 [Triends API Github]() <br>
+👉 [Sehbeom's Triends Dev Log]()
 
+## 주요 기능
 
-## Getting started
+- **유저 취향 조사**
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+  ![유저 취향 조사 과정](readmeimgs/userpreference.gif)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+  → 유저 취향 조사 과정
 
-## Add your files
+  - 회원가입 과정에서 선호하는 여행지 유형을 선택할 수 있습니다.
+  - 해당 정보는 유저 취향 기반 여행지 추천, 친구 추천에 활용됩니다.
+  - 선택 가능한 여행지 유형은 다음과 같습니다.
+    - 여행지 유형
+      - 관광지 여행
+      - 문화 여행
+      - 축제•공연•행사 여행
+      - 지역 투어 여행
+      - 레포츠 여행
+      - 호캉스 여행
+      - 쇼핑 여행
+      - 맛집 여행
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+- **여행지 추천**
 
-```
-cd existing_repo
-git remote add origin https://lab.ssafy.com/sanghoya3/triends-vue.git
-git branch -M master
-git push -uf origin master
-```
+  - 추천1 : 평점 기반 추천
 
-## Integrate with your tools
+    ![홈 화면 하단 부분의 평점 기반 추천 여행지 목록](readmeimgs/ratesreco1.gif)
 
-- [ ] [Set up project integrations](https://lab.ssafy.com/sanghoya3/triends-vue/-/settings/integrations)
+    → 홈 화면 하단 부분의 평점 기반 추천 여행지 목록
 
-## Collaborate with your team
+    ![‘여행지 추천’ 탭 상단 부분의 평점 기반 추천 여행지 목록](readmeimgs/ratesreco2.gif)
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+    → ‘여행지 추천’ 탭 상단 부분의 평점 기반 추천 여행지 목록
 
-## Test and Deploy
+    - 평점 기반 추천은 홈 화면 아래 부분과 ‘여행지 추천’ 탭의 상단 부분에서 확인할 수 있습니다.
+    - 해당 목록은 여행지의 평점 기준 내림차순으로 정렬됩니다.
+    - 여행지의 평점은 리뷰 작성 과정에서 부여할 수 있습니다.
 
-Use the built-in continuous integration in GitLab.
+  - 추천2 : 유저 취향 기반 추천
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+    ![유저 취향 기반 추천 여행지 목록](readmeimgs/preferreco.gif)
 
-***
+    → 유저 취향 기반 추천 여행지 목록
 
-# Editing this README
+    - 유저 취향 기반 추천은 ‘여행지 추천’ 탭의 하단 부분에서 확인할 수 있습니다.
+    - 추천 여행지 목록 생성 과정은 사용자 기반 협업 필터링 개념을 도입하였으며, 다음 과정으로 이루어집니다.
+      - 유저 취향 기반 추천 여행지 목록 생성 과정
+        - 현재 로그인한 유저와 타 유저 간의 취향 조사 결과를 비교하여 일치하는 비율(유사도)을 계산합니다.
+        - 유사도 기준 상위 n명의 유저가 선택한 여행지 목록을 생성합니다.
+        - 해당 여행지 목록을 평점 기준 내림차순하여 유저 취향 기반 추천 여행지 목록을 최종 생성합니다.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+- **플랜 생성**
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+  - 유저는 ‘플랜짜기’ 탭을 통해 여행 플랜을 일자별로 생성할 수 있습니다.
 
-## Name
-Choose a self-explaining name for your project.
+  - 여행지 검색
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+    ![지도 내 여행지 검색](readmeimgs/plan_search.gif)
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+    → 지도 내 여행지 검색
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+    - 우측 ‘검색결과’ 탭에서 지도 내 여행지를 검색할 수 있습니다.
+    - 여행지 이름 또는 주소가 검색 키워드에 해당하는 여행지 정보를 지도와 우측 목록에서 확인할 수 있습니다.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+  - 추천 여행지
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+    ![지도 내 추천 여행지 검색](readmeimgs/plan_reco.gif)
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+    → 지도 내 추천 여행지 검색
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+    - 우측 ‘추천여행지’ 탭을 통해 현재 표시된 지도 내에 위치한 여행지들 중 평점 기준 상위 n개의 여행지 목록을 확인할 수 있습니다.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+  - 플랜 생성
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+    ![플랜 일자별 여행지 추가](readmeimgs/plan_add.gif)
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+    → 플랜 일자별 여행지 추가
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+    ![플랜 제목 설정 및 플랜 생성](readmeimgs/plan_create.gif)
 
-## License
-For open source projects, say how it is licensed.
+    → 플랜 제목 설정 및 플랜 생성
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+    - 우측 ‘내플랜’ 탭에서 일자를 증가시킬 수 있으며, 여행지를 해당 일자에 포함시킬 수 있습니다.
+    - 여행지 추가가 완료되면 플랜 제목을 설정하고 ‘일정 저장’ 버튼을 통해 플랜을 저장할 수 있습니다.
+
+- **리뷰 작성**
+
+  ![리뷰 작성 시 여행지 별 평점 부여 가능](readmeimgs/review_write.gif)
+
+  → 리뷰 작성 시 여행지 별 평점 부여 가능
+
+  ![리뷰 조회 시 일자별 여행지와 평점 확인 가능](readmeimgs/review_detail.gif)
+
+  → 리뷰 조회 시 일자별 여행지와 평점 확인 가능
+
+  - 생성한 플랜에 대해 리뷰를 작성할 수 있으며, 리뷰 작성 시 각 여행지에 평점을 적용할 수 있습니다.
+  - 리뷰 조회 페이지에서 일자별 여행지를 확인할 수 있으며, 작성자가 각 여행지에 부여한 평점을 확인할 수 있습니다.
+
+- **친구 목록 조회 및 친구 추천**
+
+  - 친구 목록 조회
+
+    ![친구 목록 조회](readmeimgs/friends_list.gif)
+
+    → 친구 목록 조회
+
+    - ‘친구 관리’ 탭에서 친구 목록을 확인할 수 있습니다.
+
+  - 친구 추천1 : 친구 관계 기반
+
+    ![친구 관계 기반 친구 추천](readmeimgs/friends_friends.gif)
+
+    → 친구 관계 기반 친구 추천
+
+    - 유저 간의 친구 관계를 기반으로 친구를 추천받을 수 있습니다.
+    - 친구 관계 기반 친구 추천 목록은 다음과 같은 과정으로 생성됩니다.
+      - 친구 관계 기반 친구 추천 목록 생성 과정
+        - 현재 로그인한 유저의 친구 목록을 생성합니다.
+        - 해당 목록 내 유저들의 친구 목록을 조회하며 겹치는 유저에 대해 겹치는 횟수를 계산합니다.
+        - 겹치는 횟수 기준 상위 n명의 유저로 친구 추천 목록을 생성합니다.
+
+  - 친구 추천2 : 유저 취향 기반
+
+    ![유저 취향 기반 친구 추천](readmeimgs/friends_prefer.gif)
+
+    → 유저 취향 기반 친구 추천
+
+    - 현재 로그인한 유저의 취향 조사 결과와 유사한 유저들을 친구로 추천받을 수 있습니다.
+    - 유저 취향 기반 친구 추천 목록은 다음과 같은 과정으로 생성됩니다.
+      - 유저 취향 기반 친구 추천 목록 생성 과정
+        - 현재 로그인한 유저와 타 유저 간의 취향 조사 결과를 비교하여 일치하는 비율(유사도)을 계산합니다.
+        - 유사도 기준 상위 n명의 유저로 친구 추천 목록을 생성합니다.
+
+  - 친구 검색
+
+    ![친구 검색](readmeimgs/friends_search.gif)
+
+    → 친구 검색
+
+    - 이름으로 유저를 검색할 수 있습니다.
+
+- **알림 (플랜 초대 및 친구 추가)**
+
+  ![플랜 초대](readmeimgs/notification_plan.gif)
+
+  → 플랜 초대
+
+  ![친구 추가](readmeimgs/notification_friend.gif)
+
+  → 친구 추가
+
+  - 알림은 다음 두가지 경우에 대해 전달됩니다.
+    - 플랜 초대
+    - 친구 추가
+
+  ![알림 확인 및 수락, 거절](readmeimgs/notification_check.gif)
+
+  → 알림 확인 및 수락, 거절
+
+  - 수신한 알림 목록은 상단 헤더의 종모양 아이콘을 통해 확인할 수 있으며, 수신한 알림이 있을 경우 애니메이션 효과와 빨간점이 추가됩니다.
+  - 각 알림은 수락, 거절 중 선택할 수 있습니다.
