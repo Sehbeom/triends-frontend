@@ -21,7 +21,7 @@
       <h3>내 친구 목록</h3>
       <div class="friend-container">
         <div
-          v-for="friend in planDetail.memberInfo"
+          v-for="friend in friends"
           :key="friend.userId"
           class="friend"
         >
@@ -48,6 +48,7 @@ import { getPlanDetail } from "@/apis/plan";
 import { mapActions, mapState } from "vuex";
 import icon from "@/assets/icons/defaultprofile.png";
 import { sendPlanInvitation } from "@/apis/notification";
+import { getFriends } from "@/apis/friends";
 // import plan from "@/router/plan";
 
 const planDraftStore = "planDraftStore";
@@ -60,6 +61,7 @@ export default {
     return {
       color: selectRandomColor(),
       planDetail: {},
+      friends: [],
       icon: icon,
     };
   },
@@ -82,6 +84,13 @@ export default {
         ({ data }) => {
           if (data.message === "플랜 멤버 초대가 완료되었습니다.") {
             alert("친구가 정상적으로 초대되었습니다");
+            let newFriends = [];
+            for (let friend of this.friends) {
+              if (receiverId != friend.userId) {
+                newFriends.push(friend);
+              }
+            }
+            this.friends = newFriends;
           } else {
             this.$router.push({ name: "error" });
           }
@@ -102,6 +111,17 @@ export default {
         this.$router.push({ name: "error" });
       }
     );
+
+    getFriends(
+      this.userInfo.userId,
+      ({ data }) => {
+        this.friends = data.data;
+      },
+      ({ error }) => {
+        console.log(error);
+        this.$router.push({ name: "error" });
+      }
+    )
   },
 };
 </script>
